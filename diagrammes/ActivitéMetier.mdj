@@ -3521,7 +3521,7 @@
 													"height": 13,
 													"autoResize": false,
 													"underline": false,
-													"text": "Restock inventory",
+													"text": "Wait for restock",
 													"horizontalAlignment": 2,
 													"verticalAlignment": 5,
 													"wordWrap": false
@@ -6146,7 +6146,7 @@
 							"_parent": {
 								"$ref": "AAAAAAFhb41jza25cEc="
 							},
-							"name": "Restock inventory",
+							"name": "Wait for restock",
 							"visibility": "public",
 							"kind": "opaque",
 							"isLocallyReentrant": false,
