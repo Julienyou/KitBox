@@ -20,9 +20,15 @@ namespace KitBoxApp
     /// </summary>
     public partial class MainWindow : Window
     {
+        private Constrain constrains = new Constrain();
+        private Cupboard cupboard = new Cupboard();
         public MainWindow()
         {
             InitializeComponent();
+            heightComboBox.ItemsSource = constrains.Height;
+            widthComboBox.ItemsSource = constrains.Width;
+            depthComboBox.ItemsSource = constrains.Depth;
+            stackPanel.DataContext = cupboard;
         }
     }
 }

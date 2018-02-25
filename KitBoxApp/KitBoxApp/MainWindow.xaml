@@ -6,7 +6,57 @@
         xmlns:local="clr-namespace:KitBoxApp"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
+
+    <Window.Resources>
+        <Style x:Key="labelStyle" TargetType="{x:Type TextBlock}">
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Margin" Value="0,20,0,0"/>
+        </Style>
+    </Window.Resources>
+
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TabControl HorizontalAlignment="Left" Margin="1,1,0,1" Grid.Row="0" Width="169">
+            <TabItem Header="Cupboard" RenderTransformOrigin="0.5,0.5">
+                <ScrollViewer>
+                    <StackPanel x:Name="stackPanel">
+                        <TextBlock Style="{StaticResource labelStyle}">Height</TextBlock>
+                        <ComboBox x:Name="heightComboBox" SelectedItem="{Binding Path=Height}"/>
+                        <TextBlock Style="{StaticResource labelStyle}">Width</TextBlock>
+                        <ComboBox x:Name="widthComboBox" SelectedItem="{Binding Path=Width}"/>
+                        <TextBlock Style="{StaticResource labelStyle}">Depth</TextBlock>
+                        <ComboBox x:Name="depthComboBox" SelectedItem="{Binding Path=Depth}"/>
+                        <TextBlock Style="{StaticResource labelStyle}">Steel Corner</TextBlock>
+                        <ComboBox/>
+
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+            <TabItem Header="Boxes">
+                <ScrollViewer>
+                    <StackPanel>
+                        <Grid>
+                            <Button>blal</Button>
+                        </Grid>
+                        <TextBlock Style="{StaticResource labelStyle}">Door style</TextBlock>
+
+                        <ComboBox>
+
+                        </ComboBox>
+                        <TextBlock VerticalAlignment="Stretch">
+                            <CheckBox/><TextBlock>nops</TextBlock></TextBlock>
+                        <TextBlock Style="{StaticResource labelStyle}">Height</TextBlock>
+                        <ComboBox>
+
+                        </ComboBox>
+
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+        </TabControl>
+        <Button Content="Cancel" Grid.Row="1"/>
     </Grid>
 </Window>
