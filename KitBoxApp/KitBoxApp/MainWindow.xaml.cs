@@ -25,10 +25,14 @@ namespace KitBoxApp
         public MainWindow()
         {
             InitializeComponent();
-            heightComboBox.ItemsSource = constrains.Height;
             widthComboBox.ItemsSource = constrains.Width;
             depthComboBox.ItemsSource = constrains.Depth;
             stackPanel.DataContext = cupboard;
+            boxChoiseCombo.ItemsSource = new List<int> { 1, 2, 3, 4, 5, 6, 7 };
+            paneColorCombo.ItemsSource = new List<string> { "rouge franboise", "rose fluo", "paquerette" };
+            doorStyleCombo.ItemsSource = new List<string> { "Verre", "Vert", "Ver", "Vair" };
+            boxHeighCombo.ItemsSource = new List<int> { 50, 60, 70 };
+            steelCornerCombo.ItemsSource = new List<string> { "Beige des bois", "Rouge nuit", "Noir jour" };
         }
     }
 }

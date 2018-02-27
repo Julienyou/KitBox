@@ -24,37 +24,36 @@
                 <ScrollViewer>
                     <StackPanel x:Name="stackPanel">
                         <TextBlock Style="{StaticResource labelStyle}">Height</TextBlock>
-                        <ComboBox x:Name="heightComboBox" SelectedItem="{Binding Path=Height}"/>
+                        <TextBlock Background="#FFDDD6D6">250</TextBlock>
                         <TextBlock Style="{StaticResource labelStyle}">Width</TextBlock>
                         <ComboBox x:Name="widthComboBox" SelectedItem="{Binding Path=Width}"/>
                         <TextBlock Style="{StaticResource labelStyle}">Depth</TextBlock>
                         <ComboBox x:Name="depthComboBox" SelectedItem="{Binding Path=Depth}"/>
                         <TextBlock Style="{StaticResource labelStyle}">Steel Corner</TextBlock>
-                        <ComboBox/>
-
+                        <ComboBox x:Name="steelCornerCombo"/>
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>
             <TabItem Header="Boxes">
-                <ScrollViewer>
-                    <StackPanel>
-                        <Grid>
-                            <Button>blal</Button>
-                        </Grid>
-                        <TextBlock Style="{StaticResource labelStyle}">Door style</TextBlock>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition Height="20"/>
+                    </Grid.RowDefinitions>
 
-                        <ComboBox>
-
-                        </ComboBox>
-                        <TextBlock VerticalAlignment="Stretch">
-                            <CheckBox/><TextBlock>nops</TextBlock></TextBlock>
-                        <TextBlock Style="{StaticResource labelStyle}">Height</TextBlock>
-                        <ComboBox>
-
-                        </ComboBox>
-
-                    </StackPanel>
+                    <ScrollViewer Grid.Row="0" DockPanel.Dock="Top">
+                        <StackPanel>
+                            <ComboBox HorizontalContentAlignment="Center" x:Name="boxChoiseCombo"></ComboBox>
+                            <TextBlock Style="{StaticResource labelStyle}">Pane color</TextBlock>
+                            <ComboBox x:Name="paneColorCombo"/>
+                            <TextBlock Style="{StaticResource labelStyle}">Door style</TextBlock>
+                            <ComboBox x:Name="doorStyleCombo"/>
+                            <TextBlock Style="{StaticResource labelStyle}">Height</TextBlock>
+                            <ComboBox x:Name="boxHeighCombo"/>
+                        </StackPanel>
                 </ScrollViewer>
+                    <Button Grid.Row="1" Content="Add box" Height="20" Width="75"/>
+                </Grid>
             </TabItem>
         </TabControl>
         <Button Content="Cancel" Grid.Row="1"/>
