@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace KitBoxApp
 {
-    interface Component
+    interface IConstraintChecker
     {
-        int GetPrice();
+        bool Check<T>(T param);
     }
 }

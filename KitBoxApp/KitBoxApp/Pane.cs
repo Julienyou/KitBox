@@ -21,7 +21,7 @@ namespace KitBoxApp
 
         public int GetPrice(int height)
         {
-            return this.price; // How to integer the height with our class diagram ?
+            return this.price; // How to integrate the height with our class diagram ?
         }
         public string Type
         {
