@@ -23,6 +23,5 @@ namespace KitBoxApp
         {
             return true;
         }
-}
     }
 }
