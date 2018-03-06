@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.SQLite;
 
 namespace KitBoxApp
 {
@@ -43,6 +44,17 @@ namespace KitBoxApp
             get => employee;
         }
 
+        public void ComputePrice()
+        {
+            /*Class component not yet created*/
+
+            /*
+            foreach (Components component in components)
+            {
+                totalPrice += components.Price;
+            }
+            */
+        }
 
         /*Functions if we created an Order*/
         public void SetCustomer(int id, string firstName, string lastName, string street, string town)
