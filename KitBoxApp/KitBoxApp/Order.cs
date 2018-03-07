@@ -69,8 +69,9 @@ namespace KitBoxApp
         public void ExportToDatabase()
         {
             CheckCustomer();
+            CheckOrderId();
 
-            dbConnection.Close();
+            dbConnection.Close();            
         }
 
         private void CheckCustomer()
@@ -89,6 +90,20 @@ namespace KitBoxApp
 
                 command = new SQLiteCommand(sql, dbConnection);
                 command.ExecuteNonQuery();
+            }
+        }
+
+        private void CheckOrderId()
+        {
+            /*Verification if the customer exists*/
+            string sql = "select * from `Order` where PK_IDOrder='" + id.ToString() + "'";
+
+            SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
+            SQLiteDataReader reader = command.ExecuteReader();
+
+            if (reader.Read()) //if id 
+            {
+                throw new Exception("This id exists already");
             }
         }
     }
