@@ -9,12 +9,12 @@ namespace KitBoxApp
 {
     class Cupboard
     {
-        private Box boxes;
+        private List<Box> boxes;
         private SteelCorner steelcorner;
         private int width;
         private int depth;
 
-        public Cupboard(Box boxes, SteelCorner steelCorner, int width, int depth)
+        public Cupboard(List<Box> boxes, SteelCorner steelCorner, int width, int depth)
         {
             this.boxes = boxes;
             this.steelcorner = steelCorner;
@@ -45,6 +45,18 @@ namespace KitBoxApp
         public SteelCorner ChooseSteelCorner()
         {
             return new SteelCorner("red", 1, 1, true);  //Implement the method !
+        }
+
+
+        public int GetHeight()
+        {
+            int totalheight = 0;
+
+            foreach (Box box in boxes)
+            {
+                totalheight += box.Height;
+            }
+            return totalheight;
         }
 
         public int Width

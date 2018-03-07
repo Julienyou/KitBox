@@ -58,7 +58,7 @@
     <Compile Include="BoxConstraint.cs" />
     <Compile Include="CupboardConstraint.cs" />
     <Compile Include="DoorConstraint.cs" />
-    <Compile Include="IComponent.cs" />
+    <Compile Include="IAccessory.cs" />
     <Compile Include="Door.cs" />
     <Compile Include="IConstraintChecker.cs" />
     <Compile Include="Pane.cs" />

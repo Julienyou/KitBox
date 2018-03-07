@@ -10,18 +10,20 @@ namespace KitBoxApp
     {
         private bool knop;
         private List<string> colors;
-        private List<Tuple<int>> doorDimensions;
+        private List<Tuple<int,int>> doorDimensions;
 
-        public DoorConstraint(bool knop, List<string> colors, List<Tuple<int>> doorDimensions)
+        public DoorConstraint(bool knop, List<string> colors, List<Tuple<int,int>> doorDimensions)
         {
             this.knop = knop;
             this.colors = colors;
             this.doorDimensions = doorDimensions;
         }
 
-        public bool Check(Door d)  //How to check this part and resolve the problem of generic type ?
+        public bool Check(Door d, Box b)
         {
-            if (colors.Contains(d.Color))
+            Tuple<int, int> constrain = new Tuple<int, int>(b.Height - 4, (b.GetWidth() - 4) / 2);
+
+            if (colors.Contains(d.Color) && doorDimensions.Contains(constrain))
             {
                 if (d.Color == "Verre" && d.Knop == true)
                 {
@@ -31,6 +33,7 @@ namespace KitBoxApp
                 {
                     return false;
                 }
+                return true;
             }
             
             return false;

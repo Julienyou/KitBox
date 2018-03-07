@@ -10,17 +10,17 @@ namespace KitBoxApp
     {
         private int height;
         private List<IAccessory> accessories;
-        private Tuple<int> boxDimensions;
         private int price;
         private List<Pane> panes;
+        private Cupboard cupboard;
 
-        public Box(int height, List<IAccessory> accessories, Tuple<int> boxDimensions, int price, List<Pane> panes)
+        public Box(int height, List<IAccessory> accessories, int price, List<Pane> panes, Cupboard cupboard)
         {
             this.height = height;
             this.accessories = accessories;
-            this.boxDimensions = boxDimensions;
             this.price = price;
             this.panes = panes;
+            this.cupboard = cupboard;
         }
 
         public int Price
@@ -43,9 +43,9 @@ namespace KitBoxApp
             get => accessories;
         }
 
-        public Tuple<int> BoxDimensions
+        public int GetWidth()
         {
-            get => boxDimensions;
+            return cupboard.Width;
         }
 
         public int Height

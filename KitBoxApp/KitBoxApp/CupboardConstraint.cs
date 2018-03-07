@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace KitBoxApp
 {
-    class CupboardConstraint : IConstraintChecker
+    class CupboardConstraint : IConstraintChecker<Cupboard>
     {
         private List<int> dephts;
         private List<int> widths;
@@ -19,8 +19,9 @@ namespace KitBoxApp
             this.maxHeight = maxHeight;
         }
 
-        public bool Check<T>(Cupboard cb)  //How to check this part and resolve the problem of generic type ?
+        public bool Check(Cupboard cb)  //How to check this part and resolve the problem of generic type ?
         {
+
             return true;
         }
     }
