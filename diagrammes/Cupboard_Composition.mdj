@@ -9142,7 +9142,7 @@
 								"$ref": "AAAAAAFht0nsc8VkjIk="
 							},
 							"name": "Check",
-							"documentation": "Check --> coupelle avec le type\n              --> taille des boxs",
+							"documentation": "Check --> coupelle avec le type\n              --> taille des boxs\n             --> stock?\n\n",
 							"visibility": "public",
 							"isStatic": false,
 							"isLeaf": false,
@@ -12906,6 +12906,173 @@
 									},
 									"showProperty": true,
 									"showType": true
+								},
+								{
+									"_type": "UMLCombinedFragmentView",
+									"_id": "AAAAAAFh/3MPPepPgCA=",
+									"_parent": {
+										"$ref": "AAAAAAFh1yvTJnTi+14="
+									},
+									"model": {
+										"$ref": "AAAAAAFh/3MPOepN9Uc="
+									},
+									"subViews": [
+										{
+											"_type": "LabelView",
+											"_id": "AAAAAAFh/3MPPepQoRA=",
+											"_parent": {
+												"$ref": "AAAAAAFh/3MPPepPgCA="
+											},
+											"visible": true,
+											"enabled": true,
+											"lineColor": "#000000",
+											"fillColor": "#ffffff",
+											"fontColor": "#000000",
+											"font": "Arial;13;0",
+											"showShadow": true,
+											"containerChangeable": false,
+											"containerExtending": false,
+											"left": 235.578125,
+											"top": 389,
+											"width": 8.22998046875,
+											"height": 13,
+											"autoResize": false,
+											"underline": false,
+											"text": "5",
+											"horizontalAlignment": 2,
+											"verticalAlignment": 5,
+											"wordWrap": false
+										},
+										{
+											"_type": "LabelView",
+											"_id": "AAAAAAFh/3MPPepRmsk=",
+											"_parent": {
+												"$ref": "AAAAAAFh/3MPPepPgCA="
+											},
+											"visible": true,
+											"enabled": true,
+											"lineColor": "#000000",
+											"fillColor": "#ffffff",
+											"fontColor": "#000000",
+											"font": "Arial;13;1",
+											"showShadow": true,
+											"containerChangeable": false,
+											"containerExtending": false,
+											"left": 205,
+											"top": 389,
+											"width": 25.578125,
+											"height": 13,
+											"autoResize": false,
+											"underline": false,
+											"text": "loop",
+											"horizontalAlignment": 2,
+											"verticalAlignment": 5,
+											"wordWrap": false
+										},
+										{
+											"_type": "UMLInteractionOperandCompartmentView",
+											"_id": "AAAAAAFh/3MPPepSkhE=",
+											"_parent": {
+												"$ref": "AAAAAAFh/3MPPepPgCA="
+											},
+											"model": {
+												"$ref": "AAAAAAFh/3MPOepN9Uc="
+											},
+											"subViews": [
+												{
+													"_type": "UMLInteractionOperandView",
+													"_id": "AAAAAAFh/3MPjepe+qs=",
+													"_parent": {
+														"$ref": "AAAAAAFh/3MPPepSkhE="
+													},
+													"model": {
+														"$ref": "AAAAAAFh/3MPPepOvd0="
+													},
+													"subViews": [
+														{
+															"_type": "LabelView",
+															"_id": "AAAAAAFh/3MPjepfcd8=",
+															"_parent": {
+																"$ref": "AAAAAAFh/3MPjepe+qs="
+															},
+															"visible": false,
+															"enabled": true,
+															"lineColor": "#000000",
+															"fillColor": "#ffffff",
+															"fontColor": "#000000",
+															"font": "Arial;13;0",
+															"showShadow": true,
+															"containerChangeable": false,
+															"containerExtending": false,
+															"left": 220,
+															"top": 422,
+															"width": 0,
+															"height": 13,
+															"autoResize": false,
+															"underline": false,
+															"horizontalAlignment": 2,
+															"verticalAlignment": 5,
+															"wordWrap": false
+														}
+													],
+													"visible": true,
+													"enabled": true,
+													"lineColor": "#000000",
+													"fillColor": "#ffffff",
+													"fontColor": "#000000",
+													"font": "Arial;13;0",
+													"showShadow": true,
+													"containerChangeable": false,
+													"containerExtending": false,
+													"left": 200,
+													"top": 407,
+													"width": 376,
+													"height": 43,
+													"autoResize": false,
+													"guardLabel": {
+														"$ref": "AAAAAAFh/3MPjepfcd8="
+													}
+												}
+											],
+											"visible": true,
+											"enabled": true,
+											"lineColor": "#000000",
+											"fillColor": "#ffffff",
+											"fontColor": "#000000",
+											"font": "Arial;13;0",
+											"showShadow": true,
+											"containerChangeable": false,
+											"containerExtending": false,
+											"left": 200,
+											"top": 407,
+											"width": 376,
+											"height": 43,
+											"autoResize": false
+										}
+									],
+									"visible": true,
+									"enabled": true,
+									"lineColor": "#000000",
+									"fillColor": "#ffffff",
+									"fontColor": "#000000",
+									"font": "Arial;13;0",
+									"showShadow": true,
+									"containerChangeable": false,
+									"containerExtending": false,
+									"left": 200,
+									"top": 384,
+									"width": 376,
+									"height": 72,
+									"autoResize": false,
+									"nameLabel": {
+										"$ref": "AAAAAAFh/3MPPepQoRA="
+									},
+									"frameTypeLabel": {
+										"$ref": "AAAAAAFh/3MPPepRmsk="
+									},
+									"operandCompartment": {
+										"$ref": "AAAAAAFh/3MPPepSkhE="
+									}
 								}
 							],
 							"showSequenceNumber": true,
@@ -13194,6 +13361,29 @@
 									"_id": "AAAAAAFh11GMPX0WQLE=",
 									"_parent": {
 										"$ref": "AAAAAAFh11GMPX0VpJ4="
+									},
+									"name": "Operand1",
+									"visibility": "public",
+									"isReentrant": true
+								}
+							]
+						},
+						{
+							"_type": "UMLCombinedFragment",
+							"_id": "AAAAAAFh/3MPOepN9Uc=",
+							"_parent": {
+								"$ref": "AAAAAAFh1yvTF3ThmK0="
+							},
+							"name": "5",
+							"visibility": "public",
+							"isReentrant": true,
+							"interactionOperator": "loop",
+							"operands": [
+								{
+									"_type": "UMLInteractionOperand",
+									"_id": "AAAAAAFh/3MPPepOvd0=",
+									"_parent": {
+										"$ref": "AAAAAAFh/3MPOepN9Uc="
 									},
 									"name": "Operand1",
 									"visibility": "public",
