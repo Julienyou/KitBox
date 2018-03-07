@@ -69,6 +69,14 @@ namespace KitBoxApp
             CheckCustomer();
             CheckOrderId();
 
+            /*If the customer and the id to order are good*/
+            string sql = "insert into `Order` ('PK_IDOrder', 'FK_Customer', 'FK_State', 'TotalPrice')" +
+                         "values ('" + id + "','" + customer.Email + "','" + "1" + "','" + totalPrice.ToString() + "')";
+
+            SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
+            command.ExecuteNonQuery();
+
+
             dbConnection.Close();            
         }
 
@@ -77,10 +85,10 @@ namespace KitBoxApp
             /*Verification if the customer exists*/
             string sql = "select * from Customer where PK_Email='" + customer.Email + "'";
 
-            command = new SQLiteCommand(sql, dbConnection);
-            reader = command.ExecuteReader();
+            SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
+            SQLiteDataReader reader = command.ExecuteReader();
 
-            if (!reader.Read())
+            if (!reader.Read()) //Customer creation if he does not exists
             {
                 sql = "insert into Customer ('PK_Email', 'Firstname', 'Lastname', 'Street', 'Town')" +
                           "values ('" + customer.Email + "','" + customer.FirstName + "','" + customer.LastName +
@@ -94,14 +102,14 @@ namespace KitBoxApp
         private void CheckOrderId()
         {
             /*Verification if the id of order exists*/
-            string sql = "select * from `Order` where PK_IDOrder='" + id.ToString() + "'";
+            string sql = "select * from `Order` where PK_IDOrder='" + id + "'";
 
             SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
             SQLiteDataReader reader = command.ExecuteReader();
 
-            if (reader.Read()) //if id 
+            if (reader.Read()) //if id does not exists
             {
-                throw new Exception("This id exists already");
+                throw new Exception("This order id exists already");
             }
         }
     }
