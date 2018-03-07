@@ -61,6 +61,10 @@
                 </Grid>
             </TabItem>
         </TabControl>
+        
         <Button Content="Cancel" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"/>
+        <Canvas  x:Name="drawBox" Grid.Column="1" Grid.Row="0">
+            <local:BoxShape Door="True"  Height="50" Width="200" Stroke="Black" StrokeThickness="1" Canvas.Left="20" Canvas.Top="20"/>
+        </Canvas>
     </Grid>
 </Window>

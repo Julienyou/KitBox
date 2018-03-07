@@ -33,6 +33,10 @@ namespace KitBoxApp
             doorStyleCombo.ItemsSource = new List<string> { "Verre", "Vert", "Ver", "Vair" };
             boxHeighCombo.ItemsSource = new List<int> { 50, 60, 70 };
             steelCornerCombo.ItemsSource = new List<string> { "Beige des bois", "Rouge nuit", "Noir jour" };
+
+            
+
+
         }
     }
 }
