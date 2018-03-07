@@ -24,7 +24,7 @@
                 <ScrollViewer>
                     <StackPanel x:Name="stackPanel">
                         <TextBlock Style="{StaticResource labelStyle}">Height</TextBlock>
-                        <TextBlock Background="#FFDDD6D6">250</TextBlock>
+                        <TextBlock Background="#FFE4E4E4">250</TextBlock>
                         <TextBlock Style="{StaticResource labelStyle}">Width</TextBlock>
                         <ComboBox x:Name="widthComboBox" SelectedItem="{Binding Path=Width}"/>
                         <TextBlock Style="{StaticResource labelStyle}">Depth</TextBlock>
@@ -43,7 +43,8 @@
 
                     <ScrollViewer Grid.Row="0" DockPanel.Dock="Top">
                         <StackPanel>
-                            <ComboBox HorizontalContentAlignment="Center" x:Name="boxChoiseCombo"></ComboBox>
+                            <ComboBox SelectedIndex="0" HorizontalContentAlignment="Center" x:Name="boxChoiseCombo">
+                            </ComboBox>
                             <TextBlock Style="{StaticResource labelStyle}">Pane color</TextBlock>
                             <ComboBox x:Name="paneColorCombo"/>
                             <TextBlock Style="{StaticResource labelStyle}">Door style</TextBlock>
