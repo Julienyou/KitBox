@@ -44,7 +44,6 @@ namespace KitBoxApp
             get => Customer;
         }
 
-
         public void ComputePrice()
         {
             /*Class component not yet created*/
@@ -76,6 +75,20 @@ namespace KitBoxApp
             SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
             command.ExecuteNonQuery();
 
+
+            /*Add data inOrderComponentLink for each component located in components*/
+            int idLink = GetIdLink();
+
+            foreach (Component component in components)
+            {
+                sql = "insert into `OrderComponentLink` ('PK_Link', 'FK_Order', 'FK_Component')" +
+                         "values ('" + idLink.ToString() + "','" + id + "','" + component.code + "')";
+
+                command = new SQLiteCommand(sql, dbConnection);
+                command.ExecuteNonQuery();
+
+                idLink++;
+            }
 
             dbConnection.Close();            
         }
@@ -111,6 +124,25 @@ namespace KitBoxApp
             {
                 throw new Exception("This order id exists already");
             }
+        }
+
+        private int GetIdLink()
+        {
+            /*Give the last PK_Link of the table OrderComponentLink*/
+
+            string sql = "selec max(PK_Link) from OrderComponentLink";
+            SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
+            SQLiteDataReader reader = command.ExecuteReader();
+
+            if (reader.Read())
+            {
+                return Convert.ToInt32(reader["PK_link"]) + 1;
+            }
+            else
+            {
+                throw new Exception("Error, nothing PK_ID finds");
+            }
+
         }
     }
 }
