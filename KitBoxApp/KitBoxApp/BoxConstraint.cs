@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using KitBoxApp.Properties;
 
 namespace KitBoxApp
 {
-    class BoxConstraint : IConstraintChecker
+    class BoxConstraint : IConstraintChecker<Box>
     {
         private List<int> heights;
         private List<string> colors;
@@ -17,9 +18,14 @@ namespace KitBoxApp
             this.colors = colors;
         }
 
-        public bool check<T>(Box b)  //How to check this part and resolve the problem of generic type ?
+        public bool Check(Box b)
         {
-            return true;
+            if (heights.Contains(b.Height))
+            {
+                return true;
+            }
+            return false;
+            //Don't forget to check the availibility of the parts (variable)
         }
     }
 }

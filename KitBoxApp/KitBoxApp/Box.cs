@@ -9,15 +9,15 @@ namespace KitBoxApp
     class Box
     {
         private int height;
-        private List<IComponent> components;
+        private List<IAccessory> accessories;
         private Tuple<int> boxDimensions;
         private int price;
         private List<Pane> panes;
 
-        public Box(int height, List<IComponent> components, Tuple<int> boxDimensions, int price, List<Pane> panes)
+        public Box(int height, List<IAccessory> accessories, Tuple<int> boxDimensions, int price, List<Pane> panes)
         {
             this.height = height;
-            this.components = components;
+            this.accessories = accessories;
             this.boxDimensions = boxDimensions;
             this.price = price;
             this.panes = panes;
@@ -28,19 +28,34 @@ namespace KitBoxApp
             get => price;
         }
 
-        public void AddComponent(IComponent c)
+        public void AddComponent(IAccessory c)
         {
-            components.Add(c);
+            accessories.Add(c);
         }
 
-        public void RemoveComponent(IComponent c)
+        public void RemoveComponent(IAccessory c)
         {
-            components.Remove(c);
+            accessories.Remove(c);
+        }
+        
+        public List<IAccessory> Components
+        {
+            get => accessories;
         }
 
         public Tuple<int> BoxDimensions
         {
             get => boxDimensions;
+        }
+
+        public int Height
+        {
+            get { return height; }
+        }
+
+        public List<Pane> Panes
+        {
+            get => panes;
         }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace KitBoxApp
 {
-    class Door : IComponent
+    class Door : IAccessory
     {
         private string color;
         private bool knop;
@@ -22,6 +22,16 @@ namespace KitBoxApp
         public int GetPrice() // Add parameter string color ?
         {
             return this.price; // How to integrate the color with our class diagram ?
+        }
+
+        public string Color
+        {
+            get => color;
+        }
+
+        public bool Knop
+        {
+            get => knop;
         }
     }
 }

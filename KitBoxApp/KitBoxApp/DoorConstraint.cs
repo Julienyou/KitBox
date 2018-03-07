@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace KitBoxApp
 {
-    class DoorConstraint : IConstraintChecker
+    class DoorConstraint : IConstraintChecker<Door>
     {
         private bool knop;
         private List<string> colors;
@@ -19,9 +19,21 @@ namespace KitBoxApp
             this.doorDimensions = doorDimensions;
         }
 
-        public bool check<T>(Door door)  //How to check this part and resolve the problem of generic type ?
+        public bool Check(Door d)  //How to check this part and resolve the problem of generic type ?
         {
-            return true;
+            if (colors.Contains(d.Color))
+            {
+                if (d.Color == "Verre" && d.Knop == true)
+                {
+                    return false;
+                }
+                else if (d.Color != "Verre" && d.Knop == false)
+                {
+                    return false;
+                }
+            }
+            
+            return false;
         }
     }
 }

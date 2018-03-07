@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace KitBoxApp
 {
-    interface IComponent
+    interface IAccessory
     {
         int GetPrice();
     }
