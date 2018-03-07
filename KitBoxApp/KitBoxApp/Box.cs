@@ -38,7 +38,7 @@ namespace KitBoxApp
             accessories.Remove(c);
         }
         
-        public List<IAccessory> Components
+        public List<IAccessory> Accessories
         {
             get => accessories;
         }
