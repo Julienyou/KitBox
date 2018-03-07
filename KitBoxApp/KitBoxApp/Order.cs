@@ -12,14 +12,14 @@ namespace KitBoxApp
         private string id = null;
         private int totalPrice = 0;
         private Customer customer = null;
+        private List<Component> components;
 
         /*Init variables for communicate with the DataBase*/
         private SQLiteConnection dbConnection;
         SQLiteCommand command;
-        SQLiteDataReader reader
+        SQLiteDataReader reader;
 
         /*classes not yet created*/
-        //private List<Component> components;
         //private State state; 
 
         public Order(string id)
@@ -68,17 +68,20 @@ namespace KitBoxApp
 
         public void ExportToDatabase()
         {
+            CheckCustomer();
+
+            dbConnection.Close();
+        }
+
+        private void CheckCustomer()
+        {
             /*Verification if the customer exists*/
             string sql = "select * from Customer where PK_Email='" + customer.Email + "'";
 
             command = new SQLiteCommand(sql, dbConnection);
             reader = command.ExecuteReader();
 
-            if (reader.Read()) //if he exists
-            {
-
-            }
-            else //if he not existes
+            if (!reader.Read())
             {
                 sql = "insert into Customer ('PK_Email', 'Firstname', 'Lastname', 'Street', 'Town')" +
                           "values ('" + customer.Email + "','" + customer.FirstName + "','" + customer.LastName +
@@ -87,9 +90,6 @@ namespace KitBoxApp
                 command = new SQLiteCommand(sql, dbConnection);
                 command.ExecuteNonQuery();
             }
-
-
-            dbConnection.Close();
         }
     }
 }
