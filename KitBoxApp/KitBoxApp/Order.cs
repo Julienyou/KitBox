@@ -12,7 +12,11 @@ namespace KitBoxApp
         private string id = null;
         private int totalPrice = 0;
         private Customer customer = null;
-        private Employee employee = null;
+
+        /*Init variables for communicate with the DataBase*/
+        private SQLiteConnection dbConnection;
+        SQLiteCommand command;
+        SQLiteDataReader reader
 
         /*classes not yet created*/
         //private List<Component> components;
@@ -21,6 +25,10 @@ namespace KitBoxApp
         public Order(string id)
         {
             this.id = id;
+
+            /*Start connection DataBase*/
+            dbConnection = new SQLiteConnection("Data Source=db.sqlite;Version=3;");
+            dbConnection.Open();
         }
 
         public string Id
@@ -38,11 +46,6 @@ namespace KitBoxApp
             get => Customer;
         }
 
-        public Employee Employee
-        {
-            get => employee;
-        }
-
 
         public void ComputePrice()
         {
@@ -56,24 +59,37 @@ namespace KitBoxApp
             */
         }
 
+
         /*Functions if we created an Order*/
-        public void SetCustomer(int id, string firstName, string lastName, string street, string town)
+        public void SetCustomer(string email, string firstName, string lastName, string street, string town)
         {
-            customer = new Customer(id, firstName, lastName, street, town);
+            customer = new Customer(email, firstName, lastName, street, town);
         }        
-            
-        public void SetEmployee(int id, string firstName, string lastName)
-        {
-            employee = new Employee(id, firstName, lastName);
-        }
 
         public void ExportToDatabase()
         {
-            SQLiteConnection dbConnection = new SQLiteConnection("Data Source=db.sqlite;Version=3;");
-            dbConnection.Open();
+            /*Verification if the customer exists*/
+            string sql = "select * from Customer where PK_Email='" + customer.Email + "'";
 
-            string sql = "";
+            command = new SQLiteCommand(sql, dbConnection);
+            reader = command.ExecuteReader();
 
+            if (reader.Read()) //if he exists
+            {
+
+            }
+            else //if he not existes
+            {
+                sql = "insert into Customer ('PK_Email', 'Firstname', 'Lastname', 'Street', 'Town')" +
+                          "values ('" + customer.Email + "','" + customer.FirstName + "','" + customer.LastName +
+                          "','" + customer.Street + "','" + customer.Town + "')";
+
+                command = new SQLiteCommand(sql, dbConnection);
+                command.ExecuteNonQuery();
+            }
+
+
+            dbConnection.Close();
         }
     }
 }
