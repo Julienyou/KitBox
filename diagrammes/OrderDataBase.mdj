@@ -5737,7 +5737,7 @@
 											"height": 13,
 											"autoResize": false,
 											"underline": false,
-											"text": "+GetId(): int",
+											"text": "+GetEmail(): string",
 											"horizontalAlignment": 0,
 											"verticalAlignment": 5,
 											"wordWrap": false
@@ -10015,7 +10015,7 @@
 							"_parent": {
 								"$ref": "AAAAAAFh24ndzjrCuEc="
 							},
-							"name": "GetId",
+							"name": "GetEmail",
 							"visibility": "public",
 							"isStatic": false,
 							"isLeaf": false,
@@ -10029,7 +10029,7 @@
 									"visibility": "public",
 									"isStatic": false,
 									"isLeaf": false,
-									"type": "int",
+									"type": "string",
 									"isReadOnly": false,
 									"isOrdered": false,
 									"isUnique": false,
