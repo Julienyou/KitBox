@@ -11,13 +11,12 @@ namespace KitBoxApp
     {
         private string id = null;
         private int totalPrice = 0;
-        private Customer customer;
+        private Customer customer = null;
         private Employee employee = null;
 
         /*classes not yet created*/
         //private List<Component> components;
         //private State state; 
-
 
         public Order(string id)
         {
@@ -44,14 +43,15 @@ namespace KitBoxApp
             get => employee;
         }
 
+
         public void ComputePrice()
         {
             /*Class component not yet created*/
 
             /*
-            foreach (Components component in components)
+            foreach (Component component in components)
             {
-                totalPrice += components.Price;
+                totalPrice += component.Price;
             }
             */
         }
@@ -61,10 +61,19 @@ namespace KitBoxApp
         {
             customer = new Customer(id, firstName, lastName, street, town);
         }        
-
+            
         public void SetEmployee(int id, string firstName, string lastName)
         {
             employee = new Employee(id, firstName, lastName);
+        }
+
+        public void ExportToDatabase()
+        {
+            SQLiteConnection dbConnection = new SQLiteConnection("Data Source=db.sqlite;Version=3;");
+            dbConnection.Open();
+
+            string sql = "";
+
         }
     }
 }

@@ -8,28 +8,28 @@ namespace KitBoxApp
 {
     class Customer
     {
-        private int id;
+        private string email;
         private string firstName;
         private string lastName;
         private string street;
         private string town;
 
-        public Customer(int id, string firstName, string lastName, string street, string town)
+        public Customer(string email, string firstName, string lastName, string street, string town)
         {
-            this.id = id;
+            this.email = email;
             this.firstName = firstName;
             this.lastName = lastName;
             this.street = street;
             this.town = town;
         }
 
-        public int Id
+        public string Email
         {
-            get => id;
+            get => email;
 
             set
             {
-                id = value;
+                email = value;
             }
         }
 
