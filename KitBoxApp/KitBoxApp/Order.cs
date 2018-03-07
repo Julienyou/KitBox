@@ -16,8 +16,6 @@ namespace KitBoxApp
 
         /*Init variables for communicate with the DataBase*/
         private SQLiteConnection dbConnection;
-        SQLiteCommand command;
-        SQLiteDataReader reader;
 
         /*classes not yet created*/
         //private State state; 
@@ -95,7 +93,7 @@ namespace KitBoxApp
 
         private void CheckOrderId()
         {
-            /*Verification if the customer exists*/
+            /*Verification if the id of order exists*/
             string sql = "select * from `Order` where PK_IDOrder='" + id.ToString() + "'";
 
             SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
