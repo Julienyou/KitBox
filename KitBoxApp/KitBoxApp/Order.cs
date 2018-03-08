@@ -130,13 +130,21 @@ namespace KitBoxApp
         {
             /*Give the last PK_Link of the table OrderComponentLink*/
 
-            string sql = "selec max(PK_Link) from OrderComponentLink";
+            string sql = "select * from OrderComponentLink";
             SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
             SQLiteDataReader reader = command.ExecuteReader();
 
-            if (reader.Read())
+            if (!reader.Read()) //If nothing element is in the table
             {
-                return Convert.ToInt32(reader["PK_link"]) + 1;
+                return 0;
+            }
+            else if (reader.Read()) //If the table have at least one element
+            {
+                sql = "select max(Pk_link) from OrderComponentLink";
+                command = new SQLiteCommand(sql, dbConnection);
+                reader = command.ExecuteReader();
+
+                return Convert.ToInt32(reader) + 1; //Return the max ID + 1
             }
             else
             {
