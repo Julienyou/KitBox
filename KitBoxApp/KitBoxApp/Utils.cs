@@ -13,6 +13,8 @@ namespace KitBoxApp
 
         static public void ExportToDatabase(Order order)
         {
+            /*Creat a new Order in database*/
+
             /*Start connection DataBase*/
             dbConnection.Open();
 
@@ -45,6 +47,8 @@ namespace KitBoxApp
 
         static public Order ImportToDatabase(string id)
         {
+            /*Import Order in database*/
+
             Order order = new Order(id);
 
             /*Start connection DataBase*/
@@ -52,7 +56,8 @@ namespace KitBoxApp
 
 
             /*Recuperation to customer and TotalPrice data*/
-            string sql = "SELECT * FROM `Order`" +
+            string sql = "SELECT * " +
+                         "FROM `Order`" +
                          "INNER JOIN Customer ON `Order`.`FK_Customer`=`Customer`.`PK_Email`" +
                          "WHERE `Order`.`PK_IDOrder`='" + order.Id + "'";
 
@@ -90,6 +95,22 @@ namespace KitBoxApp
 
             return order;
         }
+
+        static public void ChangeState(string id, string state)
+        {
+            /*Change the Order State in database*/
+
+            /*Start connection DataBase*/
+            dbConnection.Open();
+
+            string sql = "UPDATE `Order` " +
+                         "SET State='" + state + "'" +
+                         "WHERE `Order`.`PK_IDOrder`='" + id + "'";
+
+            SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
+            
+            command.ExecuteNonQuery();
+        } 
 
 
         /*Private function*/
