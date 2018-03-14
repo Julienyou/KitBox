@@ -8,9 +8,14 @@ namespace KitBoxApp
 {
     class Pane
     {
-        private string color;
-        private int price;
-        private string type;
+
+        //---Atributes
+
+        public string color { get; private set; }
+        public int price { get; private set; }
+        public string type { get; private set; }
+
+        //---Constructors
 
         public Pane(string color, int price, string type)
         {
@@ -19,13 +24,6 @@ namespace KitBoxApp
             this.type = type;
         }
 
-        public int GetPrice(int height)
-        {
-            return this.price; // How to integrate the height with our class diagram ?
-        }
-        public string Type
-        {
-            get => type;
-        }
+        //---
     }
 }
