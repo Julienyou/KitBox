@@ -13,16 +13,22 @@ namespace KitBoxApp
 
         private string reference;
         private string code;
-        private string color; 
-        private int[] dimension = new int[3](); //Could this be unsafe? One could set a int[4] for example... 
+        private string color;
+        private int[] dimension; //should only accept int[3]
         private int price;
         private int quantity;
         private bool instore;
-        
+
 
         //---Constructors
 
-        public Component(string reference, string color, string code, int price, int quantity)
+        public Component()
+        {
+
+        }
+
+
+        public Component(string reference, string code, int[] dimension, string color,  int price, int quantity)
         {
             this.reference = reference;
             this.code = code;

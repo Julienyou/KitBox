@@ -6,24 +6,60 @@ using System.Threading.Tasks;
 
 namespace KitBoxApp
 {
-    class Pane
+    class Pane : Component
     {
 
         //---Atributes
 
-        public string color { get; private set; }
-        public int price { get; private set; }
-        public string type { get; private set; }
+        private string type;
+
 
         //---Constructors
 
-        public Pane(string color, int price, string type)
+        public Pane(string color, int price, string type) : base()
         {
-            this.color = color;
-            this.price = price;
+            Reference = "Panneau " + type;
+            Color = color;
+            Price = price;
             this.type = type;
+            
         }
 
-        //---
+        
+        //---Getters and Setters
+
+        public string Type { get => type; set => type = value; }
+
+        
+        //---Methods
+
+        public List<Component> GetComponents(int[] boxdimension)
+        {
+            List<Component> panes = new List<Component>();
+
+            Component backpanes = new Component();
+            backpanes.Reference = "Panneau Ar";
+            backpanes.Dimension = new int[] { boxdimension[0], 0, boxdimension[2]};
+            backpanes.Color = Color;
+            backpanes.Quantity = 1;
+            panes.Add(backpanes);
+
+            Component sidepanes = new Component();
+            sidepanes.Reference = "Panneau GD";
+            sidepanes.Dimension = new int[] { boxdimension[0], boxdimension[1], 0 };
+            sidepanes.Color = Color;
+            sidepanes.Quantity = 2;
+            panes.Add(sidepanes);
+
+            Component horizontalpanes = new Component();
+            horizontalpanes.Reference = "Panneau HB";
+            horizontalpanes.Dimension = new int[] { 0, boxdimension[1], boxdimension[2] };
+            horizontalpanes.Color = Color;
+            horizontalpanes.Quantity = 2;
+            panes.Add(horizontalpanes);
+
+            return panes;
+        }
+
     }
 }

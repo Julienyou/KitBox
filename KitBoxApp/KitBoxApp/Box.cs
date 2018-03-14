@@ -6,76 +6,91 @@ using System.Threading.Tasks;
 
 namespace KitBoxApp
 {
-    class Box
+    class Box 
     {
 
         //---Atributes
         
-        private int height;
-        private List<IAccessory> accessories;
+        private int height, depth, width;
+        private string color;
+        private List<IAccessory> accessories = new List<IAccessory>();
         private int price;
         private List<Pane> panes;
+        private List<Framework> frameworks;
         private Cupboard cupboard;
 
 
         //---Constructors
 
-        public Box(int height, List<IAccessory> accessories, int price, List<Pane> panes, Cupboard cupboard)
+        public Box(int height, int depth, int width, string color, Cupboard cupboard)
         {
             this.height = height;
-            
-            this.accessories = accessories;
-            this.price = price;
-            this.panes = panes;
+            this.depth = depth;
+            this.width = width;
+            this.color = color;
             this.cupboard = cupboard;
+            foreach Pane pane in this.GetPanes()
+            
         }
+
 
         //---Getters-Setters
 
-        public int Price
-        {
-            get => price;
-        }
+        public int Height { get => height; set => height = value; }
+        public int Depth { get => depth; set => depth = value; }
+        public int Width { get => width; set => width = value; }
+        public int Price { get => price; set => price = value; }
 
-        public void AddComponent(IAccessory c)
+        public List<IAccessory> Accessories { get => accessories; set => accessories = value; }
+
+        public void AddAccessory(IAccessory c)
         {
             accessories.Add(c);
         }
 
-        public void RemoveComponent(IAccessory c)
+        public void RemoveAccessory(IAccessory c)
         {
             accessories.Remove(c);
         }
         
-        public List<IAccessory> Accessories
+        
+        public List<Pane> Panes { get => panes; set => panes = value; }
+
+        public void AddPane(Pane pane)
         {
-            get => accessories;
+            this.panes.Add(pane);
         }
 
-        public int GetWidth()
+        public void RemovePane(Pane pane)
         {
-            return cupboard.Width;
+            this.panes.Remove(pane);
         }
 
-        public int Height
+
+        public List<Framework> Frameworks { get => frameworks; set => frameworks = value; }
+
+        public void AddFramework(Framework framework)
         {
-            get { return height; }
+            this.frameworks.Add(framework);
         }
 
-        public List<Pane> Panes
+        public void RemoveFramework(Framework framework)
         {
-            get => panes;
+            this.frameworks.Remove(framework);
         }
 
+
+        public Cupboard Cupboard { get => cupboard; set => cupboard = value; }
+
+        
         //---Methods
 
-        public List<Component> GetComponents(int height, int depth)
+        private List<Component> FindPanes()
         {
-            
-            List<Component> components;
-            Component sidepane = new Component("PAG" + dimmensions[0] + dimmensions [2] + this.panes[0]);
-            components.Add(new Component());
-
+            List<Component> panes = new List<Component>();
+            Component 
         }
+
+        
     }
 }

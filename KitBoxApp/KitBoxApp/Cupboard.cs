@@ -87,7 +87,19 @@ namespace KitBoxApp
 
         public List<Component> GetComponents()
         {
-            List<Component> components;
+            List<Component> components = new List<Component>();
+            Component steelcorner = this.steelcorner.ToComponent(this.GetHeight());
+            steelcorner.Quantity = 4;
+            foreach(Box box in this.boxes)
+            {
+                box.GetComponents()
+            }
+
+            
+
+
+
+            components.Add(new Component());
 
         }
     }
