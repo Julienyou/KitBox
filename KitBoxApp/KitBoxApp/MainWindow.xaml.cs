@@ -25,28 +25,39 @@ namespace KitBoxApp
         public MainWindow()
         {
             InitializeComponent();
-            widthComboBox.ItemsSource = constrains.Width;
-            depthComboBox.ItemsSource = constrains.Depth;
-            stackPanel.DataContext = cupboard;
-            //boxChoiseCombo.ItemsSource = new List<int> { 1, 2, 3, 4, 5, 6, 7 };
+            CupboardConstraint cupboardConstraint = new CupboardConstraint(new List<int> { 1,2,3}, new List<int> { 4, 5, 6 },150);
+            widthComboBox.ItemsSource = cupboardConstraint.Widths;
+            depthComboBox.ItemsSource = cupboardConstraint.Depths;
+            cupboardConfig.DataContext = cupboard;
+            cupboard.AddBox(new Box());
+            boxesConfig.DataContext = cupboard.Boxes;
+
             paneColorCombo.ItemsSource = new List<string> { "rouge franboise", "rose fluo", "paquerette" };
             doorStyleCombo.ItemsSource = new List<string> { "Verre", "Vert", "Ver", "Vair" };
             boxHeighCombo.ItemsSource = new List<int> { 50, 60, 70 };
             steelCornerCombo.ItemsSource = new List<string> { "Beige des bois", "Rouge nuit", "Noir jour" };
-            //boxesTab.DataContext = boxes;
-            boxesTab.DataContext = boxesShape;
-            drawBox.DataContext = boxesShape;
-            //boxesShape[1].
-            
-            
-
-
+             
         }
 
         private void addButton_Click(object sender, RoutedEventArgs e)
         {
-            boxes.Add(new Box());
-            BoxShape bx = new BoxShape();
+            cupboard.AddBox(new Box());
+        }
+        private void TabItem_GotFocus(object sender, RoutedEventArgs e)
+        {
+            cupboardHeight.Text = cupboard.GetHeight().ToString();
+            MessageBox.Show(cupboard.GetHeight().ToString());
+        }
+
+        private void TabItem_Loaded(object sender, RoutedEventArgs e)
+        {
+            cupboardHeight.Text = cupboard.GetHeight().ToString();
+            MessageBox.Show(cupboard.GetHeight().ToString());
+        }
+
+        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            cupboardHeight.Text = cupboard.GetHeight().ToString();
         }
     }
 }

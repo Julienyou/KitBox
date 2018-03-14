@@ -23,12 +23,12 @@
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <TabControl HorizontalAlignment="Left" Margin="1,1,0,1" Grid.Row="0" Grid.Column="0" Width="169">
-            <TabItem Header="Cupboard" RenderTransformOrigin="0.5,0.5">
+        <TabControl HorizontalAlignment="Left" Margin="1,1,0,1" Grid.Row="0" Grid.Column="0" Width="169" SelectionChanged="TabControl_SelectionChanged">
+            <TabItem Header="Cupboard" RenderTransformOrigin="0.5,0.5" >
                 <ScrollViewer>
-                    <StackPanel x:Name="stackPanel">
+                    <StackPanel x:Name="cupboardConfig">
                         <TextBlock Style="{StaticResource labelStyle}">Height</TextBlock>
-                        <TextBlock Background="#FFE4E4E4">250</TextBlock>
+                        <TextBlock x:Name="cupboardHeight" Background="#FFE4E4E4"/>
                         <TextBlock Style="{StaticResource labelStyle}">Width</TextBlock>
                         <ComboBox x:Name="widthComboBox" SelectedItem="{Binding Path=Width}"/>
                         <TextBlock Style="{StaticResource labelStyle}">Depth</TextBlock>
@@ -38,7 +38,7 @@
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>
-            <TabItem x:Name="boxesTab" Header="Boxes">
+            <TabItem Header="Boxes">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition/>
@@ -46,14 +46,16 @@
                     </Grid.RowDefinitions>
 
                     <ScrollViewer Grid.Row="0" DockPanel.Dock="Top">
-                        <StackPanel>
-                            <ComboBox SelectedIndex="0" HorizontalContentAlignment="Center" ItemsSource="{Binding Path=Height}" x:Name="boxChoiseCombo"/>
+                        <StackPanel x:Name="boxesConfig">
+                            <ComboBox SelectedIndex="0" HorizontalContentAlignment="Center" ItemsSource="{Binding}" DisplayMemberPath="Position" IsSynchronizedWithCurrentItem="True"  x:Name="boxChoiseCombo"/>
                             <TextBlock Style="{StaticResource labelStyle}">Pane color</TextBlock>
                             <ComboBox x:Name="paneColorCombo" SelectedItem="{Binding Path=PaneColor}"/>
+                            <TextBlock Style="{StaticResource labelStyle}">Top and bottom color</TextBlock>
+                            <ComboBox x:Name="hPaneColorCombo" SelectedItem="{Binding Path=HPaneColor}"/>
                             <TextBlock Style="{StaticResource labelStyle}">Door style</TextBlock>
-                            <ComboBox x:Name="doorStyleCombo" SelectedItem="{Binding Path=DoorStyle}"/>
+                            <ComboBox x:Name="doorStyleCombo" SelectedItem="{Binding Path=Accessories[0].Color}"/>
                             <TextBlock Style="{StaticResource labelStyle}">Height</TextBlock>
-                            <ComboBox x:Name="boxHeighCombo" SelectedItem="{Binding Path=Height}"/>
+                            <ComboBox x:Name="boxHeighCombo"  SelectedItem="{Binding Path=Height}"/>
                         </StackPanel>
                 </ScrollViewer>
                     <Button x:Name="addButton" Grid.Row="1" Content="Add box" Height="20" Width="75" Click="addButton_Click"/>
