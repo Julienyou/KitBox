@@ -69,20 +69,18 @@ namespace KitBoxApp
             }
 
 
-            /*Recuperation of components data*/
-            sql = "SELECT * FROM `OrderComponentLink`" +
-                  "INNER JOIN Component ON `OrderComponentLink`.`FK_Component`=`Component`.`Code`" +
-                  "INNER JOIN Color ON `Component`.`FK_Color`=`Color`.`PK_IDColor`" +
-                  "INNER JOIN Reference ON `Component`.`FK_Reference`=`Reference`.`PK_IDRef`" +
-                  "WHERE OrderComponentLink.FK_Order='" + id + "'";
+            /*Recuperation of components data in ImportData view*/
+            sql = "SELECT * " +
+                  "FROM `ImportData` " +
+                  "WHERE `ImportData`.`FK_Order`='" + id + "'";
 
             command = new SQLiteCommand(sql, dbConnection);
 
             reader = command.ExecuteReader();
             while (reader.Read())
             {
-                order.AddComponent(new Component(reader["FK_Reference"].ToString(), reader["Name"].ToString(),
-                                                 reader["code"].ToString(), Convert.ToInt32(reader["Price"]),
+                order.AddComponent(new Component(reader["ref_name"].ToString(), reader["color"].ToString(),
+                                                 reader["code"].ToString(), Convert.ToInt32(reader["price"]),
                                                  4, true));
             }
 
