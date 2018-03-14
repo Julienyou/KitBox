@@ -20,10 +20,8 @@ namespace KitBoxApp
     /// </summary>
     public partial class MainWindow : Window
     {
-        private Constrain constrains = new Constrain();
         private Cupboard cupboard = new Cupboard();
-        private Boxes boxes = new Boxes();
-        private BoxesShape boxesShape = new BoxesShape();
+
         public MainWindow()
         {
             InitializeComponent();

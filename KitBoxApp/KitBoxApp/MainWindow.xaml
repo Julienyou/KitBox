@@ -63,7 +63,7 @@
         
         <Button Content="Cancel" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"/>
         <StackPanel  x:Name="drawBox" Grid.Column="1" Grid.Row="0">
-           
+            
             <TextBlock Text="{Binding Path=Height}"/>
         </StackPanel>
         
