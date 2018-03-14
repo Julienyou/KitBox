@@ -54,6 +54,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Box.cs" />
+    <Compile Include="BoxConstraint.cs" />
+    <Compile Include="CupboardConstraint.cs" />
+    <Compile Include="DoorConstraint.cs" />
+    <Compile Include="IAccessory.cs" />
+    <Compile Include="Door.cs" />
+    <Compile Include="IConstraintChecker.cs" />
+    <Compile Include="Pane.cs" />
+    <Compile Include="SteelCorner.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

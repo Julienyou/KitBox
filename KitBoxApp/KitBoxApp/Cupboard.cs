@@ -7,23 +7,56 @@ using System.Threading.Tasks;
 
 namespace KitBoxApp
 {
-    class Cupboard : INotifyPropertyChanged
+    class Cupboard
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-        private int height;
+        private List<Box> boxes;
+        private SteelCorner steelcorner;
         private int width;
         private int depth;
 
-        public Cupboard() { }
-
-        public int Height
+        public Cupboard(List<Box> boxes, SteelCorner steelCorner, int width, int depth)
         {
-            get => height;
-            set
+            this.boxes = boxes;
+            this.steelcorner = steelCorner;
+            this.width = width;
+            this.depth = depth;
+        }
+
+        public int GetPrice()
+        {
+            return 1;  //Implement the method !
+        }
+
+        public Dictionary<string, int> GetCrossPiece()
+        {
+            return new Dictionary<string, int>();  //Implement the method !
+        }
+
+        public Dictionary<string, int> GetPane()
+        {
+            return new Dictionary<string, int>();  //Implement the method !
+        }
+
+        public Dictionary<string, int> GetMount()
+        {
+            return new Dictionary<string, int>();  //Implement the method !
+        }
+
+        public SteelCorner ChooseSteelCorner()
+        {
+            return new SteelCorner("red", 1, 1, true);  //Implement the method !
+        }
+
+
+        public int GetHeight()
+        {
+            int totalheight = 0;
+
+            foreach (Box box in boxes)
             {
-                height = value;
-                Notify("Height");
+                totalheight += box.Height;
             }
+            return totalheight;
         }
 
         public int Width
@@ -32,7 +65,6 @@ namespace KitBoxApp
             set
             {
                 width = value;
-                Notify("Width");
             }
         }
         public int Depth
@@ -41,13 +73,7 @@ namespace KitBoxApp
             set
             {
                 depth = value;
-                Notify("Depth");
             }
         }
-
-        void Notify(string propName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
-        }
     }
 }
