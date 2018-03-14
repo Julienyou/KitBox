@@ -75,5 +75,15 @@ namespace KitBoxApp
                 depth = value;
             }
         }
+
+        public void AddBox(Box b)
+        {
+            boxes.Add(b);
+        }
+
+        public void RemoveBox(Box b)
+        {
+            boxes.Remove(b);
+        }
     }
 }
