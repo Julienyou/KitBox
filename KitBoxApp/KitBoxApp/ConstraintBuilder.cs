@@ -11,6 +11,7 @@ namespace KitBoxApp
     {
         static private SQLiteConnection dbConnection = new SQLiteConnection("Data Source=db.sqlite;Version=3;");
         static List<int> heights = new List<int>();
+        static List<int> widths = new List<int>();
 
         static public List<Cupboard> ImportFromDatabase(string id)
         {
@@ -20,16 +21,15 @@ namespace KitBoxApp
 
 
             /*Recuperation to customer and TotalPrice data*/
-            string sql = "SELECT Height FROM `Component`";
+            string sql = "SELECT Height FROM `Component` WHERE FK_Reference = 1'" +
+                          ";
 
             SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
 
             SQLiteDataReader reader = command.ExecuteReader();
             while (reader.Read())
             {
-                heights.Add(reader["Height"].ToString());
-
-                order.TotalPrice = Convert.ToInt32(reader["TotalPrice"]);
+                heights.Add(Convert.ToInt32(reader["Height"]));
             }
 
 
