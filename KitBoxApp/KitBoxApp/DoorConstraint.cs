@@ -23,27 +23,27 @@ namespace KitBoxApp
         {
             foreach (IAccessory element in b.Accessories)
             {
-                if (typeof(element) == typeof(Door))
+                if (element.GetType() == typeof(Door))
                 {
                     Door d = (Door) element;
+
+                    Tuple<int, int> constrain = new Tuple<int, int>(b.Height - 4, (b.GetWidth() - 4) / 2);
+
+                    if (colors.Contains(d.Color) && doorDimensions.Contains(constrain))
+                    {
+                        if (d.Color == "Verre" && d.Knop == true)
+                        {
+                            return false;
+                        }
+                        else if (d.Color != "Verre" && d.Knop == false)
+                        {
+                            return false;
+                        }
+                        return true;
+                    }
+
                     break;
                 }
-            }
-            
-            
-            Tuple<int, int> constrain = new Tuple<int, int>(b.Height - 4, (b.GetWidth() - 4) / 2);
-
-            if (colors.Contains(d.Color) && doorDimensions.Contains(constrain))
-            {
-                if (d.Color == "Verre" && d.Knop == true)
-                {
-                    return false;
-                }
-                else if (d.Color != "Verre" && d.Knop == false)
-                {
-                    return false;
-                }
-                return true;
             }
             
             return false;

@@ -19,32 +19,7 @@ namespace KitBoxApp
             this.maxHeight = maxHeight;
         }
 
-        public void AddDepht(int d)
-        {
-            dephts.Add(d);
-        }
-
-        public void RemoveDepht(int d)
-        {
-            dephts.Remove(d);
-        }
-
-        public void AddWidth(int w)
-        {
-            widths.Add(w);
-        }
-
-        public void RemoveWidth(int w)
-        {
-            widths.Remove(w);
-        }
-
-        public int MaxHeight
-        {
-            set { maxHeight = value; }
-        }
-
-        public bool Check(Cupboard cb)  //How to check this part and resolve the problem of generic type ?
+        public bool Check(Cupboard cb)
         {
             if (dephts.Contains(cb.Depth) && widths.Contains(cb.Width) && maxHeight > cb.GetHeight())
             {
