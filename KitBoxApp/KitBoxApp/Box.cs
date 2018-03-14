@@ -10,12 +10,13 @@ namespace KitBoxApp
     {
 
         //---Atributes
-
+        
         private int height;
         private List<IAccessory> accessories;
         private int price;
         private List<Pane> panes;
         private Cupboard cupboard;
+
 
         //---Constructors
 
@@ -68,12 +69,8 @@ namespace KitBoxApp
 
         //---Methods
 
-        public List<Component> GetComponents()
+        public List<Component> GetComponents(int height, int depth)
         {
-            string[] dimmensions = new string[] {
-                Height.ToString(),                      //Height
-                this.cupboard.Width().ToString(),       //Width
-                this.cupboard.Depth().ToString() };     //Depth
             
             List<Component> components;
             Component sidepane = new Component("PAG" + dimmensions[0] + dimmensions [2] + this.panes[0]);

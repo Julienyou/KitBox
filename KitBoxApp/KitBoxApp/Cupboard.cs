@@ -9,10 +9,15 @@ namespace KitBoxApp
 {
     class Cupboard
     {
+
+        //---Attributes
+
         private List<Box> boxes;
         private SteelCorner steelcorner;
         private int width;
         private int depth;
+
+        //---Constructors
 
         public Cupboard(List<Box> boxes, SteelCorner steelCorner, int width, int depth)
         {
@@ -21,6 +26,8 @@ namespace KitBoxApp
             this.width = width;
             this.depth = depth;
         }
+
+        //---Getters and Setters
 
         public int GetPrice()
         {
@@ -74,6 +81,14 @@ namespace KitBoxApp
             {
                 depth = value;
             }
+        }
+
+        //---Methods
+
+        public List<Component> GetComponents()
+        {
+            List<Component> components;
+
         }
     }
 }
