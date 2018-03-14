@@ -9,11 +9,11 @@ using System.Windows.Shapes;
 
 namespace KitBoxApp
 {
-    class BoxShape : Shape
+    public class BoxShape : Shape
     {
         public bool Door { get; set; }
         
-
+        
         protected override Geometry DefiningGeometry
         {
             get { return GenerateMyWeirdGeometry(); }
@@ -26,7 +26,7 @@ namespace KitBoxApp
             int mountWidth = 5;
             int knopSize = 5;
             int knopDelta = 10;
-
+            
             GeometryGroup geom = new GeometryGroup();
 
 

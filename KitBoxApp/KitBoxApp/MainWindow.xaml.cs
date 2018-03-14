@@ -22,21 +22,33 @@ namespace KitBoxApp
     {
         private Constrain constrains = new Constrain();
         private Cupboard cupboard = new Cupboard();
+        private Boxes boxes = new Boxes();
+        private BoxesShape boxesShape = new BoxesShape();
         public MainWindow()
         {
             InitializeComponent();
             widthComboBox.ItemsSource = constrains.Width;
             depthComboBox.ItemsSource = constrains.Depth;
             stackPanel.DataContext = cupboard;
-            boxChoiseCombo.ItemsSource = new List<int> { 1, 2, 3, 4, 5, 6, 7 };
+            //boxChoiseCombo.ItemsSource = new List<int> { 1, 2, 3, 4, 5, 6, 7 };
             paneColorCombo.ItemsSource = new List<string> { "rouge franboise", "rose fluo", "paquerette" };
             doorStyleCombo.ItemsSource = new List<string> { "Verre", "Vert", "Ver", "Vair" };
             boxHeighCombo.ItemsSource = new List<int> { 50, 60, 70 };
             steelCornerCombo.ItemsSource = new List<string> { "Beige des bois", "Rouge nuit", "Noir jour" };
-
+            //boxesTab.DataContext = boxes;
+            boxesTab.DataContext = boxesShape;
+            drawBox.DataContext = boxesShape;
+            //boxesShape[1].
+            
             
 
 
+        }
+
+        private void addButton_Click(object sender, RoutedEventArgs e)
+        {
+            boxes.Add(new Box());
+            BoxShape bx = new BoxShape();
         }
     }
 }

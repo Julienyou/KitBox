@@ -38,7 +38,7 @@
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>
-            <TabItem Header="Boxes">
+            <TabItem x:Name="boxesTab" Header="Boxes">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition/>
@@ -47,24 +47,25 @@
 
                     <ScrollViewer Grid.Row="0" DockPanel.Dock="Top">
                         <StackPanel>
-                            <ComboBox SelectedIndex="0" HorizontalContentAlignment="Center" x:Name="boxChoiseCombo">
-                            </ComboBox>
+                            <ComboBox SelectedIndex="0" HorizontalContentAlignment="Center" ItemsSource="{Binding Path=Height}" x:Name="boxChoiseCombo"/>
                             <TextBlock Style="{StaticResource labelStyle}">Pane color</TextBlock>
-                            <ComboBox x:Name="paneColorCombo"/>
+                            <ComboBox x:Name="paneColorCombo" SelectedItem="{Binding Path=PaneColor}"/>
                             <TextBlock Style="{StaticResource labelStyle}">Door style</TextBlock>
-                            <ComboBox x:Name="doorStyleCombo"/>
+                            <ComboBox x:Name="doorStyleCombo" SelectedItem="{Binding Path=DoorStyle}"/>
                             <TextBlock Style="{StaticResource labelStyle}">Height</TextBlock>
-                            <ComboBox x:Name="boxHeighCombo"/>
+                            <ComboBox x:Name="boxHeighCombo" SelectedItem="{Binding Path=Height}"/>
                         </StackPanel>
                 </ScrollViewer>
-                    <Button Grid.Row="1" Content="Add box" Height="20" Width="75"/>
+                    <Button x:Name="addButton" Grid.Row="1" Content="Add box" Height="20" Width="75" Click="addButton_Click"/>
                 </Grid>
             </TabItem>
         </TabControl>
         
         <Button Content="Cancel" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"/>
-        <Canvas  x:Name="drawBox" Grid.Column="1" Grid.Row="0">
-            <local:BoxShape Door="True"  Height="50" Width="200" Stroke="Black" StrokeThickness="1" Canvas.Left="20" Canvas.Top="20"/>
-        </Canvas>
+        <StackPanel  x:Name="drawBox" Grid.Column="1" Grid.Row="0">
+           
+            <TextBlock Text="{Binding Path=Height}"/>
+        </StackPanel>
+        
     </Grid>
 </Window>
