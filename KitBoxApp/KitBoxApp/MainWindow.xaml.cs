@@ -21,32 +21,46 @@ namespace KitBoxApp
     public partial class MainWindow : Window
     {
         private Cupboard cupboard = new Cupboard();
+        
 
         public MainWindow()
         {
+            
             InitializeComponent();
-            CupboardConstraint cupboardConstraint = new CupboardConstraint(new List<int> { 1,2,3}, new List<int> { 4, 5, 6 },150);
+            CupboardConstraint cupboardConstraint = new CupboardConstraint(new List<int> { 1,2,3}, new List<int> { 100, 5, 6 },150);
             widthComboBox.ItemsSource = cupboardConstraint.Widths;
             depthComboBox.ItemsSource = cupboardConstraint.Depths;
             cupboardConfig.DataContext = cupboard;
-            cupboard.AddBox(new Box());
+            Box box = new Box(cupboard);
+            cupboard.AddBox(box);
+            drawBox.Children.Add(new BoxShape(box));
             boxesConfig.DataContext = cupboard.Boxes;
 
             paneColorCombo.ItemsSource = new List<string> { "rouge franboise", "rose fluo", "paquerette" };
             doorStyleCombo.ItemsSource = new List<string> { "Verre", "Vert", "Ver", "Vair" };
             boxHeighCombo.ItemsSource = new List<int> { 50, 60, 70 };
             steelCornerCombo.ItemsSource = new List<string> { "Beige des bois", "Rouge nuit", "Noir jour" };
-             
+
+            drawBox.DataContext = cupboard.Boxes;
+
         }
 
         private void addButton_Click(object sender, RoutedEventArgs e)
         {
-            cupboard.AddBox(new Box());
+            Box box = new Box(cupboard);
+            cupboard.AddBox(box);
+            Canvas can = new Canvas();
+            can.Background = Brushes.Bisque;
+            BoxShape bs = new BoxShape(box);
+            can.Children.Add(new BoxShape(box));
+            drawBox.Children.Add(new BoxShape(box));
+
         }
         private void TabItem_GotFocus(object sender, RoutedEventArgs e)
         {
             cupboardHeight.Text = cupboard.GetHeight().ToString();
             MessageBox.Show(cupboard.GetHeight().ToString());
+      
         }
 
         private void TabItem_Loaded(object sender, RoutedEventArgs e)
@@ -58,6 +72,11 @@ namespace KitBoxApp
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             cupboardHeight.Text = cupboard.GetHeight().ToString();
+        }
+
+        private void test_Click(object sender, RoutedEventArgs e)
+        {
+            ((Shape)drawBox.Children[1]).InvalidateVisual();
         }
     }
 }

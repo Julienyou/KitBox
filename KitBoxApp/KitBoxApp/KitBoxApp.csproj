@@ -56,6 +56,7 @@
     </ApplicationDefinition>
     <Compile Include="Box.cs" />
     <Compile Include="BoxConstraint.cs" />
+    <Compile Include="Cupboard.cs" />
     <Compile Include="CupboardConstraint.cs" />
     <Compile Include="DoorConstraint.cs" />
     <Compile Include="IAccessory.cs" />

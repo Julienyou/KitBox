@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace KitBoxApp
 {
-    class Door : IAccessory
+    public class Door : IAccessory
     {
         private string color;
         private bool knop;
@@ -27,6 +27,7 @@ namespace KitBoxApp
         public string Color
         {
             get => color;
+            set { color = value; } 
         }
 
         public bool Knop

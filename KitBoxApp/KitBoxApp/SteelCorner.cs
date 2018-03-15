@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace KitBoxApp
 {
-    class SteelCorner
+    public class SteelCorner
     {
         private string color;
         private int height;

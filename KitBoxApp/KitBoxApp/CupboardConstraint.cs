@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace KitBoxApp
 {
-    class CupboardConstraint : IConstraintChecker<Cupboard>
+    public class CupboardConstraint : IConstraintChecker<Cupboard>
     {
         private List<int> dephts;
         private List<int> widths;
@@ -28,5 +28,11 @@ namespace KitBoxApp
             else
                 return false;
         }
+
+        public List<int> Widths
+        { get => widths; }
+
+        public List<int> Depths
+        { get => dephts; }
     }
 }

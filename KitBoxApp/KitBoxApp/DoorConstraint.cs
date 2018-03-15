@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace KitBoxApp
 {
-    class DoorConstraint : IConstraintChecker<Box>
+    public class DoorConstraint : IConstraintChecker<Box>
     {
         private bool knop;
         private List<string> colors;
@@ -27,7 +27,7 @@ namespace KitBoxApp
                 {
                     Door d = (Door) element;
 
-                    Tuple<int, int> constrain = new Tuple<int, int>(b.Height - 4, (b.GetWidth() - 4) / 2);
+                    Tuple<int, int> constrain = new Tuple<int, int>(b.Height - 4, (b.Cupboard.Width- 4) / 2);
 
                     if (colors.Contains(d.Color) && doorDimensions.Contains(constrain))
                     {

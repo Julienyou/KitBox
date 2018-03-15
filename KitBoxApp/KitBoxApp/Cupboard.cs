@@ -1,26 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KitBoxApp
+namespace KitBoxApp 
 {
-    class Cupboard
+    public class Cupboard : INotifyPropertyChanged
     {
-        private List<Box> boxes;
-        private SteelCorner steelcorner;
-        private int width;
+        private ObservableCollection<Box> boxes = new ObservableCollection<Box> { };
+        private SteelCorner steelCorner;
+        private int width = 100;
         private int depth;
 
-        public Cupboard(List<Box> boxes, SteelCorner steelCorner, int width, int depth)
+        public Cupboard(ObservableCollection<Box> boxes, SteelCorner steelCorner, int width, int depth)
         {
             this.boxes = boxes;
-            this.steelcorner = steelCorner;
+            this.steelCorner = steelCorner;
             this.width = width;
             this.depth = depth;
         }
+
+        public Cupboard() { }
 
         public int GetPrice()
         {
@@ -59,6 +62,11 @@ namespace KitBoxApp
             return totalheight;
         }
 
+        public void AddBox(Box box)
+        {
+            boxes.Add(box);
+        }
+
         public int Width
         {
             get => width;
@@ -74,6 +82,18 @@ namespace KitBoxApp
             {
                 depth = value;
             }
+        }
+
+        public ObservableCollection<Box> Boxes
+        {
+            get => boxes;
+        }
+
+        // INotifyPropertyChanged Member
+        public event PropertyChangedEventHandler PropertyChanged;
+        void Notify(string propName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
     }
 }

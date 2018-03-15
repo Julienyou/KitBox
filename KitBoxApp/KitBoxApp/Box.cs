@@ -1,32 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace KitBoxApp
 {
-    class Box
+    public class Box : INotifyPropertyChanged
     {
-        private int height;
-        private List<IAccessory> accessories;
-        private int price;
-        private List<Pane> panes;
+        private int height = 50;
+        private List<IAccessory> accessories = new List<IAccessory> { new Door("Verre", true, 0) };
+        private static int N = 0;
         private Cupboard cupboard;
+        private int pos;
 
-        public Box(int height, List<IAccessory> accessories, int price, List<Pane> panes, Cupboard cupboard)
+        public Box(int height, List<IAccessory> accessories, Cupboard cupboard)
         {
             this.height = height;
             this.accessories = accessories;
-            this.price = price;
-            this.panes = panes;
             this.cupboard = cupboard;
+            N++;
+            pos = N;
+
         }
 
-        public int Price
+        public Box(Cupboard cupboard)
         {
-            get => price;
+            this.cupboard = cupboard;
+            N++;
+            pos = N;
         }
+
 
         public void AddComponent(IAccessory c)
         {
@@ -43,19 +48,28 @@ namespace KitBoxApp
             get => accessories;
         }
 
-        public int GetWidth()
+        public Cupboard Cupboard
         {
-            return cupboard.Width;
+            get => cupboard;
         }
 
         public int Height
         {
-            get { return height; }
+            get => height;
+            set { height = value;  Notify("Height"); }
+            
         }
 
-        public List<Pane> Panes
+        public int Position
         {
-            get => panes;
+            get => pos;
+        }
+
+        // INotifyPropertyChanged Member
+        public event PropertyChangedEventHandler PropertyChanged;
+        void Notify(string propName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
     }
 }

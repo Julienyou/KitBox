@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace KitBoxApp
 {
-    class Pane
+    public class Pane
     {
         private string color;
         private int price;
