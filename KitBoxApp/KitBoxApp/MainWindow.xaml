@@ -56,22 +56,39 @@
                             <ComboBox x:Name="doorStyleCombo" SelectedItem="{Binding Path=Accessories[0].Color}" IsSynchronizedWithCurrentItem="True"/>
                             <TextBlock Style="{StaticResource labelStyle}">Height</TextBlock>
                             <ComboBox x:Name="boxHeighCombo"  SelectedItem="{Binding Path=Height}"/>
-                            
+
                         </StackPanel>
-                </ScrollViewer>
+                    </ScrollViewer>
                     <Button x:Name="addButton" Grid.Row="1" Content="Add box" Height="20" Width="75" Click="addButton_Click"/>
                 </Grid>
             </TabItem>
         </TabControl>
-        
+
         <Button Content="Cancel" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"/>
 
-        <ListView  x:Name="drawBox" Grid.Column="1" Grid.Row="0" ItemsSource="{Binding Path=Boxes}"  IsSynchronizedWithCurrentItem="True" HorizontalAlignment="Center" BorderThickness="0" Padding="0,0,0,0">
-
+        <ListView  
+            x:Name="drawBox" 
+            Grid.Column="1" 
+            Grid.Row="0" 
+            ItemsSource="{Binding Path=Boxes}"  
+            IsSynchronizedWithCurrentItem="True" 
+            HorizontalAlignment="Center" 
+            BorderThickness="0" 
+            Padding="0,10" 
+            VerticalAlignment="Bottom" 
+            RenderTransformOrigin="0.5,0.5">
+            <ListView.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleY="-1" ScaleX="1"/>
+                    <SkewTransform AngleY="0" AngleX="0"/>
+                    <RotateTransform Angle="0"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </ListView.RenderTransform>
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="Padding" Value="0,0"/>
-                    <Setter Property="Margin" Value="0,0,0,-1.5"/>
+                    <Setter Property="Margin" Value="0,0,0,0"/>
                     <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
                     <Setter Property="Template">
                         <Setter.Value>
@@ -79,7 +96,6 @@
                                 <Border Name="RootElement">
                                     <VisualStateManager.VisualStateGroups>
                                         <VisualStateGroup x:Name="CommonStates">
-
                                             <VisualState x:Name="Selected">
                                                 <Storyboard>
                                                     <ColorAnimation Storyboard.TargetName="BorderBrush" Storyboard.TargetProperty="Color" Duration="0:0:0.5" To="BlanchedAlmond"/>
@@ -101,18 +117,13 @@
                         </Setter.Value>
                     </Setter>
                 </Style>
-
             </ListView.ItemContainerStyle>
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <local:BoxShape Height="{Binding Path=Height}" Width="{Binding Path=Cupboard.Width}" Stroke="Black" StrokeThickness="2" Margin="0,0,0,0">
-                        <local:BoxShape.Door>
-                            <Binding ElementName="doorStyleCombo" Path="SelectedItem" />
-                        </local:BoxShape.Door>
-                    </local:BoxShape>
+                    <local:BoxShape Height="{Binding Path=Height}" Width="{Binding Path=Cupboard.Width}" Door="{Binding Path=Accessories[0].Color}"  Stroke="Black" StrokeThickness="2" Margin="0,0,0,0"/>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        
+
     </Grid>
 </Window>
