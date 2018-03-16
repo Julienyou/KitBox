@@ -89,8 +89,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Component.cs" />
-    <Compile Include="Constrain.cs" />
     <Compile Include="Cupboard.cs" />
     <Compile Include="Customer.cs" />
     <Compile Include="Employee.cs" />
