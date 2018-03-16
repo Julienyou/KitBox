@@ -53,9 +53,10 @@
                             <TextBlock Style="{StaticResource labelStyle}">Top and bottom color</TextBlock>
                             <ComboBox x:Name="hPaneColorCombo" SelectedItem="{Binding Path=HPaneColor}"/>
                             <TextBlock Style="{StaticResource labelStyle}">Door style</TextBlock>
-                            <ComboBox x:Name="doorStyleCombo" SelectedItem="{Binding Path=Accessories[0].Color}"/>
+                            <ComboBox x:Name="doorStyleCombo" SelectedItem="{Binding Path=Accessories[0].Color}" IsSynchronizedWithCurrentItem="True"/>
                             <TextBlock Style="{StaticResource labelStyle}">Height</TextBlock>
                             <ComboBox x:Name="boxHeighCombo"  SelectedItem="{Binding Path=Height}"/>
+                            
                         </StackPanel>
                 </ScrollViewer>
                     <Button x:Name="addButton" Grid.Row="1" Content="Add box" Height="20" Width="75" Click="addButton_Click"/>
@@ -64,10 +65,54 @@
         </TabControl>
         
         <Button Content="Cancel" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"/>
-        <StackPanel  x:Name="drawBox" Grid.Column="1" Grid.Row="0">
-            
-            <Button x:Name="test"  Content="Refresh" Click="test_Click"/>
-        </StackPanel>
+
+        <ListView  x:Name="drawBox" Grid.Column="1" Grid.Row="0" ItemsSource="{Binding Path=Boxes}"  IsSynchronizedWithCurrentItem="True" HorizontalAlignment="Center" BorderThickness="0" Padding="0,0,0,0">
+
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Padding" Value="0,0"/>
+                    <Setter Property="Margin" Value="0,0,0,-1.5"/>
+                    <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                <Border Name="RootElement">
+                                    <VisualStateManager.VisualStateGroups>
+                                        <VisualStateGroup x:Name="CommonStates">
+
+                                            <VisualState x:Name="Selected">
+                                                <Storyboard>
+                                                    <ColorAnimation Storyboard.TargetName="BorderBrush" Storyboard.TargetProperty="Color" Duration="0:0:0.5" To="BlanchedAlmond"/>
+                                                </Storyboard>
+                                            </VisualState>
+                                            <VisualState x:Name="Unselected">
+                                                <Storyboard>
+                                                    <ColorAnimation Storyboard.TargetName="BorderBrush" Storyboard.TargetProperty="Color" Duration="0:0:0.5" To="Transparent"/>
+                                                </Storyboard>
+                                            </VisualState>
+                                        </VisualStateGroup>
+                                    </VisualStateManager.VisualStateGroups>
+                                    <Border.Background>
+                                        <SolidColorBrush x:Name="BorderBrush" Color="Transparent"/>
+                                    </Border.Background>
+                                    <ContentPresenter/>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+
+            </ListView.ItemContainerStyle>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <local:BoxShape Height="{Binding Path=Height}" Width="{Binding Path=Cupboard.Width}" Stroke="Black" StrokeThickness="2" Margin="0,0,0,0">
+                        <local:BoxShape.Door>
+                            <Binding ElementName="doorStyleCombo" Path="SelectedItem" />
+                        </local:BoxShape.Door>
+                    </local:BoxShape>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
         
     </Grid>
 </Window>

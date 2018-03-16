@@ -31,29 +31,29 @@ namespace KitBoxApp
             widthComboBox.ItemsSource = cupboardConstraint.Widths;
             depthComboBox.ItemsSource = cupboardConstraint.Depths;
             cupboardConfig.DataContext = cupboard;
-            Box box = new Box(cupboard);
+            Box box = new Box(cupboard, new BoxShape());
             cupboard.AddBox(box);
-            drawBox.Children.Add(new BoxShape(box));
             boxesConfig.DataContext = cupboard.Boxes;
 
             paneColorCombo.ItemsSource = new List<string> { "rouge franboise", "rose fluo", "paquerette" };
-            doorStyleCombo.ItemsSource = new List<string> { "Verre", "Vert", "Ver", "Vair" };
+            doorStyleCombo.ItemsSource = new List<string> { "None","Verre", "Vert", "Ver", "Vair" };
             boxHeighCombo.ItemsSource = new List<int> { 50, 60, 70 };
             steelCornerCombo.ItemsSource = new List<string> { "Beige des bois", "Rouge nuit", "Noir jour" };
 
-            drawBox.DataContext = cupboard.Boxes;
+            drawBox.DataContext = cupboard;
+            
 
         }
 
         private void addButton_Click(object sender, RoutedEventArgs e)
         {
-            Box box = new Box(cupboard);
+            Box box = new Box(cupboard,new BoxShape());
             cupboard.AddBox(box);
             Canvas can = new Canvas();
             can.Background = Brushes.Bisque;
-            BoxShape bs = new BoxShape(box);
-            can.Children.Add(new BoxShape(box));
-            drawBox.Children.Add(new BoxShape(box));
+            BoxShape bs = new BoxShape();
+            can.Children.Add(new BoxShape());
+            
 
         }
         private void TabItem_GotFocus(object sender, RoutedEventArgs e)
@@ -76,7 +76,7 @@ namespace KitBoxApp
 
         private void test_Click(object sender, RoutedEventArgs e)
         {
-            ((Shape)drawBox.Children[1]).InvalidateVisual();
+            
         }
     }
 }
