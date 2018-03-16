@@ -53,7 +53,7 @@ namespace KitBoxApp
             can.Background = Brushes.Bisque;
             BoxShape bs = new BoxShape();
             can.Children.Add(new BoxShape());
-            
+            boxChoiseCombo.SelectedItem = box;
 
         }
         private void TabItem_GotFocus(object sender, RoutedEventArgs e)
