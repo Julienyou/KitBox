@@ -130,7 +130,90 @@ namespace KitBoxApp
             SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
             
             command.ExecuteNonQuery();
-        } 
+        }
+
+        static public void ComposeOrder(Order order, Cupboard cupboard)
+        {
+            order.Components.Add(new Dictionary<string, string> {
+                { "reference", "Cornières" },
+                { "color", cupboard.SteelCornerColor },
+                { "height", cupboard.GetHeight().ToString() },
+            });
+
+            foreach (Box box in cupboard.Boxes)
+            {
+                AddCrosspieceAr(order, box);
+                AddCrosspieceAv(order, box);
+                AddCrosspieceGD(order, box);
+                AddMount(order, box);
+                AddPaneAr(order, box);
+                AddPaneGD(order, box);
+                AddPaneHB(order, box);
+            }
+        }
+
+
+        static private void AddPaneGD(Order order, Box box)
+        {
+            order.Components.Add(new Dictionary<string, string> {
+                { "reference", "Panneau GD" },
+                { "color", box.LateralColor},
+                { "height", box.Height.ToString()},
+                { "depth", box.Cupboard.Depth.ToString()}
+            });
+        }
+
+        static private void AddPaneHB(Order order, Box box)
+        {
+            order.Components.Add(new Dictionary<string, string> {
+                { "reference", "Panneau HB" },
+                { "color", box.HorizontalColor},
+                { "depth", box.Cupboard.Depth.ToString()},
+                { "width", box.Cupboard.Width.ToString()}
+            });
+        }
+
+        static private void AddPaneAr(Order order, Box box)
+        {
+            order.Components.Add(new Dictionary<string, string> {
+                { "reference", "Panneau Ar" },
+                { "color", box.LateralColor},
+                { "height", box.Height.ToString()},
+                { "width", box.Cupboard.Width.ToString()}
+                });
+        }
+
+        static private void AddMount(Order order, Box box)
+        {
+            order.Components.Add(new Dictionary<string, string> {
+                { "reference", "Tasseau" },
+                { "height", box.Height.ToString()},
+            });
+        }
+
+        static private void AddCrosspieceGD(Order order, Box box)
+        {
+            order.Components.Add(new Dictionary<string, string> {
+                { "reference", "Traverse GD" },
+                { "depth", box.Cupboard.Depth.ToString()}
+            });
+        }
+
+        static private void AddCrosspieceAr(Order order, Box box)
+        {
+            order.Components.Add(new Dictionary<string, string> {
+                { "reference", "Traverse Ar" },
+                { "depth", box.Cupboard.Width.ToString()}
+            });
+        }
+
+        static private void AddCrosspieceAv(Order order, Box box)
+        {
+            order.Components.Add(new Dictionary<string, string> {
+                { "reference", "Traverse Av" },
+                { "depth", box.Cupboard.Width.ToString()},
+            });
+        }
 
 
         /*Private function*/
@@ -166,5 +249,8 @@ namespace KitBoxApp
                 throw new Exception("This order id exists already");
             }
         }
+
+        
+
     }
 }

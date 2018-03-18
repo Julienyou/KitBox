@@ -48,7 +48,7 @@ namespace KitBoxApp
             get => height;
         }
 
-        public Cupboard cupboard
+        public Cupboard Cupboard
         {
             get => cupboard;
         }

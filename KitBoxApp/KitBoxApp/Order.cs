@@ -9,13 +9,19 @@ namespace KitBoxApp
 {
     class Order
     {
+
+        //---Attribut
+
         private string id = null;
         private int totalPrice = 0;
         private Customer customer = null;
-        private List<Component> components;
+        private List<Dictionary<String, String>> components = new List<Dictionary<String, String>>();
 
         /*classes not yet created*/
         //private State state; 
+
+
+        //---Getters and Setters
 
         public Order(string id)
         {
@@ -44,13 +50,28 @@ namespace KitBoxApp
 
         public Customer Customer
         {
-            get => Customer;
+            get => customer;
         }
 
-        public List<Component> Components
+        public List<Dictionary<string, string>> Components { get => components; set => components = value; }
+
+        
+
+
+        /*Functions if we created an Order*/
+        public void SetCustomer(string email, string firstName, string lastName, string street, string town)
         {
-            get => components;
+            customer = new Customer(email, firstName, lastName, street, town);
         }
+
+        public void AddComponent(Dictionary<string, string> component)
+        {
+            components.Add(component);
+        }
+
+        //---Methods
+
+
 
         public void ComputePrice()
         {
@@ -62,18 +83,6 @@ namespace KitBoxApp
                 totalPrice += component.Price;
             }
             */
-        }
-
-
-        /*Functions if we created an Order*/
-        public void SetCustomer(string email, string firstName, string lastName, string street, string town)
-        {
-            customer = new Customer(email, firstName, lastName, street, town);
-        }
-
-        public void AddComponent(Component component)
-        {
-            components.Add(component);
         }
     }
 }

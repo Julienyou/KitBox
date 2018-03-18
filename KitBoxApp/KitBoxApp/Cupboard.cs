@@ -17,7 +17,7 @@ namespace KitBoxApp
         public Cupboard(List<Box> boxes, string steelCornerColor, int width, int depth)
         {
             this.boxes = boxes;
-            this.steelcornerColor = steelCornerColor;
+            this.steelCornerColor = steelCornerColor;
             this.width = width;
             this.depth = depth;
         }
