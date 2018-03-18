@@ -39,10 +39,10 @@ namespace KitBoxApp
 
 
             /*Add data inOrderComponentLink for each component located in components*/
-            foreach (Component component in order.Components)
+            foreach (Dictionary<string, string> component in order.Components)
             {
                 sql = "insert into `OrderComponentLink` ('FK_Order', 'FK_Component')" +
-                         "values ('" + order.Id + "','" + component.code + "')";
+                         "values ('" + order.Id + "','" + component["code"] + "')";
 
                 command = new SQLiteCommand(sql, dbConnection);
                 command.ExecuteNonQuery();
@@ -98,9 +98,16 @@ namespace KitBoxApp
             reader = command.ExecuteReader();
             while (reader.Read())
             {
-                order.AddComponent(new Component(reader["ref_name"].ToString(), reader["color"].ToString(),
-                                                 reader["code"].ToString(), Convert.ToInt32(reader["price"]),
-                                                 4, true));
+                /*Warning not instock*/
+                order.AddComponent(new Dictionary<string, string> {
+                    { "code", reader["code"].ToString() },
+                    { "reference", reader["ref_name"].ToString() },
+                    { "color", reader["color"].ToString()},
+                    { "height", reader["height"].ToString() },
+                    { "width",  reader["width"].ToString() },
+                    { "depth", reader["depth"].ToString() },
+                    { "quantity", reader["quantity"].ToString() }
+                });                
             }
 
 
