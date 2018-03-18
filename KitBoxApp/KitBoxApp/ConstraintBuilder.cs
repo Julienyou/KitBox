@@ -10,57 +10,46 @@ namespace KitBoxApp
     static class ConstraintBuilder
     {
         static private SQLiteConnection dbConnection = new SQLiteConnection("Data Source=db.sqlite;Version=3;");
-        static List<int> heights = new List<int>();
-        static List<int> widths = new List<int>();
+        
 
-        static public List<Cupboard> ImportFromDatabase(string id)
+        static public void BuildCupboardConstraint(string id)
         {
+            List<int> heights = new List<int>();
+            List<int> widths = new List<int>();
+            List<int> depths = new List<int>();
+            int maxHeight;
 
             /*Start connection DataBase*/
             dbConnection.Open();
 
-
-            /*Recuperation to customer and TotalPrice data*/
-            string sql = "SELECT Height FROM `Component` WHERE FK_Reference = 1'" +
-                          ";
+            string sql = "SELECT * FROM `CupboardConstraint` WHERE `CupboardConstraint`.`FK_Reference='1'";
 
             SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
 
             SQLiteDataReader reader = command.ExecuteReader();
             while (reader.Read())
             {
-                heights.Add(Convert.ToInt32(reader["Height"]));
+                heights.Add(Convert.ToInt32(reader["height"]));
             }
-
-
-            /*Recuperation of components data*/
-            sql = "SELECT * FROM `OrderComponentLink`" +
-                  "INNER JOIN Component ON `OrderComponentLink`.`FK_Component`=`Component`.`Code`" +
-                  "INNER JOIN Color ON `Component`.`FK_Color`=`Color`.`PK_IDColor`" +
-                  "INNER JOIN Reference ON `Component`.`FK_Reference`=`Reference`.`PK_IDRef`" +
-                  "WHERE OrderComponentLink.FK_Order='" + id + "'";
+            
+            sql = "SELECT * FROM `CupboardConstraint` WHERE `CupboardConstraint`.`FK_Reference='5'";
 
             command = new SQLiteCommand(sql, dbConnection);
 
             reader = command.ExecuteReader();
             while (reader.Read())
             {
-                order.AddComponent(new Component(reader["FK_Reference"].ToString(), reader["Name"].ToString(),
-                                                 reader["code"].ToString(), Convert.ToInt32(reader["Price"]),
-                                                 4, true));
+                widths.Add(Convert.ToInt32(reader["width"]));
+                depths.Add(Convert.ToInt32(reader["depth"]));
             }
+
+            maxHeight = heights.Max();
 
 
             /*End connection DataBase*/
             dbConnection.Close();
 
-            return order;
-        }
-
-
-        public static void CupboardBuilder()
-        {
-
-        }
+            new CupboardConstraint(depths, widths, maxHeight);
+        }        
     }
 }
