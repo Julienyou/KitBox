@@ -61,7 +61,7 @@ namespace KitBoxApp
         /// </summary>
         /// <param name="id">This is the order's id</param>
         /// <returns>The method return the order who has been created</returns>
-        static public Order ImportToDatabase(string id)
+        static public Order ImportFromDatabase(string id)
         {
             Order order = new Order(id);
 
@@ -139,87 +139,32 @@ namespace KitBoxApp
             command.ExecuteNonQuery();
         }
 
-        static public void ComposeOrder(Order order, Cupboard cupboard)
+        
+        static public void FetchFromDataBase(List<Dictionary<string, string>> components)
         {
-            order.Components.Add(new Dictionary<string, string> {
-                { "reference", "Cornières" },
-                { "color", cupboard.SteelCornerColor },
-                { "height", cupboard.GetHeight().ToString() },
-            });
+            /*Start connection DataBase*/
+            dbConnection.Open();
 
-            foreach (Box box in cupboard.Boxes)
+            foreach (Dictionary<string, string> component in components)
             {
-                AddCrosspieceAr(order, box);
-                AddCrosspieceAv(order, box);
-                AddCrosspieceGD(order, box);
-                AddMount(order, box);
-                AddPaneAr(order, box);
-                AddPaneGD(order, box);
-                AddPaneHB(order, box);
+                string sql = "SELECT * " +
+                         "FROM ComponentData" +
+                         "WHERE ";
+                List<string> listjoin = new List<string>();
+                foreach (KeyValuePair<string,string> criteria in component)
+                {
+                    listjoin.Add(criteria.Key + "=" + criteria.Value);
+                }
+                sql += String.Join(" AND ", listjoin);
+
+                SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
+                SQLiteDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    component["code"] = reader["code"].ToString();
+                }
             }
-        }
-
-
-        static private void AddPaneGD(Order order, Box box)
-        {
-            order.Components.Add(new Dictionary<string, string> {
-                { "reference", "Panneau GD" },
-                { "color", box.LateralColor},
-                { "height", box.Height.ToString()},
-                { "depth", box.Cupboard.Depth.ToString()}
-            });
-        }
-
-        static private void AddPaneHB(Order order, Box box)
-        {
-            order.Components.Add(new Dictionary<string, string> {
-                { "reference", "Panneau HB" },
-                { "color", box.HorizontalColor},
-                { "depth", box.Cupboard.Depth.ToString()},
-                { "width", box.Cupboard.Width.ToString()}
-            });
-        }
-
-        static private void AddPaneAr(Order order, Box box)
-        {
-            order.Components.Add(new Dictionary<string, string> {
-                { "reference", "Panneau Ar" },
-                { "color", box.LateralColor},
-                { "height", box.Height.ToString()},
-                { "width", box.Cupboard.Width.ToString()}
-                });
-        }
-
-        static private void AddMount(Order order, Box box)
-        {
-            order.Components.Add(new Dictionary<string, string> {
-                { "reference", "Tasseau" },
-                { "height", box.Height.ToString()},
-            });
-        }
-
-        static private void AddCrosspieceGD(Order order, Box box)
-        {
-            order.Components.Add(new Dictionary<string, string> {
-                { "reference", "Traverse GD" },
-                { "depth", box.Cupboard.Depth.ToString()}
-            });
-        }
-
-        static private void AddCrosspieceAr(Order order, Box box)
-        {
-            order.Components.Add(new Dictionary<string, string> {
-                { "reference", "Traverse Ar" },
-                { "depth", box.Cupboard.Width.ToString()}
-            });
-        }
-
-        static private void AddCrosspieceAv(Order order, Box box)
-        {
-            order.Components.Add(new Dictionary<string, string> {
-                { "reference", "Traverse Av" },
-                { "depth", box.Cupboard.Width.ToString()},
-            });
+            dbConnection.Close();
         }
 
 
@@ -256,6 +201,8 @@ namespace KitBoxApp
                 throw new Exception("This order id exists already");
             }
         }
+
+
 
         
 
