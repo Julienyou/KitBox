@@ -73,14 +73,15 @@ namespace KitBoxApp
 
         public void ComputePrice()
         {
-            /*Class component not yet created*/
-
-            /*
-            foreach (Component component in components)
+            
+            foreach (Dictionary <string, string> component in components)
             {
-                totalPrice += component.Price;
+                string value;
+                if(component.TryGetValue("price", out value))
+                {
+                    totalPrice += Int32.Parse(value);
+                }
             }
-            */
         }
 
 
@@ -206,9 +207,11 @@ namespace KitBoxApp
             });
         }
 
-        public void RetrieveCodes()
+        public void RetrieveDetails()
         {
-
+            Utils.FetchFromDataBase(Components);
         }
+
+
     }
 }
