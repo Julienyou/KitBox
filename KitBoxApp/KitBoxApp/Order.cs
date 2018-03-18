@@ -15,7 +15,9 @@ namespace KitBoxApp
         private string id = null;
         private int totalPrice = 0;
         private Customer customer = null;
-        private List<Dictionary<String, String>> components = new List<Dictionary<String, String>>();
+
+        private List<Dictionary<string, string>> components = new List<Dictionary<string, string>>();
+
 
         /*classes not yet created*/
         //private State state; 
@@ -51,6 +53,7 @@ namespace KitBoxApp
         public Customer Customer
         {
             get => customer;
+
         }
 
         public List<Dictionary<string, string>> Components { get => components; set => components = value; }
@@ -64,14 +67,9 @@ namespace KitBoxApp
             customer = new Customer(email, firstName, lastName, street, town);
         }
 
-        public void AddComponent(Dictionary<string, string> component)
-        {
-            components.Add(component);
-        }
+
 
         //---Methods
-
-
 
         public void ComputePrice()
         {
@@ -83,6 +81,12 @@ namespace KitBoxApp
                 totalPrice += component.Price;
             }
             */
+        }
+
+
+        public void AddComponent(Dictionary<string, string> component)
+        {
+            components.Add(component);
         }
     }
 }
