@@ -50,6 +50,44 @@ namespace KitBoxApp
             dbConnection.Close();
 
             new CupboardConstraint(depths, widths, maxHeight);
-        }        
+        }
+
+        static public void BuildBoxConstraint(string id)
+        {
+            List<int> heights = new List<int>();
+            List<string> colors = new List<string>();
+
+            /*Start connection DataBase*/
+            dbConnection.Open();
+
+            string sql = "SELECT * FROM `CupboardConstraint` WHERE `CupboardConstraint`.`FK_Reference='4'";
+
+            SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
+
+            SQLiteDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                heights.Add(Convert.ToInt32(reader["height"]));
+            }
+
+            sql = "SELECT * FROM `Component`" +
+                "INNER JOIN `Color` ON Component.FK_Color=Color.PK_Color" +
+                "WHERE `CupboardConstraint`.`FK_Reference='5'";
+
+            command = new SQLiteCommand(sql, dbConnection);
+
+            reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                colors.Add(reader["Name"].ToString());
+            }
+
+
+            /*End connection DataBase*/
+            dbConnection.Close();
+
+            new BoxConstraint(heights, colors);
+        }
+        
     }
 }
