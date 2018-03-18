@@ -11,10 +11,17 @@ namespace KitBoxApp
     {
         static private SQLiteConnection dbConnection = new SQLiteConnection("Data Source=db.sqlite;Version=3;");
 
+        /// <summary>
+        ///     This method permits to create a order in Database.
+        ///     First, we check if the customer exists, if he does not exists we creat him. After 
+        ///         we look at if the order's ID does not already exist.
+        ///     Second, we create the order with the customer's email and the total price.
+        ///     Third, we add the link of the order's id at the component's code in the 
+        ///         OrderComponentLink table.
+        /// </summary>
+        /// <param name="order">This is the order we want to push in database</param>
         static public void ExportToDatabase(Order order)
-        {
-            /*Creat a new Order in database*/
-
+        {            
             /*Start connection DataBase*/
             dbConnection.Open();
 
@@ -45,10 +52,17 @@ namespace KitBoxApp
             dbConnection.Close();
         }
 
+
+        /// <summary>
+        ///     This method permits to pull a order in the database.
+        ///     First, we create a Order object with the id wished.
+        ///     Second, we recover the customer's data and the total price.
+        ///     Third, we recover the component's data for create an list.
+        /// </summary>
+        /// <param name="id">This is the order's id</param>
+        /// <returns>The method return the order who has been created</returns>
         static public Order ImportToDatabase(string id)
         {
-            /*Import Order in database*/
-
             Order order = new Order(id);
 
             /*Start connection DataBase*/
@@ -96,6 +110,12 @@ namespace KitBoxApp
             return order;
         }
 
+
+        /// <summary>
+        ///     This method permits to change the order's state.
+        /// </summary>
+        /// <param name="id">This is the order's id</param>
+        /// <param name="state">This is the state's id</param>
         static public void ChangeState(string id, string state)
         {
             /*Change the Order State in database*/
