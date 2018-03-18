@@ -7,7 +7,5 @@ using System.Threading.Tasks;
 namespace KitBoxApp
 {
     interface IAccessory
-    {
-        int GetPrice();
-    }
+    {}
 }

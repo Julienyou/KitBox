@@ -10,18 +10,11 @@ namespace KitBoxApp
     {
         private string color;
         private bool knop;
-        private int price;
 
-        public Door(string color, bool knop, int price)
+        public Door(string color, bool knop)
         {
             this.color = color;
             this.knop = knop;
-            this.price = price;
-        }
-
-        public int GetPrice() // Add parameter string color ?
-        {
-            return this.price; // How to integrate the color with our class diagram ?
         }
 
         public string Color

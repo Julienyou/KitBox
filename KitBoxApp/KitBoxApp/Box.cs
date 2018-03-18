@@ -10,34 +10,29 @@ namespace KitBoxApp
     {
         private int height;
         private List<IAccessory> accessories;
-        private int price;
-        private List<Pane> panes;
         private Cupboard cupboard;
+        private string lateralColor;
+        private string horizontalColor;
 
-        public Box(int height, List<IAccessory> accessories, int price, List<Pane> panes, Cupboard cupboard)
+        public Box(int height, List<IAccessory> accessories, Cupboard cupboard, string lateralColor, string horizontalColor)
         {
             this.height = height;
             this.accessories = accessories;
-            this.price = price;
-            this.panes = panes;
             this.cupboard = cupboard;
+            this.lateralColor = lateralColor;
+            this.horizontalColor = horizontalColor;
         }
 
-        public int Price
-        {
-            get => price;
-        }
-
-        public void AddComponent(IAccessory c)
+        public void AddAccessory(IAccessory c)
         {
             accessories.Add(c);
         }
 
-        public void RemoveComponent(IAccessory c)
+        public void RemoveAccessory(IAccessory c)
         {
             accessories.Remove(c);
         }
-        
+
         public List<IAccessory> Accessories
         {
             get => accessories;
@@ -50,12 +45,22 @@ namespace KitBoxApp
 
         public int Height
         {
-            get { return height; }
+            get => height;
         }
 
-        public List<Pane> Panes
+        public Cupboard cupboard
         {
-            get => panes;
+            get => cupboard;
+        }
+
+        public string LateralColor
+        {
+            get => lateralColor;
+        }
+
+        public string HorizontalColor
+        {
+            get => horizontalColor;
         }
     }
 }

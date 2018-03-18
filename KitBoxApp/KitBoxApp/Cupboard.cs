@@ -10,43 +10,17 @@ namespace KitBoxApp
     class Cupboard
     {
         private List<Box> boxes;
-        private SteelCorner steelcorner;
         private int width;
         private int depth;
+        private string steelCornerColor;
 
-        public Cupboard(List<Box> boxes, SteelCorner steelCorner, int width, int depth)
+        public Cupboard(List<Box> boxes, string steelCornerColor, int width, int depth)
         {
             this.boxes = boxes;
-            this.steelcorner = steelCorner;
+            this.steelcornerColor = steelCornerColor;
             this.width = width;
             this.depth = depth;
         }
-
-        public int GetPrice()
-        {
-            return 1;  //Implement the method !
-        }
-
-        public Dictionary<string, int> GetCrossPiece()
-        {
-            return new Dictionary<string, int>();  //Implement the method !
-        }
-
-        public Dictionary<string, int> GetPane()
-        {
-            return new Dictionary<string, int>();  //Implement the method !
-        }
-
-        public Dictionary<string, int> GetMount()
-        {
-            return new Dictionary<string, int>();  //Implement the method !
-        }
-
-        public SteelCorner ChooseSteelCorner()
-        {
-            return new SteelCorner("red", 1, 1, true);  //Implement the method !
-        }
-
 
         public int GetHeight()
         {
@@ -67,6 +41,16 @@ namespace KitBoxApp
                 width = value;
             }
         }
+
+        public string SteelCornerColor
+        {
+            get => SteelCornerColor;
+            set
+            {
+                steelCornerColor = value;
+            }
+        }
+
         public int Depth
         {
             get => depth;
@@ -74,6 +58,11 @@ namespace KitBoxApp
             {
                 depth = value;
             }
+        }
+
+        public List<Box> Boxes
+        {
+            get => boxes;
         }
 
         public void AddBox(Box b)
