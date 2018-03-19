@@ -12,9 +12,9 @@ namespace KitBoxApp
         static private SQLiteConnection dbConnection = new SQLiteConnection("Data Source=db.sqlite;Version=3;");
 
         /// <summary>
-        ///     This method permits to create a order in Database.
-        ///     First, we check if the customer exists, if he does not exists we creat him. After 
-        ///         we look at if the order's ID does not already exist.
+        ///     This method allows to create a order in Database.
+        ///     First, we check if the customer exists, if he does not exists we creat it. Then 
+        ///         we look if the order's ID does not already exist.
         ///     Second, we create the order with the customer's email and the total price.
         ///     Third, we add the link of the order's id at the component's code in the 
         ///         OrderComponentLink table.
@@ -162,6 +162,7 @@ namespace KitBoxApp
                 while (reader.Read())
                 {
                     component["code"] = reader["code"].ToString();
+                    component["price"] = reader["price"].ToString();
                 }
             }
             dbConnection.Close();
