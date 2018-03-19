@@ -41,8 +41,8 @@ namespace KitBoxApp
             /*Add data inOrderComponentLink for each component located in components*/
             foreach (Dictionary<string, string> component in order.Components)
             {
-                sql = "insert into `OrderComponentLink` ('FK_Order', 'FK_Component')" +
-                         "values ('" + order.Id + "','" + component["code"] + "')";
+                sql = "insert into `OrderComponentLink` ('FK_Order', 'FK_Component', 'Quantity')" +
+                         "values ('" + order.Id + "','" + component["code"] + "','" + component["quantity"] + "')";
 
                 command = new SQLiteCommand(sql, dbConnection);
                 command.ExecuteNonQuery();
@@ -59,7 +59,7 @@ namespace KitBoxApp
         ///     Second, we recover the customer's data and the total price.
         ///     Third, we recover the component's data for create an list.
         /// </summary>
-        /// <param name="id">This is the order's id</param>
+        /// <param name="id">Order's id</param>
         /// <returns>The method return the order who has been created</returns>
         static public Order ImportFromDatabase(string id)
         {
@@ -73,6 +73,7 @@ namespace KitBoxApp
             string sql = "SELECT * " +
                          "FROM `Order`" +
                          "INNER JOIN Customer ON `Order`.`FK_Customer`=`Customer`.`PK_Email`" +
+                         "INNER JOIN State ON `Order`.`FK_State`=`State`.`PK_State`" +
                          "WHERE `Order`.`PK_IDOrder`='" + order.Id + "'";
 
             SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
@@ -85,6 +86,8 @@ namespace KitBoxApp
                                         reader["Town"].ToString());
 
                 order.TotalPrice = Convert.ToInt32(reader["TotalPrice"]);
+
+                order.State = reader["Name"].ToString();
             }
 
 
@@ -131,12 +134,15 @@ namespace KitBoxApp
             dbConnection.Open();
 
             string sql = "UPDATE `Order` " +
-                         "SET State='" + state + "'" +
+                         "SET FK_State='" + state + "'" +
                          "WHERE `Order`.`PK_IDOrder`='" + id + "'";
 
             SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
             
             command.ExecuteNonQuery();
+
+            /*End connection DataBase*/
+            dbConnection.Close();
         }
 
         

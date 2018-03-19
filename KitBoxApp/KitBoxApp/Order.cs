@@ -15,13 +15,9 @@ namespace KitBoxApp
         private string id = null;
         private int totalPrice = 0;
         private Customer customer = null;
+        private string state;
 
         private List<Dictionary<string, string>> components = new List<Dictionary<string, string>>();
-
-
-        /*classes not yet created*/
-        //private State state; 
-
 
         //---Getters and Setters
 
@@ -56,9 +52,17 @@ namespace KitBoxApp
 
         }
 
-        public List<Dictionary<string, string>> Components { get => components; set => components = value; }
+        public string State
+        {
+            get => state;
 
-        
+            set
+            {
+                state = value;
+            }
+        }
+
+        public List<Dictionary<string, string>> Components { get => components; set => components = value; }
 
 
         /*Functions if we created an Order*/
@@ -83,8 +87,6 @@ namespace KitBoxApp
                 }
             }
         }
-
-
 
         public void AddComponent(Dictionary<string, string> mycomponent)
         {
@@ -211,7 +213,5 @@ namespace KitBoxApp
         {
             Utils.FetchFromDataBase(Components);
         }
-
-
     }
 }
