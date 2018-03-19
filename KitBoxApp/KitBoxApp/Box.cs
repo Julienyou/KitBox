@@ -1,18 +1,27 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace KitBoxApp
 {
-    class Box : INotifyPropertyChanged
+
+    public class Box : INotifyPropertyChanged
     {
-        private int height;
+        private int height=70;
         private List<IAccessory> accessories;
         private Cupboard cupboard;
         private string lateralColor;
         private string horizontalColor;
+
+
+        public Box(Cupboard cupboard)
+        {
+            this.cupboard = cupboard;
+            this.accessories = new List<IAccessory> { };
+        }
 
         // INotifyPropertyChanged Member
         public event PropertyChangedEventHandler PropertyChanged;
@@ -51,7 +60,7 @@ namespace KitBoxApp
             }
         }
 
-        public Cupboard cupboard
+        public Cupboard Cupboard
         {
             get => cupboard;
         }

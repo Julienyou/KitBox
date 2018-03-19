@@ -31,7 +31,7 @@ namespace KitBoxApp
             widthComboBox.ItemsSource = cupboardConstraint.Widths;
             depthComboBox.ItemsSource = cupboardConstraint.Depths;
             cupboardConfig.DataContext = cupboard;
-            Box box = new Box(cupboard, new BoxShape());
+            Box box = new Box(cupboard);
             cupboard.AddBox(box);
             boxesConfig.DataContext = cupboard.Boxes;
 
@@ -48,7 +48,7 @@ namespace KitBoxApp
         private void add_button_Click(object sender, RoutedEventArgs e)
         {
             Console.WriteLine("button Pressed");
-            Box box = new Box(cupboard, new BoxShape());
+            Box box = new Box(cupboard);
             cupboard.AddBox(box);
             
         }
@@ -59,7 +59,7 @@ namespace KitBoxApp
             if (messageBoxResult == MessageBoxResult.Yes)
             {
                 cupboard = new Cupboard();
-                cupboard.AddBox(new Box(cupboard, new BoxShape()));
+                cupboard.AddBox(new Box(cupboard));
                 drawBox.DataContext = cupboard;
                 boxesConfig.DataContext = cupboard.Boxes;
                 cupboardConfig.DataContext = cupboard;
@@ -80,7 +80,7 @@ namespace KitBoxApp
 
         private void delete_buttn_Click(object sender, RoutedEventArgs e)
         {
-                cupboard.DeleteBox((Box)drawBox.SelectedItem);
+                cupboard.RemoveBox((Box)drawBox.SelectedItem);
         }
     }
 }

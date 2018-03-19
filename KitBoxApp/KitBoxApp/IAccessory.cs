@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 namespace KitBoxApp
 {
 
-    interface IAccessory
-    {}
+    public interface IAccessory{}
 
 }

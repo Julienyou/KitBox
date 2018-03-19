@@ -13,7 +13,7 @@ namespace KitBoxApp
 
         public DoorConstraint(List<string> colors, List<Tuple<int,int>> doorDimensions)
         {
-            this.knop = knop;
+ //         this.knop = knop;
             this.colors = colors;
             this.doorDimensions = doorDimensions;
         }

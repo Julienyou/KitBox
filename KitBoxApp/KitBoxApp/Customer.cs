@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace KitBoxApp
 {
-    class Customer
+    public class Customer
     {
         private string email;
         private string firstName;

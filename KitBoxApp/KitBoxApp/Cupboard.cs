@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -7,12 +8,13 @@ using System.Threading.Tasks;
 
 namespace KitBoxApp
 {
-    class Cupboard : INotifyPropertyChanged
+    public class Cupboard : INotifyPropertyChanged
     {
-        private ObservableCollection<Box> boxes;
-        private int width;
+        private ObservableCollection<Box> boxes = new ObservableCollection<Box> { };
+        private int width=100;
         private int depth;
         private string steelCornerColor;
+
 
         // INotifyPropertyChanged Member
         public event PropertyChangedEventHandler PropertyChanged;
