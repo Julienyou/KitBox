@@ -27,7 +27,7 @@ namespace KitBoxApp
         {
             
             InitializeComponent();
-            CupboardConstraint cupboardConstraint = new CupboardConstraint(new List<int> { 1,2,3}, new List<int> { 100, 5, 6 },150);
+            CupboardConstraint cupboardConstraint = new CupboardConstraint(new List<int> { 1,2,3}, new List<int> { 100, 200, 300 },150);
             widthComboBox.ItemsSource = cupboardConstraint.Widths;
             depthComboBox.ItemsSource = cupboardConstraint.Depths;
             cupboardConfig.DataContext = cupboard;
@@ -45,38 +45,42 @@ namespace KitBoxApp
 
         }
 
-        private void addButton_Click(object sender, RoutedEventArgs e)
+        private void add_button_Click(object sender, RoutedEventArgs e)
         {
-            Box box = new Box(cupboard,new BoxShape());
+            Console.WriteLine("button Pressed");
+            Box box = new Box(cupboard, new BoxShape());
             cupboard.AddBox(box);
-            Canvas can = new Canvas();
-            can.Background = Brushes.Bisque;
-            BoxShape bs = new BoxShape();
-            can.Children.Add(new BoxShape());
-            boxChoiseCombo.SelectedItem = box;
-
+            
         }
-        private void TabItem_GotFocus(object sender, RoutedEventArgs e)
+
+        private void reset_button_Click(object sender, RoutedEventArgs e)
         {
-            cupboardHeight.Text = cupboard.GetHeight().ToString();
-            MessageBox.Show(cupboard.GetHeight().ToString());
-      
+            MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Are you sure?", "Delete Confirmation", System.Windows.MessageBoxButton.YesNo);
+            if (messageBoxResult == MessageBoxResult.Yes)
+            {
+                cupboard = new Cupboard();
+                cupboard.AddBox(new Box(cupboard, new BoxShape()));
+                drawBox.DataContext = cupboard;
+                boxesConfig.DataContext = cupboard.Boxes;
+                cupboardConfig.DataContext = cupboard;
+            }
         }
 
-        private void TabItem_Loaded(object sender, RoutedEventArgs e)
-        {
-            cupboardHeight.Text = cupboard.GetHeight().ToString();
-            MessageBox.Show(cupboard.GetHeight().ToString());
-        }
-
-        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            cupboardHeight.Text = cupboard.GetHeight().ToString();
-        }
-
-        private void test_Click(object sender, RoutedEventArgs e)
+        private void validate_button_Click(object sender, RoutedEventArgs e)
         {
             
+            Window w = new OrderRecap();
+            w.ShowDialog();
+        }
+
+        private void drawBox_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            cupboardHeight.Text = cupboard.GetHeight().ToString();
+        }
+
+        private void delete_buttn_Click(object sender, RoutedEventArgs e)
+        {
+                cupboard.DeleteBox((Box)drawBox.SelectedItem);
         }
     }
 }
