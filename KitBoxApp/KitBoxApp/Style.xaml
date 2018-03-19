@@ -5,10 +5,39 @@
 
     <DrawingBrush x:Key="BackbroungColor">#EEEEEE</DrawingBrush>
     <DrawingBrush x:Key="SecondaryBackgroud">#FAFAFA</DrawingBrush>
-    <DrawingBrush x:Key="DarckBackgroud">#CACACA</DrawingBrush>
+    <DrawingBrush x:Key="DarckBackgroud">#DDDDDD</DrawingBrush>
+    <DrawingBrush x:Key="ActionColor">#46A1FB</DrawingBrush>
+    <DrawingBrush x:Key="ActionBackground">#E6F2FE</DrawingBrush>
 
     <Style x:Key="textBoxStyle" TargetType="{x:Type TextBox}">
         <Setter Property="Padding" Value="8"/>
+    </Style>
+
+    <Style x:Key="button" TargetType="{x:Type Button}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{StaticResource ActionColor}"/>
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="Panel" Padding="5">
+                        <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter TargetName="Panel" Property="Background" Value="{StaticResource ActionBackground}" />
+                        </Trigger>
+                        <Trigger Property="IsFocused" Value="False">
+                            <Setter TargetName="Panel" Property="Background" Value="Transparent" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+               
+            </Setter.Value>
+        </Setter>
     </Style>
     
     <Style x:Key="labelStyle" TargetType="{x:Type TextBlock}">
@@ -20,6 +49,22 @@
     <Style x:Key="ComboStyle" TargetType="{x:Type ComboBox}">
         <Setter Property="Padding" Value="8"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="ItemContainerStyle">
+            <Setter.Value>
+                <Style TargetType="{x:Type ComboBoxItem}">
+                    <Setter Property="Margin" Value="10"/>
+                    <Setter Property="FontSize" Value="14"/>
+                    <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type ComboBoxItem}">
+                                <ContentPresenter/>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Setter.Value>
+        </Setter>
     </Style>
     
     <Style x:Key="roundedButton" TargetType="{x:Type Button}">
@@ -29,7 +74,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
                     <Grid>
-                        <Ellipse Width="40" Height="40" Fill="#46A1FB"/>
+                        <Ellipse Width="40" Height="40" Fill="{StaticResource ActionColor}"/>
                         <ContentPresenter
                                        VerticalAlignment="Center" HorizontalAlignment="Center" />
                     </Grid>
@@ -45,12 +90,12 @@
                 <ControlTemplate TargetType="TabItem">
                     <Grid Name="Panel">
                         <ContentPresenter x:Name="ContentSite"
-                                        TextBlock.FontSize="16"
+                                        TextBlock.FontSize="14"
                                         FocusVisualStyle="{x:Null}"
                                         VerticalAlignment="Center"
                                         HorizontalAlignment="Center"
                                         ContentSource="Header"
-                                        Margin="10,10"
+                                        Margin="15,7"
                                         />
                     </Grid>
                     <ControlTemplate.Triggers>
