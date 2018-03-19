@@ -19,20 +19,37 @@ namespace KitBoxApp
 
         public string Door
         {
-            get { Console.WriteLine("Door GET : " + GetValue(DoorProperty));  return (string)GetValue(DoorProperty); }
-            set { Console.WriteLine("Door changed : " + GetValue(DoorProperty));  SetValue(DoorProperty, value);  }
+            get { return (string)GetValue(DoorProperty); }
+            set { SetValue(DoorProperty, value);  }
         }
-        
 
-       //     public string Door { get; set; }
+        public static readonly DependencyProperty BHeightProperty =
+        DependencyProperty.Register("BHeight", typeof(int),
+        typeof(BoxShape),
+        new FrameworkPropertyMetadata(0, FrameworkPropertyMetadataOptions.AffectsMeasure));
+
+        public int BHeight
+        {
+            get { return (int)GetValue(BHeightProperty); }
+            set { SetValue(BHeightProperty, value); }
+        }
+
+
+        public static readonly DependencyProperty BWidthProperty =
+        DependencyProperty.Register("BWidth", typeof(int),
+        typeof(BoxShape),
+        new FrameworkPropertyMetadata(0, FrameworkPropertyMetadataOptions.AffectsMeasure));
+
+        public int BWidth
+        {
+            get { return (int)GetValue(BWidthProperty); }
+            set { SetValue(BWidthProperty, value); }
+        }
 
 
         public BoxShape()
         {
-            Stroke = Brushes.Black;
-            StrokeThickness = 2;
-            //Door = "None";
-            Console.WriteLine("bla : " + Door);
+
         }
 
         protected override Geometry DefiningGeometry
@@ -42,47 +59,52 @@ namespace KitBoxApp
 
         private Geometry GenerateMyWeirdGeometry()
         {
+
+            int scale = 2;
+            int cornerWidth = 5*scale;
+            int mountWidth = 5*scale;
+            int knopSize = 5*scale;
+            int knopDelta = 10*scale;
+            int width = BWidth * scale;
+            int height = BHeight * scale;
+
             
-            int cornerWidth = 5;
-            int mountWidth = 5;
-            int knopSize = 5;
-            int knopDelta = 10;
-            
+
             GeometryGroup geom = new GeometryGroup();
 
 
             
             RectangleGeometry mainRect = new RectangleGeometry();
-            mainRect.Rect = new Rect(0,0,Width,Height);
+            mainRect.Rect = new Rect(0,0, width, height);
             
 
             LineGeometry leftCorner = new LineGeometry();
             leftCorner.StartPoint = new Point(cornerWidth, 0);
-            leftCorner.EndPoint = new Point(cornerWidth, Height);
+            leftCorner.EndPoint = new Point(cornerWidth, height);
 
             LineGeometry rightCorner = new LineGeometry();
-            rightCorner.StartPoint = new Point(Width-cornerWidth, 0);
-            rightCorner.EndPoint = new Point(Width-cornerWidth, Height);
+            rightCorner.StartPoint = new Point(width-cornerWidth, 0);
+            rightCorner.EndPoint = new Point(width-cornerWidth, height);
 
             LineGeometry topMount = new LineGeometry();
             topMount.StartPoint = new Point(cornerWidth, mountWidth);
-            topMount.EndPoint = new Point(Width-cornerWidth, mountWidth);
+            topMount.EndPoint = new Point(width-cornerWidth, mountWidth);
 
             LineGeometry bottomMount = new LineGeometry();
-            bottomMount.StartPoint = new Point(cornerWidth, Height-mountWidth);
-            bottomMount.EndPoint = new Point(Width - cornerWidth, Height-mountWidth);
+            bottomMount.StartPoint = new Point(cornerWidth, height-mountWidth);
+            bottomMount.EndPoint = new Point(width - cornerWidth, height-mountWidth);
 
             LineGeometry door = new LineGeometry();
-            door.StartPoint = new Point(Width/2, mountWidth);
-            door.EndPoint = new Point(Width/2, Height - mountWidth);
+            door.StartPoint = new Point(width/2, mountWidth);
+            door.EndPoint = new Point(width/2, height - mountWidth);
 
             EllipseGeometry leftKnop = new EllipseGeometry();
-            leftKnop.Center = new Point(cornerWidth + knopDelta, Height / 2);
+            leftKnop.Center = new Point(cornerWidth + knopDelta, height / 2);
             leftKnop.RadiusX = knopSize;
             leftKnop.RadiusY = knopSize;
 
             EllipseGeometry rightKnop = new EllipseGeometry();
-            rightKnop.Center = new Point(Width-(cornerWidth + knopDelta), Height / 2);
+            rightKnop.Center = new Point(width-(cornerWidth + knopDelta), height / 2);
             rightKnop.RadiusX = knopSize;
             rightKnop.RadiusY = knopSize;
 
@@ -93,7 +115,6 @@ namespace KitBoxApp
             geom.Children.Add(topMount);
             geom.Children.Add(bottomMount);
 
-            Console.WriteLine("coucou "+Door);
             if(Door!=null && !Door.Equals("None"))
             {
                 geom.Children.Add(door);

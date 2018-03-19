@@ -25,7 +25,7 @@ namespace KitBoxApp
 
         }
 
-        public Box(Cupboard cupboard)
+        public Box(Cupboard cupboard, BoxShape bs)
         {
             this.cupboard = cupboard;
             N++;
@@ -56,7 +56,11 @@ namespace KitBoxApp
         public int Height
         {
             get => height;
-            set { height = value;  Notify("Height"); }
+            set
+            {
+                height = value;
+                Notify("Height");
+            }
             
         }
 

@@ -67,12 +67,18 @@ namespace KitBoxApp
             boxes.Add(box);
         }
 
+        public void DeleteBox(Box box)
+        {
+            boxes.Remove(box);
+        }
+
         public int Width
         {
             get => width;
             set
             {
                 width = value;
+                Notify("Width");
             }
         }
         public int Depth
