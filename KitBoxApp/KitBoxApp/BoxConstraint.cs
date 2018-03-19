@@ -7,7 +7,7 @@ using KitBoxApp.Properties;
 
 namespace KitBoxApp
 {
-    class BoxConstraint : IConstraintChecker<Box>
+    public class BoxConstraint : IConstraintChecker<Box>
     {
         private List<int> heights;
         private List<string> colors;

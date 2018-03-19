@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -7,19 +7,18 @@ using System.Threading.Tasks;
 
 namespace KitBoxApp
 {
-    class Cupboard
+    class Cupboard : INotifyPropertyChanged
     {
-        private List<Box> boxes;
+        private ObservableCollection<Box> boxes;
         private int width;
         private int depth;
         private string steelCornerColor;
 
-        public Cupboard(List<Box> boxes, string steelCornerColor, int width, int depth)
+        // INotifyPropertyChanged Member
+        public event PropertyChangedEventHandler PropertyChanged;
+        void Notify(string propName)
         {
-            this.boxes = boxes;
-            this.steelcornerColor = steelCornerColor;
-            this.width = width;
-            this.depth = depth;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
 
         public int GetHeight()
@@ -39,6 +38,7 @@ namespace KitBoxApp
             set
             {
                 width = value;
+                Notify("Width");
             }
         }
 
@@ -57,10 +57,11 @@ namespace KitBoxApp
             set
             {
                 depth = value;
+                Notify("Depth");
             }
         }
 
-        public List<Box> Boxes
+        public ObservableCollection<Box> Boxes
         {
             get => boxes;
         }

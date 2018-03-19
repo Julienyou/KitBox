@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace KitBoxApp
 {
-    interface IConstraintChecker<T>
+    public interface IConstraintChecker<T>
     {
         bool Check(T param);
     }
