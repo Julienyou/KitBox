@@ -10,7 +10,7 @@ namespace KitBoxApp
     class Order
     {
 
-        //---Attribut
+        #region Attributes
 
         private string id = null;
         private int totalPrice = 0;
@@ -19,12 +19,16 @@ namespace KitBoxApp
 
         private List<Dictionary<string, string>> components = new List<Dictionary<string, string>>();
 
-        //---Getters and Setters
+        #endregion
+        #region Constructors
 
         public Order(string id)
         {
             this.id = id;
         }
+
+        #endregion
+        #region Getters and Setters
 
         public string Id
         {
@@ -71,7 +75,8 @@ namespace KitBoxApp
             customer = new Customer(email, firstName, lastName, street, town);
         }
 
-
+        #endregion
+        #region Methods
 
         //---Methods
 
@@ -139,6 +144,7 @@ namespace KitBoxApp
             }
         }
 
+            #region ComposeOrder sub-methods
 
         private void AddPaneGD(Box box)
         {
@@ -209,9 +215,28 @@ namespace KitBoxApp
             });
         }
 
+        private void AddAccessories(Box box)
+        {
+            foreach(IAccessory accessory in box.Accessories)
+            {
+                if(accessory is Door)
+                {
+                    this.AddComponent(new Dictionary<string, string>() { 
+                        { "reference", "Porte" },
+                        { "width",  box.Cupboard.Width.ToString() },
+                        { "quantity", "2" }
+                    });
+                }
+            }
+        }
+            #endregion
+
+
         public void RetrieveDetails()
         {
             Utils.FetchFromDataBase(Components);
         }
     }
 }
+        #endregion
+
