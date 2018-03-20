@@ -12,7 +12,7 @@ namespace KitBoxApp
         static private SQLiteConnection dbConnection = new SQLiteConnection("Data Source=db.sqlite;Version=3;");
         
 
-        static public void BuildCupboardConstraint(string id)
+        static public void BuildCupboardConstraint()
         {
             List<int> heights = new List<int>();
             List<int> widths = new List<int>();
@@ -52,7 +52,7 @@ namespace KitBoxApp
             new CupboardConstraint(depths, widths, maxHeight);
         }
 
-        static public void BuildBoxConstraint(string id)
+        static public void BuildBoxConstraint()
         {
             List<int> heights = new List<int>();
             List<string> colors = new List<string>();
@@ -89,7 +89,7 @@ namespace KitBoxApp
             new BoxConstraint(heights, colors);
         }
 
-        static public void BuildDoorConstraint(string id)
+        static public void BuildDoorConstraint()
         {
             List<Tuple<int, int>> doorDimensions = new List<Tuple<int, int>>();
             List<string> colors = new List<string>();
