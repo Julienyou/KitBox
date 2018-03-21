@@ -90,6 +90,27 @@ namespace KitBoxApp
             bc.hcolors = colors;
         }
 
+        static public void GetAvailableDoorStyle(int width, int height)
+        {
+            List<string> colors = new List<string>();
+
+            sql = sql = "SELECT * FROM `Component` +" +
+                 "INNER JOIN `Color` ON Component.FK_Color=Color.PK_Color" +
+                 "WHERE `CupboardConstraint`.`FK_Reference='6', `width`=" + Convert.ToString(width) + ", `depth`=" + Convert.ToString(height);
+
+            command = new SQLiteCommand(sql, dbConnection);
+
+            reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                depths.Add(Convert.ToInt32(reader["Name"]));
+            }
+
+            dc.colors = colors;
+        }
+
+
+
 
 
 
@@ -158,6 +179,8 @@ namespace KitBoxApp
         {
             List<Tuple<int, int>> doorDimensions = new List<Tuple<int, int>>();
             List<string> colors = new List<string>();
+
+            DoorConstraint dc = new DoorConstraint();
 
             /*Start connection DataBase*/
             dbConnection.Open();

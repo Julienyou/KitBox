@@ -48,6 +48,10 @@ namespace KitBoxApp
             return false;
         }
 
-        public List<string> Colors { get => colors; }
+        public List<string> Colors
+        {
+            get => colors;
+            set { colors = value; }
+        }
     }
 }
