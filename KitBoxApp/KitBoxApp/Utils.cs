@@ -128,8 +128,6 @@ namespace KitBoxApp
         /// <param name="state">This is the state's id</param>
         static public void ChangeState(string id, string state)
         {
-            /*Change the Order State in database*/
-
             /*Start connection DataBase*/
             dbConnection.Open();
 
@@ -153,10 +151,11 @@ namespace KitBoxApp
 
             foreach (Dictionary<string, string> component in components)
             {
+                List<string> listjoin = new List<string>();
                 string sql = "SELECT * " +
                          "FROM ComponentData" +
-                         "WHERE ";
-                List<string> listjoin = new List<string>();
+                         "WHERE ";                
+
                 foreach (KeyValuePair<string,string> criteria in component)
                 {
                     listjoin.Add(criteria.Key + "=" + criteria.Value);
@@ -171,6 +170,8 @@ namespace KitBoxApp
                     component["price"] = reader["price"].ToString();
                 }
             }
+
+            /*End connection DataBase*/
             dbConnection.Close();
         }
 
@@ -207,11 +208,6 @@ namespace KitBoxApp
             {
                 throw new Exception("This order id exists already");
             }
-        }
-
-
-
-        
-
+        }      
     }
 }
