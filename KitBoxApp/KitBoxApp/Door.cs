@@ -12,10 +12,9 @@ namespace KitBoxApp
         private string color;
         private bool knop;
 
-        public Door(string color, bool knop)
+        public Door(string color)
         {
             this.color = color;
-            this.knop = knop;
         }
 
         public string Color
@@ -27,6 +26,7 @@ namespace KitBoxApp
         public bool Knop
         {
             get => knop;
+            set { Knop = value; }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

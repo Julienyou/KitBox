@@ -47,5 +47,7 @@ namespace KitBoxApp
             
             return false;
         }
+
+        public List<string> Colors { get => colors; }
     }
 }
