@@ -1,5 +1,6 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -7,19 +8,25 @@ using System.Threading.Tasks;
 
 namespace KitBoxApp
 {
-    class Cupboard
+    public class Cupboard : INotifyPropertyChanged
     {
-        private List<Box> boxes;
+        private ObservableCollection<Box> boxes = new ObservableCollection<Box> { };
         private int width;
         private int depth;
         private string steelCornerColor;
 
-        public Cupboard(List<Box> boxes, string steelCornerColor, int width, int depth)
+        public Cupboard(int width, int depth, string steelCornerColor)
         {
-            this.boxes = boxes;
-            this.steelCornerColor = steelCornerColor;
             this.width = width;
             this.depth = depth;
+            this.steelCornerColor = steelCornerColor;
+        }
+
+        // INotifyPropertyChanged Member
+        public event PropertyChangedEventHandler PropertyChanged;
+        void Notify(string propName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
 
         public int GetHeight()
@@ -39,15 +46,17 @@ namespace KitBoxApp
             set
             {
                 width = value;
+                Notify("Width");
             }
         }
 
         public string SteelCornerColor
         {
-            get => SteelCornerColor;
+            get => steelCornerColor;
             set
             {
                 steelCornerColor = value;
+                Notify("SteelCornerColor");
             }
         }
 
@@ -57,10 +66,11 @@ namespace KitBoxApp
             set
             {
                 depth = value;
+                Notify("Depth");
             }
         }
 
-        public List<Box> Boxes
+        public ObservableCollection<Box> Boxes
         {
             get => boxes;
         }

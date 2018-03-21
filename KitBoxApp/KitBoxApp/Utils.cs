@@ -13,15 +13,15 @@ namespace KitBoxApp
 
         /// <summary>
         ///     This method allows to create a order in Database.
-        ///     First, we check if the customer exists, if he does not exists we creat it. Then 
+        ///     First, we check if the customer exists, if he does not exists we creat it. Then
         ///         we look if the order's ID does not already exist.
         ///     Second, we create the order with the customer's email and the total price.
-        ///     Third, we add the link of the order's id at the component's code in the 
+        ///     Third, we add the link of the order's id at the component's code in the
         ///         OrderComponentLink table.
         /// </summary>
         /// <param name="order">This is the order we want to push in database</param>
         static public void ExportToDatabase(Order order)
-        {            
+        {
             /*Start connection DataBase*/
             dbConnection.Open();
 
@@ -47,7 +47,7 @@ namespace KitBoxApp
                 command = new SQLiteCommand(sql, dbConnection);
                 command.ExecuteNonQuery();
             }
-
+*/
             /*End connection DataBase*/
             dbConnection.Close();
         }
@@ -110,7 +110,7 @@ namespace KitBoxApp
                     { "width",  reader["width"].ToString() },
                     { "depth", reader["depth"].ToString() },
                     { "quantity", reader["quantity"].ToString() }
-                });                
+                });
             }
 
 
@@ -136,14 +136,14 @@ namespace KitBoxApp
                          "WHERE `Order`.`PK_IDOrder`='" + id + "'";
 
             SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
-            
+
             command.ExecuteNonQuery();
 
             /*End connection DataBase*/
             dbConnection.Close();
         }
 
-        
+
         static public void FetchFromDataBase(List<Dictionary<string, string>> components)
         {
             /*Start connection DataBase*/
@@ -154,7 +154,7 @@ namespace KitBoxApp
                 List<string> listjoin = new List<string>();
                 string sql = "SELECT * " +
                          "FROM ComponentData" +
-                         "WHERE ";                
+                         "WHERE ";
 
                 foreach (KeyValuePair<string,string> criteria in component)
                 {
@@ -208,6 +208,6 @@ namespace KitBoxApp
             {
                 throw new Exception("This order id exists already");
             }
-        }      
+        }
     }
 }

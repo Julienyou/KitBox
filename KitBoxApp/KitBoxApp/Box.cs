@@ -1,12 +1,14 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace KitBoxApp
 {
-    class Box
+
+    public class Box : INotifyPropertyChanged
     {
         private int height;
         private List<IAccessory> accessories;
@@ -14,13 +16,21 @@ namespace KitBoxApp
         private string lateralColor;
         private string horizontalColor;
 
-        public Box(int height, List<IAccessory> accessories, Cupboard cupboard, string lateralColor, string horizontalColor)
+
+        public Box(Cupboard cupboard, int height, string lateralColor, string horizontalColor)
         {
-            this.height = height;
-            this.accessories = accessories;
             this.cupboard = cupboard;
+            this.height = height;
             this.lateralColor = lateralColor;
             this.horizontalColor = horizontalColor;
+            this.accessories = new List<IAccessory> { };
+        }
+
+        // INotifyPropertyChanged Member
+        public event PropertyChangedEventHandler PropertyChanged;
+        void Notify(string propName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
 
         public void AddAccessory(IAccessory c)
@@ -46,6 +56,11 @@ namespace KitBoxApp
         public int Height
         {
             get => height;
+            set
+            {
+                height = value;
+                Notify("Height");
+            }
         }
 
         public Cupboard Cupboard
@@ -56,11 +71,21 @@ namespace KitBoxApp
         public string LateralColor
         {
             get => lateralColor;
+            set
+            {
+                lateralColor = value;
+                Notify("LateralColor");
+            }
         }
 
         public string HorizontalColor
         {
             get => horizontalColor;
+            set
+            {
+                horizontalColor = value;
+                Notify("HorizontalColor");
+            }
         }
     }
 }

@@ -7,7 +7,7 @@ using System.Data.SQLite;
 
 namespace KitBoxApp
 {
-    class Order
+    public class Order
     {
 
         #region Attributes
@@ -77,10 +77,10 @@ namespace KitBoxApp
 
         #endregion
         #region Methods
-  
+
         //---Methods
         public void ComputePrice()
-        {            
+        {
             foreach (Dictionary <string, string> component in components)
             {
                 string value;
@@ -90,8 +90,8 @@ namespace KitBoxApp
                 }
             }
         }
+*/
     }
 
         #endregion
 }
-
