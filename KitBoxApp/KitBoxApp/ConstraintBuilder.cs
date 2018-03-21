@@ -14,7 +14,6 @@ namespace KitBoxApp
 
         static public void BuildCupboardConstraint()
         {
-            List<int> heights = new List<int>();
             List<int> widths = new List<int>();
             
             int maxHeight;
@@ -55,9 +54,9 @@ namespace KitBoxApp
             cc.Depths = depths;
         }
 
-        static public void GetAvailableHeight(int width)
+        static public void GetAvailableHeight(int width, int depth)
         {
-            List<int> depths = new List<int>();
+            List<int> heights = new List<int>();
 
             sql = "SELECT * FROM `CupboardConstraint` WHERE `CupboardConstraint`.`FK_Reference='5', `width`=" + Convert.ToString(width) + ", `depth`=" + Convert.ToString(depth);
 
@@ -69,8 +68,29 @@ namespace KitBoxApp
                 depths.Add(Convert.ToInt32(reader["height"]));
             }
 
-            bc.Depths = depths;
+            bc.Heights = heights;
         }
+
+        static public void GetAvailableHPaneColor(int width, int depth, int height)
+        {
+            List<string> colors = new List<string>();
+
+            sql = "SELECT * FROM `Component` +" +
+                 "INNER JOIN `Color` ON Component.FK_Color=Color.PK_Color" +
+                 "WHERE `CupboardConstraint`.`FK_Reference='5', `width`=" + Convert.ToString(width) + ", `depth`=" + Convert.ToString(depth) + ", `height`=" + Convert.ToString(height);
+
+            command = new SQLiteCommand(sql, dbConnection);
+
+            reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                depths.Add(Convert.ToInt32(reader["Name"]));
+            }
+
+            bc.hcolors = colors;
+        }
+
+
 
 
 
