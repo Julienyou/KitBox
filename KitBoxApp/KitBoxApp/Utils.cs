@@ -47,7 +47,6 @@ namespace KitBoxApp
                 command = new SQLiteCommand(sql, dbConnection);
                 command.ExecuteNonQuery();
             }
-*/
             /*End connection DataBase*/
             dbConnection.Close();
         }
@@ -102,7 +101,7 @@ namespace KitBoxApp
             while (reader.Read())
             {
                 /*Warning not instock*/
-                order.AddComponent(new Dictionary<string, string> {
+                KitComposer.AddComponent(order, new Dictionary<string, string> {
                     { "code", reader["code"].ToString() },
                     { "reference", reader["ref_name"].ToString() },
                     { "color", reader["color"].ToString()},

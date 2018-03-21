@@ -8,13 +8,26 @@ namespace KitBoxApp
 {
     static class KitComposer
     {
+        /// <summary>
+        ///     Completes a specific order with the cupboard given in parameter
+        ///     and generates a list of components.
+        /// </summary>
+        /// <param name="order">Represents the order that is going to receive the list of components</param>
+        /// <param name="cupboard">The cupboard that is going to be analysed to generate the component list.</param>
         static public void ComposeKit(Order order, Cupboard cupboard)
         {
             ComposeOrder(order, cupboard);
             Utils.FetchFromDataBase(order.Components);
         }
 
-        static private void AddComponent(Order order, Dictionary<string, string> mycomponent)
+        /// <summary>
+        ///     Automatically add a component to the order. If the component 
+        ///     already exists in the order, it automatically increments its
+        ///     quantity value by the quantity from the component to add.
+        /// </summary>
+        /// <param name="order">Represents the order to add to.</param>
+        /// <param name="mycomponent">Represents the component dictionnary to add.</param>
+        static public void AddComponent(Order order, Dictionary<string, string> mycomponent)
         {
             bool compfound = false;
             foreach (Dictionary<string, string> component in order.Components)
@@ -44,6 +57,14 @@ namespace KitBoxApp
             }
         }
 
+
+        /// <summary>
+        ///     Generates the components for the specified cupboard for the 
+        ///     specified order and determines what are the relevant creterias 
+        ///     for a database commponent checkout.
+        /// </summary>
+        /// <param name="order">Represents the order that is going to receive the list of components.</param>
+        /// <param name="cupboard">Represents the cupboard that is going to be analysed to generate the component list.</param>
         static private void ComposeOrder(Order order, Cupboard cupboard)
         {
             AddComponent(order, new Dictionary<string, string> {
@@ -67,6 +88,11 @@ namespace KitBoxApp
 
         #region ComposeOrder sub-methods
 
+        /// <summary>
+        ///     Adds side panes components based on box infos to the order.  
+        /// </summary>
+        /// <param name="order">Represents the order that is going to receive theses panes.</param>
+        /// <param name="box">Represents the box to analyse to retrieve the component details.</param>
         static private void AddPaneGD(Order order, Box box)
         {
             AddComponent(order, new Dictionary<string, string>() {
@@ -77,7 +103,12 @@ namespace KitBoxApp
                 { "quantity" , "2"}
             });
         }
-
+        
+        /// <summary>
+        ///     Adds top and bottom panes components based on box infos to the order.  
+        /// </summary>
+        /// <param name="order">Represents the order that is going to receive these panes.</param>
+        /// <param name="box">Represents the box to analyse to retrieve the component details.</param>
         static private void AddPaneHB(Order order, Box box)
         {
             AddComponent(order, new Dictionary<string, string>() {
@@ -89,6 +120,11 @@ namespace KitBoxApp
             });
         }
 
+        /// <summary>
+        ///     Adds the rear pane component based on box infos to the order.  
+        /// </summary>
+        /// <param name="order">Represents the order that is going to receive this pane.</param>
+        /// <param name="box">Represents the box to analyse to retrieve the component details.</param>
         static private void AddPaneAr(Order order, Box box)
         {
             AddComponent(order, new Dictionary<string, string>() {
@@ -100,6 +136,11 @@ namespace KitBoxApp
                 });
         }
 
+        /// <summary>
+        ///     Adds the mounts components based on box infos to the order.  
+        /// </summary>
+        /// <param name="order">Represents the order that is going to receive these mounts.</param>
+        /// <param name="box">Represents the box to analyse to retrieve the component details.</param>
         static private void AddMount(Order order, Box box)
         {
             AddComponent(order, new Dictionary<string, string>() {
@@ -109,6 +150,11 @@ namespace KitBoxApp
             });
         }
 
+        /// <summary>
+        ///     Adds the cross pieces components based on box infos to the order.  
+        /// </summary>
+        /// <param name="order">Represents the order that is going to receive these cross pieces.</param>
+        /// <param name="box">Represents the box to analyse to retrieve the component details.</param>
         static private void AddCrosspieceGD(Order order, Box box)
         {
             AddComponent(order, new Dictionary<string, string>() {
@@ -118,6 +164,11 @@ namespace KitBoxApp
             });
         }
 
+        /// <summary>
+        ///     Adds the cross pieces components based on box infos to the order.  
+        /// </summary>
+        /// <param name="order">Represents the order that is going to receive these cross pieces.</param>
+        /// <param name="box">Represents the box to analyse to retrieve the component details.</param>
         static private void AddCrosspieceAr(Order order, Box box)
         {
             AddComponent(order, new Dictionary<string, string>() {
@@ -127,6 +178,11 @@ namespace KitBoxApp
             });
         }
 
+        /// <summary>
+        ///     Adds the cross pieces components based on box infos to the order.  
+        /// </summary>
+        /// <param name="order">Represents the order that is going to receive these cross pieces.</param>
+        /// <param name="box">Represents the box to analyse to retrieve the component details.</param>
         static private void AddCrosspieceAv(Order order, Box box)
         {
             AddComponent(order, new Dictionary<string, string>() {
@@ -136,6 +192,11 @@ namespace KitBoxApp
             });
         }
 
+        /// <summary>
+        ///     Adds the accessory components based on box infos to the order.  
+        /// </summary>
+        /// <param name="order">Represents the order that is going to receive these accessories.</param>
+        /// <param name="box">Represents the box to analyse to retrieve the component details.</param>
         static private void AddAccessories(Order order, Box box)
         {
             foreach (IAccessory accessory in box.Accessories)
@@ -147,6 +208,14 @@ namespace KitBoxApp
                         { "width",  box.Cupboard.Width.ToString() },
                         { "quantity", "2" }
                     });
+                    Door door = (Door)accessory;
+                    if (door.Knop)
+                    {
+                        AddComponent(order, new Dictionary<string, string>() {
+                        { "reference", "Coupelles" },
+                        { "quantity", "2" }
+                    });
+                    }
                 }
             }
         }
