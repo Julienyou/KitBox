@@ -55,23 +55,6 @@ namespace KitBoxApp
             cc.Depths = depths;
         }
 
-        static public void GetAvailableHeight(int width)
-        {
-            List<int> depths = new List<int>();
-
-            sql = "SELECT * FROM `CupboardConstraint` WHERE `CupboardConstraint`.`FK_Reference='5', `width`=" + Convert.ToString(width) + ", `depth`=" + Convert.ToString(depth);
-
-            command = new SQLiteCommand(sql, dbConnection);
-
-            reader = command.ExecuteReader();
-            while (reader.Read())
-            {
-                depths.Add(Convert.ToInt32(reader["height"]));
-            }
-
-            bc.Depths = depths;
-        }
-
 
 
         /*sql = "SELECT * FROM `CupboardConstraint` WHERE `CupboardConstraint`.`FK_Reference='1'";
