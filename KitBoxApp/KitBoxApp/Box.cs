@@ -10,16 +10,19 @@ namespace KitBoxApp
 
     public class Box : INotifyPropertyChanged
     {
-        private int height=70;
+        private int height;
         private List<IAccessory> accessories;
         private Cupboard cupboard;
         private string lateralColor;
         private string horizontalColor;
 
 
-        public Box(Cupboard cupboard)
+        public Box(Cupboard cupboard, int height, string lateralColor, string horizontalColor)
         {
             this.cupboard = cupboard;
+            this.height = height;
+            this.lateralColor = lateralColor;
+            this.horizontalColor = horizontalColor;
             this.accessories = new List<IAccessory> { };
         }
 

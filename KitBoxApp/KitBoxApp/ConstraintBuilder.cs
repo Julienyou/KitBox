@@ -49,7 +49,7 @@ namespace KitBoxApp
             /*End connection DataBase*/
             dbConnection.Close();
 
-            new CupboardConstraint(depths, widths, maxHeight);
+            new CupboardConstraint(depths, widths,null,maxHeight);
         }
 
         static public void BuildBoxConstraint(string id)
@@ -86,7 +86,7 @@ namespace KitBoxApp
             /*End connection DataBase*/
             dbConnection.Close();
 
-            new BoxConstraint(heights, colors);
+            new BoxConstraint(heights, colors, null);
         }
 
         static public void BuildDoorConstraint(string id)

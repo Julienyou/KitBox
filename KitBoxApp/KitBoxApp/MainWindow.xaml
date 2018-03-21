@@ -33,11 +33,11 @@
                     </Grid.RowDefinitions>
                     <StackPanel  x:Name="boxesConfig">
                         <TextBlock Style="{StaticResource labelStyle}">Pane color</TextBlock>
-                        <ComboBox Style="{StaticResource ComboStyle}" x:Name="paneColorCombo" SelectedItem="{Binding Path=PaneColor}"/>
+                        <ComboBox Style="{StaticResource ComboStyle}" x:Name="paneColorCombo" SelectedItem="{Binding Path=LateralColor}"/>
                         <TextBlock Style="{StaticResource labelStyle}">Top and bottom color</TextBlock>
-                        <ComboBox Style="{StaticResource ComboStyle}" x:Name="hPaneColorCombo" SelectedItem="{Binding Path=HPaneColor}"/>
+                        <ComboBox Style="{StaticResource ComboStyle}" x:Name="hPaneColorCombo" SelectedItem="{Binding Path=HorizontalColor}"/>
                         <TextBlock Style="{StaticResource labelStyle}">Door style</TextBlock>
-                        <ComboBox Style="{StaticResource ComboStyle}" x:Name="doorStyleCombo" SelectedItem="{Binding Path=Accessories[0].Color}" IsSynchronizedWithCurrentItem="True"/>
+                        <ComboBox Style="{StaticResource ComboStyle}" x:Name="doorStyleCombo" SelectedItem="{Binding Path=Accessories[0].Color}"/>
                         <TextBlock Style="{StaticResource labelStyle}">Height</TextBlock>
                         <ComboBox Style="{StaticResource ComboStyle}" x:Name="boxHeighCombo"  SelectedItem="{Binding Path=Height}"/>
                     </StackPanel>
