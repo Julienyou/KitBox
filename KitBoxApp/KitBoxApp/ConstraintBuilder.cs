@@ -10,29 +10,21 @@ namespace KitBoxApp
     static class ConstraintBuilder
     {
         static private SQLiteConnection dbConnection = new SQLiteConnection("Data Source=db.sqlite;Version=3;");
-        
+
 
         static public void BuildCupboardConstraint()
         {
             List<int> heights = new List<int>();
             List<int> widths = new List<int>();
-            List<int> depths = new List<int>();
+            
             int maxHeight;
+
+            CupboardConstraint cc = new CupboardConstraint();
 
             /*Start connection DataBase*/
             dbConnection.Open();
 
-            string sql = "SELECT * FROM `CupboardConstraint` WHERE `CupboardConstraint`.`FK_Reference='1'";
-
-            SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
-
-            SQLiteDataReader reader = command.ExecuteReader();
-            while (reader.Read())
-            {
-                heights.Add(Convert.ToInt32(reader["height"]));
-            }
-            
-            sql = "SELECT * FROM `CupboardConstraint` WHERE `CupboardConstraint`.`FK_Reference='5'";
+            string sql = "SELECT * FROM `CupboardConstraint` WHERE `CupboardConstraint`.`FK_Reference='5'";
 
             command = new SQLiteCommand(sql, dbConnection);
 
@@ -40,22 +32,76 @@ namespace KitBoxApp
             while (reader.Read())
             {
                 widths.Add(Convert.ToInt32(reader["width"]));
+            }
+
+            cc.Widths = widths;
+
+        }
+
+        static public void GetAvailableDepth(int width)
+        {
+            List<int> depths = new List<int>();
+
+            sql = "SELECT * FROM `CupboardConstraint` WHERE `CupboardConstraint`.`FK_Reference='5', `width`=" + Convert.ToString(height);
+
+            command = new SQLiteCommand(sql, dbConnection);
+
+            reader = command.ExecuteReader();
+            while (reader.Read())
+            {
                 depths.Add(Convert.ToInt32(reader["depth"]));
             }
 
-            maxHeight = heights.Max();
-
-
-            /*End connection DataBase*/
-            dbConnection.Close();
-
-            new CupboardConstraint(depths, widths,null,maxHeight);
+            cc.Depths = depths;
         }
+
+        static public void GetAvailableHeight(int width)
+        {
+            List<int> depths = new List<int>();
+
+            sql = "SELECT * FROM `CupboardConstraint` WHERE `CupboardConstraint`.`FK_Reference='5', `width`=" + Convert.ToString(width) + ", `depth`=" + Convert.ToString(depth);
+
+            command = new SQLiteCommand(sql, dbConnection);
+
+            reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                depths.Add(Convert.ToInt32(reader["height"]));
+            }
+
+            bc.Depths = depths;
+        }
+
+
+
+        /*sql = "SELECT * FROM `CupboardConstraint` WHERE `CupboardConstraint`.`FK_Reference='1'";
+
+        SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
+
+        SQLiteDataReader reader = command.ExecuteReader();
+        while (reader.Read())
+        {
+            heights.Add(Convert.ToInt32(reader["height"]));
+        }
+
+
+
+        maxHeight = heights.Max();
+
+
+        /*End connection DataBase*/
+        /*dbConnection.Close();
+
+         new CupboardConstraint(depths, widths,null,maxHeight);
+     }*/
 
         static public void BuildBoxConstraint()
         {
             List<int> heights = new List<int>();
             List<string> colors = new List<string>();
+            List<int> widths = new List<int>();
+
+            BoxConstraint bc = new BoxConstraint();
 
             /*Start connection DataBase*/
             dbConnection.Open();
@@ -81,7 +127,6 @@ namespace KitBoxApp
             {
                 colors.Add(reader["Name"].ToString());
             }
-
 
             /*End connection DataBase*/
             dbConnection.Close();
@@ -124,6 +169,21 @@ namespace KitBoxApp
             dbConnection.Close();
 
             new DoorConstraint(colors, doorDimensions);
+        }
+
+        static public void InterfaceConstraint()
+        {
+            List<int> widths = List<int>();
+
+            string sql = "SELECT * FROM `CupboardConstraint` WHERE `CupboardConstraint`.`FK_Reference='5'";
+
+            command = new SQLiteCommand(sql, dbConnection);
+
+            reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                widths.Add(Convert.ToInt32(reader["width"]));
+            }
         }
     }
 }
