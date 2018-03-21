@@ -14,6 +14,7 @@ namespace KitBoxApp
 
         private string id = null;
         private int totalPrice = 0;
+        private int remnantSale = 0;
         private Customer customer = null;
         private string state;
 
@@ -50,6 +51,16 @@ namespace KitBoxApp
             }
         }
 
+        public int RemnantSale
+        {
+            get => remnantSale;
+
+            set
+            {
+                remnantSale = value;
+            }
+        }
+
         public Customer Customer
         {
             get => customer;
@@ -66,7 +77,11 @@ namespace KitBoxApp
             }
         }
 
-        public List<Dictionary<string, string>> Components { get => components; set => components = value; }
+        public List<Dictionary<string, string>> Components
+        {
+            get => components;
+            set { components = value; }
+        }
 
 
         /*Functions if we created an Order*/
