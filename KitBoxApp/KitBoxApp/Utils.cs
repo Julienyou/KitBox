@@ -31,8 +31,9 @@ namespace KitBoxApp
             CheckOrderId(order);
 
             /*If the customer and the id to order are good*/
-            string sql = "insert into `Order` ('PK_IDOrder', 'FK_Customer', 'FK_State', 'TotalPrice')" +
-                         "values ('" + order.Id + "','" + customer.Email + "','" + "1" + "','" + order.TotalPrice.ToString() + "')";
+            string sql = "insert into `Order` ('PK_IDOrder', 'FK_Customer', 'FK_State', 'RemnantSale', 'TotalPrice')" +
+                         "values ('" + order.Id + "','" + customer.Email + "','" + "1" + "','" + 
+                         order.RemnantSale.Tostring() + order.TotalPrice.ToString() + "')";
 
             SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
             command.ExecuteNonQuery();
@@ -47,7 +48,7 @@ namespace KitBoxApp
                 command = new SQLiteCommand(sql, dbConnection);
                 command.ExecuteNonQuery();
             }
-*/
+
             /*End connection DataBase*/
             dbConnection.Close();
         }
@@ -86,6 +87,8 @@ namespace KitBoxApp
                                         reader["Town"].ToString());
 
                 order.TotalPrice = Convert.ToInt32(reader["TotalPrice"]);
+
+                order.RemnantSale = reader["RemnantSale"].ToString();
 
                 order.State = reader["Name"].ToString();
             }
