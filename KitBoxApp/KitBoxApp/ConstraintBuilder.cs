@@ -109,6 +109,44 @@ namespace KitBoxApp
             dc.colors = colors;
         }
 
+        static public void GetAvailableVPaneColor(int width, int depth, int height)
+        {
+            List<string> colors = new List<string>();
+
+            sql = "SELECT * FROM `Component` +" +
+                 "INNER JOIN `Color` ON Component.FK_Color=Color.PK_Color" +
+                 "WHERE `CupboardConstraint`.`FK_Reference='4', `width`=" + Convert.ToString(width) + ", `depth`=" + Convert.ToString(depth) + ", `height`=" + Convert.ToString(height);
+
+            command = new SQLiteCommand(sql, dbConnection);
+
+            reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                depths.Add(Convert.ToInt32(reader["Name"]));
+            }
+
+            bc.vcolors = colors;
+        }
+
+        static public void GetAvailableSteelCornerColor(int height)
+        {
+            List<string> colors = new List<string>();
+
+            sql = "SELECT * FROM `Component` +" +
+                 "INNER JOIN `Color` ON Component.FK_Color=Color.PK_Color" +
+                 "WHERE `CupboardConstraint`.`FK_Reference='1', `height` >=" + Convert.ToString(height);
+
+            command = new SQLiteCommand(sql, dbConnection);
+
+            reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                depths.Add(Convert.ToInt32(reader["Name"]));
+            }
+
+            cc.steelcornercolors = colors;
+        }
+
 
 
 
