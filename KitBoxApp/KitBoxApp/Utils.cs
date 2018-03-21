@@ -32,7 +32,7 @@ namespace KitBoxApp
 
             /*If the customer and the id to order are good*/
             string sql = "insert into `Order` ('PK_IDOrder', 'FK_Customer', 'FK_State', 'RemnantSale', 'TotalPrice')" +
-                         "values ('" + order.Id + "','" + customer.Email + "','" + "1" + "','" + 
+                         "values ('" + order.Id + "','" + customer.Email + "','" + "1" + "','" +
                          order.RemnantSale.ToString() + "','" + order.TotalPrice.ToString() + "')";
 
             SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
@@ -52,7 +52,7 @@ namespace KitBoxApp
                 /*Remove stock in Component table*/
                 sql = "SELECT * " +
                       "FROM `Component` " +
-                      "WHERE `Component`.`Code`='" + component["code"] + "'"; 
+                      "WHERE `Component`.`Code`='" + component["code"] + "'";
 
                 command = new SQLiteCommand(sql, dbConnection);
                 SQLiteDataReader reader = command.ExecuteReader();
@@ -128,7 +128,7 @@ namespace KitBoxApp
             while (reader.Read())
             {
                 /*Warning not instock*/
-                order.AddComponent(new Dictionary<string, string> {
+                KitComposer.AddComponent(order, new Dictionary<string, string> {
                     { "code", reader["code"].ToString() },
                     { "reference", reader["ref_name"].ToString() },
                     { "color", reader["color"].ToString()},
