@@ -1,0 +1,150 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:KitBoxApp">
+
+
+    <DrawingBrush x:Key="BackbroungColor">#EEEEEE</DrawingBrush>
+    <DrawingBrush x:Key="SecondaryBackgroud">#FAFAFA</DrawingBrush>
+    <DrawingBrush x:Key="DarckBackgroud">#DDDDDD</DrawingBrush>
+    <DrawingBrush x:Key="ActionColor">#46A1FB</DrawingBrush>
+    <DrawingBrush x:Key="ActionBackground">#E6F2FE</DrawingBrush>
+
+    <Style x:Key="textBoxStyle" TargetType="{x:Type TextBox}">
+        <Setter Property="Padding" Value="8"/>
+    </Style>
+
+    <Style x:Key="button" TargetType="{x:Type Button}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{StaticResource ActionColor}"/>
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="Panel" Padding="5">
+                        <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter TargetName="Panel" Property="Background" Value="{StaticResource ActionBackground}" />
+                        </Trigger>
+                        <Trigger Property="IsFocused" Value="False">
+                            <Setter TargetName="Panel" Property="Background" Value="Transparent" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+               
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    <Style x:Key="labelStyle" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="Margin" Value="0,20,0,5"/>
+    </Style>
+    
+    <Style x:Key="ComboStyle" TargetType="{x:Type ComboBox}">
+        <Setter Property="Padding" Value="8"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="ItemContainerStyle">
+            <Setter.Value>
+                <Style TargetType="{x:Type ComboBoxItem}">
+                    <Setter Property="Margin" Value="10"/>
+                    <Setter Property="FontSize" Value="14"/>
+                    <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type ComboBoxItem}">
+                                <ContentPresenter/>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    <Style x:Key="roundedButton" TargetType="{x:Type Button}">
+        <Setter Property="Margin" Value="0,10"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid>
+                        <Ellipse Width="40" Height="40" Fill="{StaticResource ActionColor}"/>
+                        <ContentPresenter
+                                       VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    </Grid>
+                </ControlTemplate>
+
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    <Style x:Key="TabItemStyle"  TargetType="TabItem">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TabItem">
+                    <Grid Name="Panel">
+                        <ContentPresenter x:Name="ContentSite"
+                                        TextBlock.FontSize="14"
+                                        FocusVisualStyle="{x:Null}"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"
+                                        ContentSource="Header"
+                                        Margin="15,7"
+                                        />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="Panel" Property="Background" Value="{StaticResource SecondaryBackgroud}" />
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="False">
+                            <Setter TargetName="Panel" Property="Background" Value="{StaticResource DarckBackgroud}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="BoxShapeListStyle" TargetType="ListViewItem">
+        <Setter Property="Padding" Value="0,0"/>
+        <Setter Property="Margin" Value="5,0,0,0"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListViewItem}">
+                    <Border Name="RootElement">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Selected">
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetName="BorderBrush" Storyboard.TargetProperty="Color" Duration="0:0:0.1" To="#E6F2FE"/>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Unselected">
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetName="BorderBrush" Storyboard.TargetProperty="Color" Duration="0:0:0.1" To="Transparent"/>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <Border.Background>
+                            <SolidColorBrush x:Name="BorderBrush" Color="Transparent"/>
+                        </Border.Background>
+                        <ContentPresenter x:Name="ContentPresenter" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Image x:Shared="false" x:Key="AddIcon" Source="C:\Users\guill\source\repos\KitBox\KitBoxApp\KitBoxApp\ic_add_white_24dp\ic_add_white_24dp\web\ic_add_white_24dp_1x.png"/>
+    <Image x:Shared="false" x:Key="DeleteIcon" Source="C:\Users\guill\source\repos\KitBox\KitBoxApp\KitBoxApp\ic_remove_white_24dp\ic_remove_white_24dp\web\ic_remove_white_24dp_1x.png"/>
+    <Image x:Shared="false" x:Key="RefreshIcon" Source="C:\Users\guill\source\repos\KitBox\KitBoxApp\KitBoxApp\ic_clear_white_24dp\ic_clear_white_24dp\web\ic_clear_white_24dp_1x.png "/>
+    <Image x:Shared="false" x:Key="ValdidateIcon" Source="C:\Users\guill\source\repos\KitBox\KitBoxApp\KitBoxApp\ic_done_white_24dp\ic_done_white_24dp\web\ic_done_white_24dp_1x.png"  />
+</ResourceDictionary>

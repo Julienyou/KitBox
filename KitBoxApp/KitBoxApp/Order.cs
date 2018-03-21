@@ -7,12 +7,12 @@ using System.Data.SQLite;
 
 namespace KitBoxApp
 {
-    class Order
+    public class Order
     {
         private string id = null;
         private int totalPrice = 0;
         private Customer customer = null;
-        private List<Component> components;
+//      private List<Component> components;
 
         /*classes not yet created*/
         //private State state; 
@@ -47,11 +47,11 @@ namespace KitBoxApp
             get => Customer;
         }
 
-        public List<Component> Components
+ /*       public List<Component> Components
         {
             get => components;
         }
-
+*/
         public void ComputePrice()
         {
             /*Class component not yet created*/
@@ -70,10 +70,11 @@ namespace KitBoxApp
         {
             customer = new Customer(email, firstName, lastName, street, town);
         }
-
+/*
         public void AddComponent(Component component)
         {
             components.Add(component);
         }
+*/
     }
 }

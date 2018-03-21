@@ -5,58 +5,89 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KitBoxApp"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="887" Width="1362.575" WindowStartupLocation="CenterScreen" WindowState="Maximized">
 
-    <Window.Resources>
-        <Style x:Key="labelStyle" TargetType="{x:Type TextBlock}">
-            <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="Margin" Value="0,20,0,0"/>
-        </Style>
-    </Window.Resources>
-
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="10*"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <TabControl HorizontalAlignment="Left" Margin="1,1,0,1" Grid.Row="0" Width="169">
+    <Grid Background="{StaticResource BackbroungColor}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="8*"/>
+        </Grid.ColumnDefinitions>
+        <TabControl  ItemContainerStyle="{StaticResource TabItemStyle}" Background="{StaticResource SecondaryBackgroud}" Margin="1,1,0,1" Grid.Row="0" Grid.Column="0" UseLayoutRounding="False" Padding="40,0,40,0" BorderThickness="0">
             <TabItem Header="Cupboard" RenderTransformOrigin="0.5,0.5">
-                <ScrollViewer>
-                    <StackPanel x:Name="stackPanel">
-                        <TextBlock Style="{StaticResource labelStyle}">Height</TextBlock>
-                        <TextBlock Background="#FFE4E4E4">250</TextBlock>
-                        <TextBlock Style="{StaticResource labelStyle}">Width</TextBlock>
-                        <ComboBox x:Name="widthComboBox" SelectedItem="{Binding Path=Width}"/>
-                        <TextBlock Style="{StaticResource labelStyle}">Depth</TextBlock>
-                        <ComboBox x:Name="depthComboBox" SelectedItem="{Binding Path=Depth}"/>
-                        <TextBlock Style="{StaticResource labelStyle}">Steel Corner</TextBlock>
-                        <ComboBox x:Name="steelCornerCombo"/>
-                    </StackPanel>
-                </ScrollViewer>
+                <StackPanel x:Name="cupboardConfig">
+                    <TextBlock Style="{StaticResource labelStyle}" >Height</TextBlock>
+                    <TextBlock x:Name="cupboardHeight" Padding="8" Background="#FFE6E6E6"/>
+                    <TextBlock Style="{StaticResource labelStyle}">Width</TextBlock>
+                    <ComboBox Style="{StaticResource ComboStyle}" x:Name="widthComboBox" SelectedItem="{Binding Path=Width}"/>
+                    <TextBlock Style="{StaticResource labelStyle}">Depth</TextBlock>
+                    <ComboBox Style="{StaticResource ComboStyle}" x:Name="depthComboBox" SelectedItem="{Binding Path=Depth}"/>
+                    <TextBlock Style="{StaticResource labelStyle}">Steel Corner</TextBlock>
+                    <ComboBox Style="{StaticResource ComboStyle}" x:Name="steelCornerCombo"/>
+                </StackPanel>
             </TabItem>
-            <TabItem Header="Boxes">
+            <TabItem  Header="Boxes">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition/>
                         <RowDefinition Height="20"/>
                     </Grid.RowDefinitions>
-
-                    <ScrollViewer Grid.Row="0" DockPanel.Dock="Top">
-                        <StackPanel>
-                            <ComboBox SelectedIndex="0" HorizontalContentAlignment="Center" x:Name="boxChoiseCombo">
-                            </ComboBox>
-                            <TextBlock Style="{StaticResource labelStyle}">Pane color</TextBlock>
-                            <ComboBox x:Name="paneColorCombo"/>
-                            <TextBlock Style="{StaticResource labelStyle}">Door style</TextBlock>
-                            <ComboBox x:Name="doorStyleCombo"/>
-                            <TextBlock Style="{StaticResource labelStyle}">Height</TextBlock>
-                            <ComboBox x:Name="boxHeighCombo"/>
-                        </StackPanel>
-                </ScrollViewer>
-                    <Button Grid.Row="1" Content="Add box" Height="20" Width="75"/>
+                    <StackPanel  x:Name="boxesConfig">
+                        <TextBlock Style="{StaticResource labelStyle}">Pane color</TextBlock>
+                        <ComboBox Style="{StaticResource ComboStyle}" x:Name="paneColorCombo" SelectedItem="{Binding Path=LateralColor}"/>
+                        <TextBlock Style="{StaticResource labelStyle}">Top and bottom color</TextBlock>
+                        <ComboBox Style="{StaticResource ComboStyle}" x:Name="hPaneColorCombo" SelectedItem="{Binding Path=HorizontalColor}"/>
+                        <TextBlock Style="{StaticResource labelStyle}">Door style</TextBlock>
+                        <ComboBox Style="{StaticResource ComboStyle}" x:Name="doorStyleCombo" SelectedItem="{Binding Path=Accessories[0].Color}"/>
+                        <TextBlock Style="{StaticResource labelStyle}">Height</TextBlock>
+                        <ComboBox Style="{StaticResource ComboStyle}" x:Name="boxHeighCombo"  SelectedItem="{Binding Path=Height}"/>
+                    </StackPanel>
                 </Grid>
             </TabItem>
         </TabControl>
-        <Button Content="Cancel" Grid.Row="1"/>
+        <ListView  
+            x:Name="drawBox" 
+            Background="Transparent"
+            Grid.Column="1" 
+            Grid.Row="0" 
+            ItemsSource="{Binding Path=Boxes}"  
+            IsSynchronizedWithCurrentItem="True" 
+            HorizontalAlignment="Center" 
+            BorderThickness="0" 
+            Padding="0" 
+            Margin="0,100"
+            VerticalAlignment="Bottom" 
+            RenderTransformOrigin="0.5,0.5" 
+            Panel.ZIndex="-2" 
+            ScrollViewer.CanContentScroll="False" 
+            SizeChanged="drawBox_SizeChanged" 
+            ItemContainerStyle="{StaticResource BoxShapeListStyle}">
+
+            <ListView.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleY="-1"/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                </TransformGroup>
+            </ListView.RenderTransform>
+
+            <ListView.ItemTemplate >
+                <DataTemplate x:Name="ShapeTemplate" >
+                    <local:BoxShape x:Name="Shape"   BHeight="{Binding Path=Height}" BWidth="{Binding Path=Cupboard.Width}" Door="{Binding Path=Accessories[0].Color}"  Stroke="{StaticResource ActionColor}" StrokeThickness="2" Margin="0,0,0,0" RenderTransformOrigin="0.5,0.5"/>
+                    <DataTemplate.Triggers>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}},Path=IsSelected}" Value="True">
+                            <Setter TargetName="Shape" Property="StrokeThickness" Value="4"/>
+                        </DataTrigger>
+                    </DataTemplate.Triggers>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Canvas Grid.Column="1">
+            <StackPanel Canvas.Right="30" Canvas.Top="30">
+                <Button x:Name="add_button" Style="{StaticResource roundedButton}" Click="add_button_Click" Content="{StaticResource AddIcon}"/>
+                <Button x:Name="delete_buttn" Style="{StaticResource roundedButton}" Content="{StaticResource DeleteIcon}" Click="delete_buttn_Click"/>
+                <Button x:Name="validate_button" Style="{StaticResource roundedButton}" Click="validate_button_Click" Content="{StaticResource ValdidateIcon}"/>
+                <Button x:Name="reset_button"  Style="{StaticResource roundedButton}" Click="reset_button_Click"  Content="{StaticResource RefreshIcon}"/>
+            </StackPanel>
+        </Canvas>
     </Grid>
 </Window>

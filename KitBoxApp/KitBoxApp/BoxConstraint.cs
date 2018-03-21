@@ -7,15 +7,17 @@ using KitBoxApp.Properties;
 
 namespace KitBoxApp
 {
-    class BoxConstraint : IConstraintChecker<Box>
+    public class BoxConstraint : IConstraintChecker<Box>
     {
         private List<int> heights;
-        private List<string> colors;
+        private List<string> vColors;
+        private List<string> hColors;
 
-        public BoxConstraint(List<int> heights, List<string> colors)
+        public BoxConstraint(List<int> heights, List<string> vColors, List<string> hColors)
         {
             this.heights = heights;
-            this.colors = colors;
+            this.vColors = vColors;
+            this.hColors = hColors;
         }
 
         public bool Check(Box b)
@@ -27,5 +29,10 @@ namespace KitBoxApp
             return false;
             //Don't forget to check the availibility of the parts (variable)
         }
+
+        public List<string> VColors { get => vColors; }
+        public List<string> HColors { get => hColors; }
+        public List<int> Heights { get => heights; }
+
     }
 }
