@@ -179,12 +179,12 @@ namespace KitBoxApp
             {
                 List<string> listjoin = new List<string>();
                 string sql = "SELECT * " +
-                         "FROM ComponentData" +
+                         "FROM ComponentData " +
                          "WHERE ";
 
                 foreach (KeyValuePair<string,string> criteria in component)
                 {
-                    listjoin.Add(criteria.Key + "=" + criteria.Value);
+                    listjoin.Add(criteria.Key + "='" + criteria.Value + "'");
                 }
                 sql += String.Join(" AND ", listjoin);
 
@@ -192,8 +192,8 @@ namespace KitBoxApp
                 SQLiteDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    component["code"] = reader["code"].ToString();
-                    component["price"] = reader["price"].ToString();
+                    component.Add("code", reader["code"].ToString());
+                    component.Add("price", reader["price"].ToString());
                 }
             }
 
