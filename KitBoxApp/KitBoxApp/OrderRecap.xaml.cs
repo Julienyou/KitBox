@@ -33,7 +33,10 @@ namespace KitBoxApp
 
         private void confirm_button_Click(object sender, RoutedEventArgs e)
         {
-
+            if (firstNameCombo.Text.Trim() == "" && lastNameCombo.Text.Trim() == "" && emailCombo.Text.Trim() == "" && adressCombo.Text.Trim() == "")
+                MessageBox.Show("You must complete all the field");
+            else
+                MessageBox.Show("Thank you for ordering");
         }
     }
 }
