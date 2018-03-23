@@ -18,6 +18,7 @@ namespace KitBoxApp
         {
             ComposeOrder(order, cupboard);
             Utils.FetchFromDataBase(order.Components);
+            order.ComputePrice();
         }
 
         /// <summary>
@@ -35,18 +36,17 @@ namespace KitBoxApp
                 bool compexists = true;
                 foreach (string key in mycomponent.Keys) //Could use a while but mycomponent.keys is not indexable directly. Maybe there is a way to make it so.
                 {
-                    if (component.ContainsKey(key) & compexists)
+                    if (component.ContainsKey(key) && compexists)
                     {
-                        if (key != "quantity")
+                        if (!key.Equals("quantity"))
                         {
                             compexists = (component[key] == mycomponent[key]);
                         }
                     }
                 }
-
                 if (compexists)
                 {
-                    int quantity = Int32.Parse(component["quantity"]) + Int32.Parse(mycomponent["quantity"]);
+                    int quantity = Convert.ToInt32(component["quantity"]) + Convert.ToInt32(mycomponent["quantity"]);
                     component["quantity"] = quantity.ToString();
                     compfound = true;
                 }

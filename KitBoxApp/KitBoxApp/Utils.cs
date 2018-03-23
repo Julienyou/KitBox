@@ -184,7 +184,10 @@ namespace KitBoxApp
 
                 foreach (KeyValuePair<string,string> criteria in component)
                 {
-                    listjoin.Add(criteria.Key + "='" + criteria.Value + "'");
+                    if (!criteria.Key.Equals("quantity"))
+                    {
+                        listjoin.Add(criteria.Key + "='" + criteria.Value + "'");
+                    }
                 }
                 sql += String.Join(" AND ", listjoin);
 
