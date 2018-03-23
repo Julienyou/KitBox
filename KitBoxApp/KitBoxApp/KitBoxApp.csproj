@@ -89,6 +89,8 @@
     <Compile Include="OrderConfirm.xaml.cs">
       <DependentUpon>OrderConfirm.xaml</DependentUpon>
     </Compile>
+    <Compile Include="KitComposer.cs" />
+
     <Compile Include="Utils.cs" />
     <Compile Include="OrderRecap.xaml.cs">
       <DependentUpon>OrderRecap.xaml</DependentUpon>
