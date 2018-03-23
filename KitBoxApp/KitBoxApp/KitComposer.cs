@@ -173,7 +173,7 @@ namespace KitBoxApp
         {
             AddComponent(order, new Dictionary<string, string>() {
                 { "reference", "Traverse Ar" },
-                { "depth", box.Cupboard.Width.ToString()},
+                { "width", box.Cupboard.Width.ToString()},
                 { "quantity" , "2"}
             });
         }
@@ -187,7 +187,7 @@ namespace KitBoxApp
         {
             AddComponent(order, new Dictionary<string, string>() {
                 { "reference", "Traverse Av" },
-                { "depth", box.Cupboard.Width.ToString()},
+                { "width", box.Cupboard.Width.ToString()},
                 { "quantity" , "2"}
             });
         }
@@ -206,6 +206,7 @@ namespace KitBoxApp
                     AddComponent(order, new Dictionary<string, string>() {
                         { "reference", "Porte" },
                         { "width",  box.Cupboard.Width.ToString() },
+                        { "height ", box.Height.ToString() },
                         { "quantity", "2" }
                     });
                     Door door = (Door)accessory;
