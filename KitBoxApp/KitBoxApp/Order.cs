@@ -23,10 +23,7 @@ namespace KitBoxApp
         #endregion
         #region Constructors
 
-        public Order(string id)
-        {
-            this.id = id;
-        }
+        public Order() {}
 
         #endregion
         #region Getters and Setters

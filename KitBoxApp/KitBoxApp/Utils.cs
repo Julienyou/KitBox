@@ -28,15 +28,27 @@ namespace KitBoxApp
             Customer customer = order.Customer;
 
             CheckCustomer(customer);
-            CheckOrderId(order);
 
             /*If the customer and the id to order are good*/
-            string sql = "insert into `Order` ('PK_IDOrder', 'FK_Customer', 'FK_State', 'RemnantSale', 'TotalPrice')" +
-                         "values ('" + order.Id + "','" + customer.Email + "','" + "1" + "','" +
+            string sql = "insert into `Order` ('FK_Customer', 'FK_State', 'RemnantSale', 'TotalPrice')" +
+                         "values ('" + customer.Email + "','" + "1" + "','" +
                          order.RemnantSale.ToString() + "','" + order.TotalPrice.ToString() + "')";
 
             SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
             command.ExecuteNonQuery();
+
+            /*Recuperation of the last order's id*/
+            sql = "SELECT MAX(PK_IDOrder) as max " +
+                  "FROM `Order`";
+
+            command = new SQLiteCommand(sql, dbConnection);
+            SQLiteDataReader reader = command.ExecuteReader();
+
+
+            while (reader.Read())
+            {
+                order.Id = reader["max"].ToString();
+            }
 
 
             foreach (Dictionary<string, string> component in order.Components)
@@ -55,7 +67,7 @@ namespace KitBoxApp
                       "WHERE `Component`.`Code`='" + component["code"] + "'";
 
                 command = new SQLiteCommand(sql, dbConnection);
-                SQLiteDataReader reader = command.ExecuteReader();
+                reader = command.ExecuteReader();
 
                 while (reader.Read())
                 {
@@ -225,18 +237,5 @@ namespace KitBoxApp
             }
         }
 
-        static private void CheckOrderId(Order order)
-        {
-            /*Verification if the id of order exists*/
-            string sql = "select * from `Order` where PK_IDOrder='" + order.Id + "'";
-
-            SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
-            SQLiteDataReader reader = command.ExecuteReader();
-
-            if (reader.Read()) //if id does not exists
-            {
-                throw new Exception("This order id exists already");
-            }
-        }
     }
 }
