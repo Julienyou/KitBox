@@ -19,14 +19,21 @@ namespace KitBoxApp
     /// </summary>
     public partial class OrderRecap : Window
     {
-        public OrderRecap()
+        private MainWindow mainWindow;
+        public OrderRecap(MainWindow main)
         {
             InitializeComponent();
+            mainWindow = main;
         }
 
         private void cancel_button_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void confirm_button_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
