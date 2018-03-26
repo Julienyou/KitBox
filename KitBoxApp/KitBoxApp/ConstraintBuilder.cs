@@ -228,7 +228,7 @@ namespace KitBoxApp
                 heights.Add(Convert.ToInt32(reader["height"]));
             }
 
-            sql = "SELECT * FROM `CupboardConstraint` WHERE `CupboardConstraint`.`FK_Reference='1'";
+            sql = "SELECT * FROM `CupboardConstraint` WHERE `FK_Reference`='1'";
 
             command = new SQLiteCommand(sql, dbConnection);
 
@@ -239,24 +239,29 @@ namespace KitBoxApp
                 depths.Add(Convert.ToInt32(reader["depth"]));
             }
 
+            IEnumerable<int> distinctWidths = widths.Distinct();
+            IEnumerable<int> distinctHeights = heights.Distinct();
+            IEnumerable<int> distinctDepths = depths.Distinct();
+
             maxHeight = heights.Max();
 
             /*End connection DataBase*/
             dbConnection.Close();
 
-            return new CupboardConstraint(depths, widths, null, maxHeight);
+            return new CupboardConstraint(distinctDepths.ToList(), distinctWidths.ToList(), null, maxHeight);
         }
 
         public static BoxConstraint BuildBoxConstraint()
         {
             List<int> heights = new List<int>();
-            List<string> colors = new List<string>();
+            List<string> vColors = new List<string>();
+            List<string> hColors = new List<string>();
             List<int> widths = new List<int>();
 
             /*Start connection DataBase*/
             dbConnection.Open();
 
-            string sql = "SELECT * FROM `CupboardConstraint` WHERE `CupboardConstraint`.`FK_Reference='4'";
+            string sql = "SELECT `height` FROM `CupboardConstraint` WHERE `FK_Reference`='4'";
 
             SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
 
@@ -266,22 +271,37 @@ namespace KitBoxApp
                 heights.Add(Convert.ToInt32(reader["height"]));
             }
 
-            sql = "SELECT * FROM `Component`" +
-                "INNER JOIN `Color` ON Component.FK_Color=Color.PK_Color" +
-                "WHERE `CupboardConstraint`.`FK_Reference='5'";
+            sql = "SELECT `Name` FROM `Component` " +
+                "INNER JOIN `Color` ON Component.FK_Color=Color.PK_IDColor " +
+                "WHERE `FK_Reference`='4'";
 
             command = new SQLiteCommand(sql, dbConnection);
 
             reader = command.ExecuteReader();
             while (reader.Read())
             {
-                colors.Add(reader["Name"].ToString());
+                vColors.Add(reader["Name"].ToString());
             }
 
+            sql = "SELECT `Name` FROM `Component` " +
+                "INNER JOIN `Color` ON Component.FK_Color=Color.PK_IDColor " +
+                "WHERE `FK_Reference`='5'";
+
+            command = new SQLiteCommand(sql, dbConnection);
+
+            reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                hColors.Add(reader["Name"].ToString());
+            }
+
+            IEnumerable<string> distinctHColors = hColors.Distinct();
+            IEnumerable<string> distinctVColors = vColors.Distinct();
+            IEnumerable<int> distinctHeights = heights.Distinct();
             /*End connection DataBase*/
             dbConnection.Close();
 
-            return new BoxConstraint(heights, colors, null);
+            return new BoxConstraint(distinctHeights.ToList(), distinctVColors.ToList(), distinctHColors.ToList());
         }
 
         public static DoorConstraint BuildDoorConstraint()
@@ -292,7 +312,7 @@ namespace KitBoxApp
             /*Start connection DataBase*/
             dbConnection.Open();
 
-            string sql = "SELECT * FROM `CupboardConstraint` WHERE `CupboardConstraint`.`FK_Reference='6'";
+            string sql = "SELECT * FROM `CupboardConstraint` WHERE `FK_Reference`='6'";
 
             SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
 
@@ -302,9 +322,9 @@ namespace KitBoxApp
                 doorDimensions.Add(new Tuple<int, int>(Convert.ToInt32(reader["Height"]), Convert.ToInt32(reader["Width"])));
             }
 
-            sql = "SELECT * FROM `Component`" +
-                "INNER JOIN `Color` ON Component.FK_Color=Color.PK_Color" +
-                "WHERE `CupboardConstraint`.`FK_Reference='6'";
+            sql = "SELECT `Name` FROM `Component` " +
+                "INNER JOIN `Color` ON Component.FK_Color=Color.PK_IDColor " +
+                "WHERE `FK_Reference`='6'";
 
             command = new SQLiteCommand(sql, dbConnection);
 
@@ -314,11 +334,13 @@ namespace KitBoxApp
                 colors.Add(reader["Name"].ToString());
             }
 
+            IEnumerable<Tuple<int,int>> distinctDoorDimensions = doorDimensions.Distinct();
+            IEnumerable<string> distinctColors = colors.Distinct();
 
             /*End connection DataBase*/
             dbConnection.Close();
 
-            return new DoorConstraint(colors, doorDimensions);
+            return new DoorConstraint(distinctColors.ToList(), distinctDoorDimensions.ToList());
         }
     }
 }
