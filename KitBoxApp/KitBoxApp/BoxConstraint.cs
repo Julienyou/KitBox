@@ -32,13 +32,13 @@ namespace KitBoxApp
 
         public List<string> VColors
         {
-            get => vcolors;
-            set { Vcolors = value; }
+            get => vColors;
+            set { vColors = value; }
         }
         public List<string> HColors
         {
             get => hColors;
-            set { hcolors = value; }
+            set { hColors = value; }
         }
 
         public List<int> Heights

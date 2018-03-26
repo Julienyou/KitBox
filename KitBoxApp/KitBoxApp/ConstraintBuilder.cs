@@ -12,139 +12,195 @@ namespace KitBoxApp
         static private SQLiteConnection dbConnection = new SQLiteConnection("Data Source=db.sqlite;Version=3;");
 
 
-        static public void BuildCupboardConstraint()
+        static public List<int> BuildWidthsList()
         {
             List<int> widths = new List<int>();
-            
-            int maxHeight;
-
-            CupboardConstraint cc = new CupboardConstraint();
 
             /*Start connection DataBase*/
             dbConnection.Open();
 
-            string sql = "SELECT * FROM `CupboardConstraint` WHERE `CupboardConstraint`.`FK_Reference='5'";
+            string sql = "SELECT `width` FROM `CupboardConstraint` WHERE `CupboardConstraint`.`FK_Reference`='5'";
 
-            command = new SQLiteCommand(sql, dbConnection);
+            SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
 
-            reader = command.ExecuteReader();
+            SQLiteDataReader reader = command.ExecuteReader();
             while (reader.Read())
             {
                 widths.Add(Convert.ToInt32(reader["width"]));
             }
 
-            cc.Widths = widths;
+            widths.Sort();
 
+            dbConnection.Close();
+            return widths;
         }
 
-        static public void GetAvailableDepth(int width)
+        static public List<int> GetAvailableDepth(int width)
         {
             List<int> depths = new List<int>();
 
-            sql = "SELECT * FROM `CupboardConstraint` WHERE `CupboardConstraint`.`FK_Reference='5', `width`=" + Convert.ToString(height);
+            /*Start connection DataBase*/
+            dbConnection.Open();
 
-            command = new SQLiteCommand(sql, dbConnection);
+            string sql = "SELECT * FROM `CupboardConstraint` WHERE `CupboardConstraint`.`FK_Reference`='5' AND `width`=" + Convert.ToString(width);
 
-            reader = command.ExecuteReader();
+            SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
+
+            SQLiteDataReader reader = command.ExecuteReader();
             while (reader.Read())
             {
                 depths.Add(Convert.ToInt32(reader["depth"]));
             }
 
-            cc.Depths = depths;
+            depths.Sort();
+            IEnumerable<int> distinctDepths = depths.Distinct();
+            dbConnection.Close();
+            return distinctDepths.ToList();
         }
 
-        static public void GetAvailableHeight(int width, int depth)
+        static public List<int> GetAvailableHeight()
         {
             List<int> heights = new List<int>();
 
-            sql = "SELECT * FROM `CupboardConstraint` WHERE `CupboardConstraint`.`FK_Reference='5', `width`=" + Convert.ToString(width) + ", `depth`=" + Convert.ToString(depth);
+            /*Start connection DataBase*/
+            dbConnection.Open();
 
-            command = new SQLiteCommand(sql, dbConnection);
+            //string sql = "SELECT * FROM `CupboardConstraint` WHERE `CupboardConstraint`.`FK_Reference='5', `width`=" + Convert.ToString(width) + ", `depth`=" + Convert.ToString(depth);
+            string sql = "SELECT `height` FROM `CupboardConstraint` WHERE `CupboardConstraint`.`FK_Reference`='7'";
 
-            reader = command.ExecuteReader();
+            SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
+
+            SQLiteDataReader reader = command.ExecuteReader();
             while (reader.Read())
             {
-                depths.Add(Convert.ToInt32(reader["height"]));
+                heights.Add(Convert.ToInt32(reader["height"]));
             }
 
-            bc.Heights = heights;
+            heights.Sort();
+            IEnumerable<int> distinctHeights = heights.Distinct();
+            dbConnection.Close();
+            return distinctHeights.ToList();
         }
 
-        static public void GetAvailableHPaneColor(int width, int depth, int height)
+        static public List<string> GetAvailableHPaneColor(int width, int depth)
         {
             List<string> colors = new List<string>();
 
-            sql = "SELECT * FROM `Component` +" +
-                 "INNER JOIN `Color` ON Component.FK_Color=Color.PK_Color" +
-                 "WHERE `CupboardConstraint`.`FK_Reference='5', `width`=" + Convert.ToString(width) + ", `depth`=" + Convert.ToString(depth) + ", `height`=" + Convert.ToString(height);
+            /*Start connection DataBase*/
+            dbConnection.Open();
 
-            command = new SQLiteCommand(sql, dbConnection);
+            string sql = "SELECT `Name` FROM `Component`" +
+                         "INNER JOIN `Color` ON Component.FK_Color = Color.PK_IDColor " + 
+                         "WHERE `FK_Reference`= '5' AND `width`="+ Convert.ToString(width) +" AND `depth`=" + Convert.ToString(depth);
 
-            reader = command.ExecuteReader();
+            SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
+
+            SQLiteDataReader reader = command.ExecuteReader();
             while (reader.Read())
             {
-                depths.Add(Convert.ToInt32(reader["Name"]));
+                colors.Add(reader["Name"].ToString());
             }
 
-            bc.hcolors = colors;
+            colors.Sort();
+            IEnumerable<string> distinctColors = colors.Distinct();
+            dbConnection.Close();
+            return distinctColors.ToList();
         }
 
-        static public void GetAvailableDoorStyle(int width, int height)
+        static public List<string> GetAvailableDoorStyle(int width, int height)
         {
             List<string> colors = new List<string>();
 
-            sql = sql = "SELECT * FROM `Component` +" +
-                 "INNER JOIN `Color` ON Component.FK_Color=Color.PK_Color" +
-                 "WHERE `CupboardConstraint`.`FK_Reference='6', `width`=" + Convert.ToString(width) + ", `depth`=" + Convert.ToString(height);
+            /*Start connection DataBase*/
+            dbConnection.Open();
 
-            command = new SQLiteCommand(sql, dbConnection);
+            string sql = "SELECT `Name` FROM `Component`" +
+                 "INNER JOIN `Color` ON Component.FK_Color=Color.PK_IDColor " +
+                 "WHERE `FK_Reference`='6' AND `width`=" + Convert.ToString(width) + " AND `height`=" + Convert.ToString(height);
 
-            reader = command.ExecuteReader();
+            SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
+
+            SQLiteDataReader reader = command.ExecuteReader();
             while (reader.Read())
             {
-                depths.Add(Convert.ToInt32(reader["Name"]));
+                colors.Add(reader["Name"].ToString());
             }
 
-            dc.colors = colors;
+            colors.Sort();
+            IEnumerable<string> distinctColors = colors.Distinct();
+            dbConnection.Close();
+            return distinctColors.ToList();
         }
 
-        static public void GetAvailableVPaneColor(int width, int depth, int height)
+        static public List<string> GetAvailableVPaneColor(int width, int depth, int height)
+        {
+            List<string> colors = new List<string>();
+            List<string> colorsOnly = new List<string>();
+
+            /*Start connection DataBase*/
+            dbConnection.Open();
+
+            string sql = "SELECT * FROM `Component` " +
+                 "INNER JOIN `Color` ON Component.FK_Color=Color.PK_IDColor " +
+                 "WHERE `FK_Reference`='4' AND `depth`=" + Convert.ToString(depth) + " AND `height`=" + Convert.ToString(height) +
+                 " OR `FK_Reference`='3' AND `width`=" + Convert.ToString(width) + " AND `height`=" + Convert.ToString(height);
+
+            SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
+
+            SQLiteDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                colors.Add(reader["Name"].ToString());
+            }
+
+            colors.Sort();
+            int count = 0;
+            foreach (string i in colors)
+            {
+                if (!colorsOnly.Contains(i))
+                    colorsOnly.Add(i);
+                else
+                {
+                    count += 1;
+                }
+            }
+
+            if (colors.Count()/2 == count)
+            {
+                IEnumerable<string> distinctColors = colors.Distinct();
+                dbConnection.Close();
+                return distinctColors.ToList();
+            }
+            else
+            {
+                return new List<string>();
+            }
+            
+        }
+
+        static public List<string> GetAvailableSteelCornerColor(int height)
         {
             List<string> colors = new List<string>();
 
-            sql = "SELECT * FROM `Component` +" +
-                 "INNER JOIN `Color` ON Component.FK_Color=Color.PK_Color" +
-                 "WHERE `CupboardConstraint`.`FK_Reference='4', `width`=" + Convert.ToString(width) + ", `depth`=" + Convert.ToString(depth) + ", `height`=" + Convert.ToString(height);
+            /*Start connection DataBase*/
+            dbConnection.Open();
 
-            command = new SQLiteCommand(sql, dbConnection);
+            string sql = "SELECT * FROM `Component` " +
+                 "INNER JOIN `Color` ON Component.FK_Color=Color.PK_IDColor " +
+                 "WHERE `FK_Reference`='1' AND `height` >=" + Convert.ToString(height);
 
-            reader = command.ExecuteReader();
+            SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
+
+            SQLiteDataReader reader = command.ExecuteReader();
             while (reader.Read())
             {
-                depths.Add(Convert.ToInt32(reader["Name"]));
+                colors.Add(reader["Name"].ToString());
             }
 
-            bc.vcolors = colors;
-        }
-
-        static public void GetAvailableSteelCornerColor(int height)
-        {
-            List<string> colors = new List<string>();
-
-            sql = "SELECT * FROM `Component` +" +
-                 "INNER JOIN `Color` ON Component.FK_Color=Color.PK_Color" +
-                 "WHERE `CupboardConstraint`.`FK_Reference='1', `height` >=" + Convert.ToString(height);
-
-            command = new SQLiteCommand(sql, dbConnection);
-
-            reader = command.ExecuteReader();
-            while (reader.Read())
-            {
-                depths.Add(Convert.ToInt32(reader["Name"]));
-            }
-
-            cc.steelcornercolors = colors;
+            colors.Sort();
+            IEnumerable<string> distinctColors = colors.Distinct();
+            dbConnection.Close();
+            return distinctColors.ToList();
         }
 
 
@@ -179,8 +235,6 @@ namespace KitBoxApp
             List<int> heights = new List<int>();
             List<string> colors = new List<string>();
             List<int> widths = new List<int>();
-
-            BoxConstraint bc = new BoxConstraint();
 
             /*Start connection DataBase*/
             dbConnection.Open();
@@ -218,8 +272,6 @@ namespace KitBoxApp
             List<Tuple<int, int>> doorDimensions = new List<Tuple<int, int>>();
             List<string> colors = new List<string>();
 
-            DoorConstraint dc = new DoorConstraint();
-
             /*Start connection DataBase*/
             dbConnection.Open();
 
@@ -250,21 +302,6 @@ namespace KitBoxApp
             dbConnection.Close();
 
             new DoorConstraint(colors, doorDimensions);
-        }
-
-        static public void InterfaceConstraint()
-        {
-            List<int> widths = List<int>();
-
-            string sql = "SELECT * FROM `CupboardConstraint` WHERE `CupboardConstraint`.`FK_Reference='5'";
-
-            command = new SQLiteCommand(sql, dbConnection);
-
-            reader = command.ExecuteReader();
-            while (reader.Read())
-            {
-                widths.Add(Convert.ToInt32(reader["width"]));
-            }
         }
     }
 }

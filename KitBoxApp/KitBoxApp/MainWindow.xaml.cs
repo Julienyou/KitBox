@@ -31,7 +31,12 @@ namespace KitBoxApp
         {
             
             InitializeComponent();
-            
+
+            List<string> widths = ConstraintBuilder.GetAvailableSteelCornerColor(72);
+            foreach (string i in widths)
+                Console.WriteLine(i);
+
+
             cupboard = new Cupboard(cupboardConstraint.Widths[0], cupboardConstraint.Depths[0], cupboardConstraint.SteelCornerColors[0]);
 
             widthComboBox.ItemsSource = cupboardConstraint.Widths;

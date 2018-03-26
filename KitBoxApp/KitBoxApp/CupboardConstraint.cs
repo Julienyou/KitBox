@@ -8,14 +8,14 @@ namespace KitBoxApp
 {
     public class CupboardConstraint : IConstraintChecker<Cupboard>
     {
-        private List<int> dephts;
+        private List<int> depths;
         private List<int> widths;
         private List<string> steelCornerColors;
         private int maxHeight;
 
-        public CupboardConstraint(List<int> dephts, List<int> widths, List<string> steelCornerColors,int maxHeight)
+        public CupboardConstraint(List<int> depths, List<int> widths, List<string> steelCornerColors,int maxHeight)
         {
-            this.dephts = dephts;
+            this.depths = depths;
             this.widths = widths;
             this.steelCornerColors = steelCornerColors;
             this.maxHeight = maxHeight;
@@ -23,7 +23,7 @@ namespace KitBoxApp
 
         public bool Check(Cupboard cb)
         {
-            if (dephts.Contains(cb.Depth) && widths.Contains(cb.Width) && maxHeight > cb.GetHeight())
+            if (depths.Contains(cb.Depth) && widths.Contains(cb.Width) && maxHeight > cb.GetHeight())
             {
                 return true;
             }
@@ -44,8 +44,8 @@ namespace KitBoxApp
         }
         public List<string> SteelCornerColors
         {
-            get => steelcornercolors;
-            set { steelcornercolors = value; }
+            get => steelCornerColors;
+            set { steelCornerColors = value; }
         }
         public int MaxHeight
         {
