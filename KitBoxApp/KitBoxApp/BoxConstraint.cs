@@ -30,9 +30,22 @@ namespace KitBoxApp
             //Don't forget to check the availibility of the parts (variable)
         }
 
-        public List<string> VColors { get => vColors; }
-        public List<string> HColors { get => hColors; }
-        public List<int> Heights { get => heights; }
+        public List<string> VColors
+        {
+            get => vcolors;
+            set { Vcolors = value; }
+        }
+        public List<string> HColors
+        {
+            get => hColors;
+            set { hcolors = value; }
+        }
+
+        public List<int> Heights
+        {
+            get => heights;
+            set { heights = value; }
+        }
 
     }
 }

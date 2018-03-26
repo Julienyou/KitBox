@@ -31,11 +31,27 @@ namespace KitBoxApp
                 return false;
         }
 
-        public List<int> Widths{ get => widths; }
+        public List<int> Widths
+        {
+            get => widths;
+            set { widths = value; }
+        }
 
-        public List<int> Depths{ get => dephts; }
-        public List<string> SteelCornerColors { get => steelCornerColors; }
-        public int MaxHeight { get => maxHeight; }
+        public List<int> Depths
+        {
+            get => depths;
+            set { depths = value; }
+        }
+        public List<string> SteelCornerColors
+        {
+            get => steelcornercolors;
+            set { steelcornercolors = value; }
+        }
+        public int MaxHeight
+        {
+            get => maxHeight;
+            set { maxHeight = value; }
+        }
 
 
     }
