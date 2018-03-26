@@ -9,10 +9,10 @@ namespace KitBoxApp
 {
     static class ConstraintBuilder
     {
-        static private SQLiteConnection dbConnection = new SQLiteConnection("Data Source=db.sqlite;Version=3;");
+        private static SQLiteConnection dbConnection = new SQLiteConnection("Data Source=db.sqlite;Version=3;");
 
 
-        static public List<int> BuildWidthsList()
+        public static List<int> BuildWidthsList()
         {
             List<int> widths = new List<int>();
 
@@ -35,7 +35,7 @@ namespace KitBoxApp
             return widths;
         }
 
-        static public List<int> GetAvailableDepth(int width)
+        public static List<int> GetAvailableDepth(int width)
         {
             List<int> depths = new List<int>();
 
@@ -58,7 +58,7 @@ namespace KitBoxApp
             return distinctDepths.ToList();
         }
 
-        static public List<int> GetAvailableHeight()
+        public static List<int> GetAvailableHeight()
         {
             List<int> heights = new List<int>();
 
@@ -82,7 +82,7 @@ namespace KitBoxApp
             return distinctHeights.ToList();
         }
 
-        static public List<string> GetAvailableHPaneColor(int width, int depth)
+        public static List<string> GetAvailableHPaneColor(int width, int depth)
         {
             List<string> colors = new List<string>();
 
@@ -107,7 +107,7 @@ namespace KitBoxApp
             return distinctColors.ToList();
         }
 
-        static public List<string> GetAvailableDoorStyle(int width, int height)
+        public static List<string> GetAvailableDoorStyle(int width, int height)
         {
             List<string> colors = new List<string>();
 
@@ -132,7 +132,7 @@ namespace KitBoxApp
             return distinctColors.ToList();
         }
 
-        static public List<string> GetAvailableVPaneColor(int width, int depth, int height)
+        public static List<string> GetAvailableVPaneColor(int width, int depth, int height)
         {
             List<string> colors = new List<string>();
             List<string> colorsOnly = new List<string>();
@@ -178,7 +178,7 @@ namespace KitBoxApp
             
         }
 
-        static public List<string> GetAvailableSteelCornerColor(int height)
+        public static List<string> GetAvailableSteelCornerColor(int height)
         {
             List<string> colors = new List<string>();
 
@@ -208,29 +208,46 @@ namespace KitBoxApp
 
 
 
-
-        /*sql = "SELECT * FROM `CupboardConstraint` WHERE `CupboardConstraint`.`FK_Reference='1'";
-
-        SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
-
-        SQLiteDataReader reader = command.ExecuteReader();
-        while (reader.Read())
+        public static CupboardConstraint BuildCupboardConstraint()
         {
-            heights.Add(Convert.ToInt32(reader["height"]));
+            List<int> heights = new List<int>();
+            List<int> widths = new List<int>();
+            List<int> depths = new List<int>();
+            int maxHeight;
+
+            /*Start connection DataBase*/
+            dbConnection.Open();
+
+            string sql = "SELECT * FROM `CupboardConstraint` WHERE `CupboardConstraint`.`FK_Reference='1'";
+
+            SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
+
+            SQLiteDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                heights.Add(Convert.ToInt32(reader["height"]));
+            }
+
+            sql = "SELECT * FROM `CupboardConstraint` WHERE `CupboardConstraint`.`FK_Reference='1'";
+
+            command = new SQLiteCommand(sql, dbConnection);
+
+            reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                widths.Add(Convert.ToInt32(reader["width"]));
+                depths.Add(Convert.ToInt32(reader["depth"]));
+            }
+
+            maxHeight = heights.Max();
+
+            /*End connection DataBase*/
+            dbConnection.Close();
+
+            return new CupboardConstraint(depths, widths, null, maxHeight);
         }
 
-
-
-        maxHeight = heights.Max();
-
-
-        /*End connection DataBase*/
-        /*dbConnection.Close();
-
-         new CupboardConstraint(depths, widths,null,maxHeight);
-     }*/
-
-        static public void BuildBoxConstraint()
+        public static BoxConstraint BuildBoxConstraint()
         {
             List<int> heights = new List<int>();
             List<string> colors = new List<string>();
@@ -264,10 +281,10 @@ namespace KitBoxApp
             /*End connection DataBase*/
             dbConnection.Close();
 
-            new BoxConstraint(heights, colors, null);
+            return new BoxConstraint(heights, colors, null);
         }
 
-        static public void BuildDoorConstraint()
+        public static DoorConstraint BuildDoorConstraint()
         {
             List<Tuple<int, int>> doorDimensions = new List<Tuple<int, int>>();
             List<string> colors = new List<string>();
@@ -301,7 +318,7 @@ namespace KitBoxApp
             /*End connection DataBase*/
             dbConnection.Close();
 
-            new DoorConstraint(colors, doorDimensions);
+            return new DoorConstraint(colors, doorDimensions);
         }
     }
 }
