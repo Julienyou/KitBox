@@ -1,0 +1,19 @@
+﻿<Window x:Class="KitBoxApp.OrderConfirm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:KitBoxApp"
+        mc:Ignorable="d"
+        Title="OrderConfirm" Height="450" Width="800" Background="{StaticResource BackbroungColor}">
+
+    <Grid Background="Transparent">
+        <DockPanel x:Name="confirmPanel"  Background="Transparent">
+            <RichTextBox x:Name="textBox" Background="Transparent" Margin="0,30" BorderThickness="0"/>
+        </DockPanel>
+            <Canvas >
+            <Button x:Name="order_button" Style="{StaticResource button}" Content="Order" Canvas.Bottom="30" Canvas.Right="50" Click="order_button_Click"/>
+            <Button x:Name="cancel_button" Style="{StaticResource button}" Content="Cancel" Canvas.Bottom="30" Canvas.Right="150" Click="cancel_button_Click"/>
+        </Canvas>
+    </Grid>
+</Window>

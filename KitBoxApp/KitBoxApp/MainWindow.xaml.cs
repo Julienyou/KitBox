@@ -100,8 +100,7 @@ namespace KitBoxApp
 
         private void validate_button_Click(object sender, RoutedEventArgs e)
         {
-            
-            Window w = new OrderRecap();
+            Window w = new OrderConfirm(this);
             w.ShowDialog();
         }
 
@@ -114,5 +113,7 @@ namespace KitBoxApp
         {
                 cupboard.RemoveBox((Box)drawBox.SelectedItem);
         }
+
+        public Cupboard Cupboard { get => cupboard; }
     }
 }

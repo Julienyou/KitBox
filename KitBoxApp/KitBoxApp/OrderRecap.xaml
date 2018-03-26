@@ -24,7 +24,7 @@
         </StackPanel>
         <Canvas>
             <Button x:Name="cancel_button" Style="{StaticResource button}" Canvas.Bottom="27" Canvas.Left="35" Click="cancel_button_Click">Cancel</Button>
-            <Button Style="{StaticResource button}" Canvas.Bottom="27" Canvas.Right="35">Confirm</Button>
+            <Button x:Name="confirm_button" Style="{StaticResource button}" Canvas.Bottom="27" Canvas.Right="35" Click="confirm_button_Click">Confirm</Button>
         </Canvas>
     </Grid>
 </Window>

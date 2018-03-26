@@ -32,21 +32,44 @@ namespace KitBoxApp
 
             /*If the customer and the id to order are good*/
             string sql = "insert into `Order` ('PK_IDOrder', 'FK_Customer', 'FK_State', 'RemnantSale', 'TotalPrice')" +
-                         "values ('" + order.Id + "','" + customer.Email + "','" + "1" + "','" + 
-                         order.RemnantSale.Tostring() + order.TotalPrice.ToString() + "')";
+                         "values ('" + order.Id + "','" + customer.Email + "','" + "1" + "','" +
+                         order.RemnantSale.ToString() + "','" + order.TotalPrice.ToString() + "')";
 
             SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
             command.ExecuteNonQuery();
 
 
-            /*Add data inOrderComponentLink for each component located in components*/
             foreach (Dictionary<string, string> component in order.Components)
             {
+                /*Add data in OrderComponentLink for each component located in components*/
                 sql = "insert into `OrderComponentLink` ('FK_Order', 'FK_Component', 'Quantity')" +
-                         "values ('" + order.Id + "','" + component["code"] + "','" + component["quantity"] + "')";
+                      "values ('" + order.Id + "','" + component["code"] + "','" + component["quantity"] + "')";
 
                 command = new SQLiteCommand(sql, dbConnection);
                 command.ExecuteNonQuery();
+
+
+                /*Remove stock in Component table*/
+                sql = "SELECT * " +
+                      "FROM `Component` " +
+                      "WHERE `Component`.`Code`='" + component["code"] + "'";
+
+                command = new SQLiteCommand(sql, dbConnection);
+                SQLiteDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    int newStock = Convert.ToInt32(reader["Stock"]);
+                    newStock -= Convert.ToInt32(component["quantity"]);
+
+                    sql = "UPDATE `Component`" +
+                          "SET Stock='" + newStock.ToString() + "'" +
+                          "WHERE `Component`.`Code`='" + component["code"] + "'";
+
+                    command = new SQLiteCommand(sql, dbConnection);
+                    command.ExecuteNonQuery();
+
+                }
             }
 
             /*End connection DataBase*/
@@ -83,12 +106,12 @@ namespace KitBoxApp
             while (reader.Read())
             {
                 order.SetCustomer(reader["Pk_Email"].ToString(), reader["Firstname"].ToString(),
-                                        reader["Lastname"].ToString(), reader["Street"].ToString(),
-                                        reader["Town"].ToString());
+                                  reader["Lastname"].ToString(), reader["Street"].ToString(),
+                                  reader["Town"].ToString());
 
                 order.TotalPrice = Convert.ToInt32(reader["TotalPrice"]);
 
-                order.RemnantSale = reader["RemnantSale"].ToString();
+                order.RemnantSale = Convert.ToInt32(reader["RemnantSale"]);
 
                 order.State = reader["Name"].ToString();
             }
@@ -105,7 +128,7 @@ namespace KitBoxApp
             while (reader.Read())
             {
                 /*Warning not instock*/
-                order.AddComponent(new Dictionary<string, string> {
+                KitComposer.AddComponent(order, new Dictionary<string, string> {
                     { "code", reader["code"].ToString() },
                     { "reference", reader["ref_name"].ToString() },
                     { "color", reader["color"].ToString()},
