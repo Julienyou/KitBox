@@ -181,7 +181,10 @@ namespace KitBoxApp
             dbConnection.Close();
         }
 
-
+        /// <summary>
+        ///     Allows to fetch informations for components such as the code and the price.
+        /// </summary>
+        /// <param name="components">List of components that need to be looked up in the database</param>
         static public void FetchFromDataBase(List<Dictionary<string, string>> components)
         {
             /*Start connection DataBase*/
@@ -214,6 +217,36 @@ namespace KitBoxApp
 
             /*End connection DataBase*/
             dbConnection.Close();
+        }
+        /// <summary>
+        ///     Retrieves the smallest available steelcorner lenght form the database
+        /// </summary>
+
+        static public string GetCornersLength(string color, int minheight)
+        {
+            string length = "";
+            string sql =
+                "SELECT MIN(height) " +
+                "FROM ComponentData " +
+                "WHERE reference = 'Cornières' AND Color = " + color + " AND height >  " + minheight.ToString();
+
+            /*
+                "SELECT * " +
+                "FROM ComponentData " +
+                "WHERE reference = 'Cornières' AND Color = " + color + " AND height >  " + minheight +
+                "ORDER BY ASC";
+
+             */
+
+
+            SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
+            SQLiteDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                length = reader["height"].ToString();
+            }
+
+            return length;
         }
 
 

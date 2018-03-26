@@ -67,10 +67,11 @@ namespace KitBoxApp
         /// <param name="cupboard">Represents the cupboard that is going to be analysed to generate the component list.</param>
         static private void ComposeOrder(Order order, Cupboard cupboard)
         {
+            string height = Utils.GetCornersLength(cupboard.SteelCornerColor, cupboard.GetHeight());
             AddComponent(order, new Dictionary<string, string> {
                 { "reference", "Cornières" },
                 { "color", cupboard.SteelCornerColor },
-                { "height", cupboard.GetHeight().ToString() },
+                { "height", height},
                 { "quantity" , "4"}
             });
 
