@@ -9,18 +9,27 @@ namespace KitBoxApp
 {
     public class Order
     {
+
+        #region Attributes
+
         private string id = null;
         private int totalPrice = 0;
+        private int remnantSale = 0;
         private Customer customer = null;
-//      private List<Component> components;
+        private string state;
 
-        /*classes not yet created*/
-        //private State state; 
+        private List<Dictionary<string, string>> components = new List<Dictionary<string, string>>();
+
+        #endregion
+        #region Constructors
 
         public Order(string id)
         {
             this.id = id;
         }
+
+        #endregion
+        #region Getters and Setters
 
         public string Id
         {
@@ -42,26 +51,36 @@ namespace KitBoxApp
             }
         }
 
+        public int RemnantSale
+        {
+            get => remnantSale;
+
+            set
+            {
+                remnantSale = value;
+            }
+        }
+
         public Customer Customer
         {
-            get => Customer;
+            get => customer;
+
         }
 
- /*       public List<Component> Components
+        public string State
+        {
+            get => state;
+
+            set
+            {
+                state = value;
+            }
+        }
+
+        public List<Dictionary<string, string>> Components
         {
             get => components;
-        }
-*/
-        public void ComputePrice()
-        {
-            /*Class component not yet created*/
-
-            /*
-            foreach (Component component in components)
-            {
-                totalPrice += component.Price;
-            }
-            */
+            set { components = value; }
         }
 
 
@@ -70,11 +89,23 @@ namespace KitBoxApp
         {
             customer = new Customer(email, firstName, lastName, street, town);
         }
-/*
-        public void AddComponent(Component component)
+
+        #endregion
+        #region Methods
+
+        //---Methods
+        public void ComputePrice()
         {
-            components.Add(component);
+            foreach (Dictionary <string, string> component in components)
+            {
+                string value;
+                if(component.TryGetValue("price", out value))
+                {
+                    totalPrice += Int32.Parse(value);
+                }
+            }
         }
-*/
     }
+
+        #endregion
 }
