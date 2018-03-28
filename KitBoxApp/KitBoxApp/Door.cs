@@ -9,14 +9,10 @@ namespace KitBoxApp
 {
     public class Door : IAccessory, INotifyPropertyChanged
     {
-        private string color;
-        private bool knop;
+        private string color = "";
+        private bool knop = false;
 
-        public Door(string color)
-        {
-            this.color = color;
-        }
-
+        
         public string Color
         {
             get => color;

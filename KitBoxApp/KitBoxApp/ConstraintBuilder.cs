@@ -30,9 +30,10 @@ namespace KitBoxApp
             }
 
             widths.Sort();
+            IEnumerable<int> distinctWidths = widths.Distinct();
 
             dbConnection.Close();
-            return widths;
+            return distinctWidths.ToList();
         }
 
         public static List<int> GetAvailableDepth(int width)
@@ -203,53 +204,6 @@ namespace KitBoxApp
             return distinctColors.ToList();
         }
 
-
-
-
-
-
-        public static CupboardConstraint BuildCupboardConstraint()
-        {
-            List<int> heights = new List<int>();
-            List<int> widths = new List<int>();
-            List<int> depths = new List<int>();
-            int maxHeight;
-
-            /*Start connection DataBase*/
-            dbConnection.Open();
-
-            string sql = "SELECT * FROM `CupboardConstraint` WHERE `CupboardConstraint`.`FK_Reference='1'";
-
-            SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
-
-            SQLiteDataReader reader = command.ExecuteReader();
-            while (reader.Read())
-            {
-                heights.Add(Convert.ToInt32(reader["height"]));
-            }
-
-            sql = "SELECT * FROM `CupboardConstraint` WHERE `FK_Reference`='1'";
-
-            command = new SQLiteCommand(sql, dbConnection);
-
-            reader = command.ExecuteReader();
-            while (reader.Read())
-            {
-                widths.Add(Convert.ToInt32(reader["width"]));
-                depths.Add(Convert.ToInt32(reader["depth"]));
-            }
-
-            IEnumerable<int> distinctWidths = widths.Distinct();
-            IEnumerable<int> distinctHeights = heights.Distinct();
-            IEnumerable<int> distinctDepths = depths.Distinct();
-
-            maxHeight = heights.Max();
-
-            /*End connection DataBase*/
-            dbConnection.Close();
-
-            return new CupboardConstraint(distinctDepths.ToList(), distinctWidths.ToList(), null, maxHeight);
-        }
 
         public static BoxConstraint BuildBoxConstraint()
         {

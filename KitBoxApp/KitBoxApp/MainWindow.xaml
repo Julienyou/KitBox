@@ -33,13 +33,13 @@
                     </Grid.RowDefinitions>
                     <StackPanel  x:Name="boxesConfig">
                         <TextBlock Style="{StaticResource labelStyle}">Pane color</TextBlock>
-                        <ComboBox Style="{StaticResource ComboStyle}" x:Name="paneColorCombo" SelectedItem="{Binding Path=LateralColor}"/>
+                        <ComboBox Style="{StaticResource ComboStyle}" x:Name="paneColorCombo" SelectedItem="{Binding Path=LateralColor}" IsSynchronizedWithCurrentItem="True"/>
                         <TextBlock Style="{StaticResource labelStyle}">Top and bottom color</TextBlock>
-                        <ComboBox Style="{StaticResource ComboStyle}" x:Name="hPaneColorCombo" SelectedItem="{Binding Path=HorizontalColor}"/>
+                        <ComboBox Style="{StaticResource ComboStyle}" x:Name="hPaneColorCombo" SelectedItem="{Binding Path=HorizontalColor}" IsSynchronizedWithCurrentItem="True"/>
                         <TextBlock Style="{StaticResource labelStyle}">Door style</TextBlock>
-                        <ComboBox Style="{StaticResource ComboStyle}" x:Name="doorStyleCombo" SelectedItem="{Binding Path=Accessories[0].Color}"/>
+                        <ComboBox Style="{StaticResource ComboStyle}" x:Name="doorStyleCombo" SelectedItem="{Binding Path=Accessories[0].Color}" IsSynchronizedWithCurrentItem="True"/>
                         <TextBlock Style="{StaticResource labelStyle}">Height</TextBlock>
-                        <ComboBox Style="{StaticResource ComboStyle}" x:Name="boxHeighCombo"  SelectedItem="{Binding Path=Height}"/>
+                        <ComboBox Style="{StaticResource ComboStyle}" x:Name="boxHeighCombo"  SelectedItem="{Binding Path=Height}" IsSynchronizedWithCurrentItem="True"/>
                     </StackPanel>
                 </Grid>
             </TabItem>
@@ -72,10 +72,10 @@
 
             <ListView.ItemTemplate >
                 <DataTemplate x:Name="ShapeTemplate" >
-                    <local:BoxShape x:Name="Shape"   BHeight="{Binding Path=Height}" BWidth="{Binding Path=Cupboard.Width}" Door="{Binding Path=Accessories[0].Color}"  Stroke="{StaticResource ActionColor}" StrokeThickness="2" Margin="0,0,0,0" RenderTransformOrigin="0.5,0.5"/>
+                    <local:BoxShape x:Name="Shape"   BHeight="{Binding Path=Height}" BWidth="{Binding Path=Cupboard.Width}" Door="{Binding Path=Accessories[0].Color}"  Stroke="{StaticResource ActionColor}" StrokeThickness="1" Margin="0,0,0,0" RenderTransformOrigin="0.5,0.5"/>
                     <DataTemplate.Triggers>
                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}},Path=IsSelected}" Value="True">
-                            <Setter TargetName="Shape" Property="StrokeThickness" Value="4"/>
+                            <Setter TargetName="Shape" Property="StrokeThickness" Value="2"/>
                         </DataTrigger>
                     </DataTemplate.Triggers>
                 </DataTemplate>

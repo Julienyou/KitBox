@@ -12,14 +12,7 @@ namespace KitBoxApp
         private List<int> widths;
         private List<string> steelCornerColors;
         private int maxHeight;
-
-        public CupboardConstraint(List<int> depths, List<int> widths, List<string> steelCornerColors,int maxHeight)
-        {
-            this.depths = depths;
-            this.widths = widths;
-            this.steelCornerColors = steelCornerColors;
-            this.maxHeight = maxHeight;
-        }
+        
 
         public bool Check(Cupboard cb)
         {

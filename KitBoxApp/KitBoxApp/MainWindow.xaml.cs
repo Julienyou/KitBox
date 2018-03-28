@@ -21,7 +21,7 @@ namespace KitBoxApp
     public partial class MainWindow : Window
     {
         
-        private CupboardConstraint cupboardConstraint = new CupboardConstraint(new List<int> { 1, 2, 3 }, new List<int> { 100, 200, 300 }, new List<string> { "Beige des bois", "Rouge nuit", "Noir jour" }, 250);
+        private CupboardConstraint cupboardConstraint = new CupboardConstraint();
         private BoxConstraint boxConstraint = new BoxConstraint(new List<int> { 50, 60, 70 }, new List<string> { "rouge franboise", "rose fluo", "paquerette" }, new List<string> { "Blanc", "Brun" });
         private DoorConstraint doorConstraint = new DoorConstraint(new List<string> { "None", "Verre", "Vert", "Ver", "Vair" }, null);
 
@@ -32,47 +32,73 @@ namespace KitBoxApp
             
             InitializeComponent();
 
-            //List<string> widths = ConstraintBuilder.GetAvailableSteelCornerColor(72);
-            //foreach (string i in widths)
-            //    Console.WriteLine(i);
-
-            BoxConstraint a = ConstraintBuilder.BuildBoxConstraint();
-            foreach (int i in a.Heights)
-            {
-                Console.WriteLine(i);
-            }
-            Console.WriteLine(a.HColors);
-            Console.WriteLine(a.VColors);
-            Console.WriteLine(a.Heights);
+            
+            cupboard = new Cupboard();
+            Box box = new Box(cupboard);
+            box.AddAccessory(new Door());
 
 
-
-            cupboard = new Cupboard(cupboardConstraint.Widths[0], cupboardConstraint.Depths[0], cupboardConstraint.SteelCornerColors[0]);
-
+            cupboardConstraint.Widths = ConstraintBuilder.BuildWidthsList();
             widthComboBox.ItemsSource = cupboardConstraint.Widths;
+            cupboard.Width = cupboardConstraint.Widths[0];
+
+            cupboardConstraint.Depths = ConstraintBuilder.GetAvailableDepth(cupboard.Width);
             depthComboBox.ItemsSource = cupboardConstraint.Depths;
+            cupboard.Depth = cupboardConstraint.Depths[0];
+
+            boxConstraint.Heights = ConstraintBuilder.GetAvailableHeight();
+            boxHeighCombo.ItemsSource = boxConstraint.Heights;
+            box.Height = boxConstraint.Heights[0];
+
+            boxConstraint.HColors = ConstraintBuilder.GetAvailableHPaneColor(cupboard.Width,cupboard.Depth);
+            hPaneColorCombo.ItemsSource = boxConstraint.HColors;
+            box.HorizontalColor = boxConstraint.HColors[0];
+
+            boxConstraint.VColors = ConstraintBuilder.GetAvailableVPaneColor(cupboard.Width, cupboard.Depth, box.Height);
+            paneColorCombo.ItemsSource = boxConstraint.VColors;
+            box.LateralColor = boxConstraint.VColors[0];
+
+            doorConstraint.Colors = ConstraintBuilder.GetAvailableDoorStyle(cupboard.Width,box.Height);
+            doorConstraint.Colors.Insert(0,"None");
+            doorStyleCombo.ItemsSource = doorConstraint.Colors;
+            ((Door)box.Accessories[0]).Color = doorConstraint.Colors[2];
+
+            cupboardConstraint.SteelCornerColors = ConstraintBuilder.GetAvailableSteelCornerColor(cupboard.GetHeight());
+            cupboardConstraint.MaxHeight = 300;
             steelCornerCombo.ItemsSource = cupboardConstraint.SteelCornerColors;
 
-            boxHeighCombo.ItemsSource = boxConstraint.Heights;
-            paneColorCombo.ItemsSource = boxConstraint.VColors;
-            hPaneColorCombo.ItemsSource = boxConstraint.HColors;
-           
-            doorStyleCombo.ItemsSource = doorConstraint.Colors;
 
             cupboardConfig.DataContext = cupboard;
-            Box box = new Box(cupboard,boxConstraint.Heights[0], boxConstraint.VColors[0], boxConstraint.HColors[0]);
-            box.AddAccessory(new Door(doorConstraint.Colors[1]));
-            cupboard.AddBox(box);
-
             boxesConfig.DataContext = cupboard.Boxes;
             drawBox.DataContext = cupboard;
+            cupboard.AddBox(box);
 
         }
 
         private void add_button_Click(object sender, RoutedEventArgs e)
         {
-            Box box = new Box(cupboard, boxConstraint.Heights[0], boxConstraint.VColors[0], boxConstraint.HColors[0]);
-            box.AddAccessory(new Door(doorConstraint.Colors[1]));
+            Box box = new Box(cupboard);
+
+            boxConstraint.Heights = ConstraintBuilder.GetAvailableHeight();
+            boxHeighCombo.ItemsSource = boxConstraint.Heights;
+            box.Height = boxConstraint.Heights[0];
+
+            boxConstraint.HColors = ConstraintBuilder.GetAvailableHPaneColor(cupboard.Width, cupboard.Depth);
+            hPaneColorCombo.ItemsSource = boxConstraint.HColors;
+            box.HorizontalColor = boxConstraint.HColors[0];
+
+            boxConstraint.VColors = ConstraintBuilder.GetAvailableVPaneColor(cupboard.Width, cupboard.Depth, box.Height);
+            paneColorCombo.ItemsSource = boxConstraint.VColors;
+            box.LateralColor = boxConstraint.VColors[0];
+
+            box.AddAccessory(new Door());
+
+            doorConstraint.Colors = ConstraintBuilder.GetAvailableDoorStyle(cupboard.Width, box.Height);
+            doorConstraint.Colors.Insert(0, "None");
+            doorStyleCombo.ItemsSource = doorConstraint.Colors;
+            ((Door)box.Accessories[0]).Color = doorConstraint.Colors[2];
+
+
             if (cupboard.GetHeight()+box.Height <= cupboardConstraint.MaxHeight)
             {
                 cupboard.AddBox(box);
@@ -88,9 +114,9 @@ namespace KitBoxApp
             MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Are you sure?", "Delete Confirmation", System.Windows.MessageBoxButton.YesNo);
             if (messageBoxResult == MessageBoxResult.Yes)
             {
-                cupboard = new Cupboard(cupboardConstraint.Widths[0], cupboardConstraint.Depths[0], cupboardConstraint.SteelCornerColors[0]);
-                Box box = new Box(cupboard, boxConstraint.Heights[0], boxConstraint.VColors[0], boxConstraint.HColors[0]);
-                box.AddAccessory(new Door(doorConstraint.Colors[1]));
+                cupboard = new Cupboard();
+                Box box = new Box(cupboard);
+                box.AddAccessory(new Door());
                 cupboard.AddBox(box);
                 drawBox.DataContext = cupboard;
                 boxesConfig.DataContext = cupboard.Boxes;

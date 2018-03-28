@@ -10,17 +10,11 @@ namespace KitBoxApp
 {
     public class Cupboard : INotifyPropertyChanged
     {
-        private ObservableCollection<Box> boxes = new ObservableCollection<Box> { };
-        private int width;
-        private int depth;
-        private string steelCornerColor;
+        private ObservableCollection<Box> boxes = new ObservableCollection<Box> {};
+        private int width = 100;
+        private int depth = 100;
+        private string steelCornerColor = "";
 
-        public Cupboard(int width, int depth, string steelCornerColor)
-        {
-            this.width = width;
-            this.depth = depth;
-            this.steelCornerColor = steelCornerColor;
-        }
 
         // INotifyPropertyChanged Member
         public event PropertyChangedEventHandler PropertyChanged;
