@@ -18,6 +18,7 @@ namespace KitBoxApp
         {
             ComposeOrder(order, cupboard);
             Utils.FetchFromDataBase(order.Components);
+            order.ComputePrice();
         }
 
         /// <summary>
@@ -35,18 +36,17 @@ namespace KitBoxApp
                 bool compexists = true;
                 foreach (string key in mycomponent.Keys) //Could use a while but mycomponent.keys is not indexable directly. Maybe there is a way to make it so.
                 {
-                    if (component.ContainsKey(key) & compexists)
+                    if (component.ContainsKey(key) && compexists)
                     {
-                        if (key != "quantity")
+                        if (!key.Equals("quantity"))
                         {
                             compexists = (component[key] == mycomponent[key]);
                         }
                     }
                 }
-
                 if (compexists)
                 {
-                    int quantity = Int32.Parse(component["quantity"]) + Int32.Parse(mycomponent["quantity"]);
+                    int quantity = Convert.ToInt32(component["quantity"]) + Convert.ToInt32(mycomponent["quantity"]);
                     component["quantity"] = quantity.ToString();
                     compfound = true;
                 }
@@ -67,10 +67,11 @@ namespace KitBoxApp
         /// <param name="cupboard">Represents the cupboard that is going to be analysed to generate the component list.</param>
         static private void ComposeOrder(Order order, Cupboard cupboard)
         {
+            string height = Utils.GetCornersLength(cupboard.SteelCornerColor, cupboard.GetHeight());
             AddComponent(order, new Dictionary<string, string> {
                 { "reference", "Cornières" },
                 { "color", cupboard.SteelCornerColor },
-                { "height", cupboard.GetHeight().ToString() },
+                { "height", height},
                 { "quantity" , "4"}
             });
 
@@ -173,7 +174,7 @@ namespace KitBoxApp
         {
             AddComponent(order, new Dictionary<string, string>() {
                 { "reference", "Traverse Ar" },
-                { "depth", box.Cupboard.Width.ToString()},
+                { "width", box.Cupboard.Width.ToString()},
                 { "quantity" , "2"}
             });
         }
@@ -187,7 +188,7 @@ namespace KitBoxApp
         {
             AddComponent(order, new Dictionary<string, string>() {
                 { "reference", "Traverse Av" },
-                { "depth", box.Cupboard.Width.ToString()},
+                { "width", box.Cupboard.Width.ToString()},
                 { "quantity" , "2"}
             });
         }
@@ -206,6 +207,7 @@ namespace KitBoxApp
                     AddComponent(order, new Dictionary<string, string>() {
                         { "reference", "Porte" },
                         { "width",  box.Cupboard.Width.ToString() },
+                        { "height ", box.Height.ToString() },
                         { "quantity", "2" }
                     });
                     Door door = (Door)accessory;

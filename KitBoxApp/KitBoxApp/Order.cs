@@ -13,7 +13,7 @@ namespace KitBoxApp
         #region Attributes
 
         private string id = null;
-        private int totalPrice = 0;
+        private double totalPrice = 0;
         private int remnantSale = 0;
         private Customer customer = null;
         private string state;
@@ -23,10 +23,7 @@ namespace KitBoxApp
         #endregion
         #region Constructors
 
-        public Order(string id)
-        {
-            this.id = id;
-        }
+        public Order() {}
 
         #endregion
         #region Getters and Setters
@@ -41,7 +38,7 @@ namespace KitBoxApp
             }
         }
 
-        public int TotalPrice
+        public double TotalPrice
         {
             get => totalPrice;
 
@@ -96,13 +93,9 @@ namespace KitBoxApp
         //---Methods
         public void ComputePrice()
         {
-            foreach (Dictionary <string, string> component in components)
+            foreach (Dictionary<string, string> component in components)
             {
-                string value;
-                if(component.TryGetValue("price", out value))
-                {
-                    totalPrice += Int32.Parse(value);
-                }
+                totalPrice += Convert.ToDouble(component["price"]) * Convert.ToDouble(component["quantity"]);
             }
         }
     }

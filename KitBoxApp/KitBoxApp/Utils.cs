@@ -28,15 +28,27 @@ namespace KitBoxApp
             Customer customer = order.Customer;
 
             CheckCustomer(customer);
-            CheckOrderId(order);
 
             /*If the customer and the id to order are good*/
-            string sql = "insert into `Order` ('PK_IDOrder', 'FK_Customer', 'FK_State', 'RemnantSale', 'TotalPrice')" +
-                         "values ('" + order.Id + "','" + customer.Email + "','" + "1" + "','" +
+            string sql = "insert into `Order` ('FK_Customer', 'FK_State', 'RemnantSale', 'TotalPrice')" +
+                         "values ('" + customer.Email + "','" + "1" + "','" +
                          order.RemnantSale.ToString() + "','" + order.TotalPrice.ToString() + "')";
 
             SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
             command.ExecuteNonQuery();
+
+            /*Recuperation of the last order's id*/
+            sql = "SELECT MAX(PK_IDOrder) as max " +
+                  "FROM `Order`";
+
+            command = new SQLiteCommand(sql, dbConnection);
+            SQLiteDataReader reader = command.ExecuteReader();
+
+
+            while (reader.Read())
+            {
+                order.Id = reader["max"].ToString();
+            }
 
 
             foreach (Dictionary<string, string> component in order.Components)
@@ -55,7 +67,7 @@ namespace KitBoxApp
                       "WHERE `Component`.`Code`='" + component["code"] + "'";
 
                 command = new SQLiteCommand(sql, dbConnection);
-                SQLiteDataReader reader = command.ExecuteReader();
+                reader = command.ExecuteReader();
 
                 while (reader.Read())
                 {
@@ -87,7 +99,8 @@ namespace KitBoxApp
         /// <returns>The method return the order who has been created</returns>
         static public Order ImportFromDatabase(string id)
         {
-            Order order = new Order(id);
+            Order order = new Order();
+            order.Id = id;
 
             /*Start connection DataBase*/
             dbConnection.Open();
@@ -169,7 +182,10 @@ namespace KitBoxApp
             dbConnection.Close();
         }
 
-
+        /// <summary>
+        ///     Allows to fetch informations for components such as the code and the price.
+        /// </summary>
+        /// <param name="components">List of components that need to be looked up in the database</param>
         static public void FetchFromDataBase(List<Dictionary<string, string>> components)
         {
             /*Start connection DataBase*/
@@ -179,12 +195,15 @@ namespace KitBoxApp
             {
                 List<string> listjoin = new List<string>();
                 string sql = "SELECT * " +
-                         "FROM ComponentData" +
+                         "FROM ComponentData " +
                          "WHERE ";
 
                 foreach (KeyValuePair<string,string> criteria in component)
                 {
-                    listjoin.Add(criteria.Key + "=" + criteria.Value);
+                    if (!criteria.Key.Equals("quantity"))
+                    {
+                        listjoin.Add(criteria.Key + "='" + criteria.Value + "'");
+                    }
                 }
                 sql += String.Join(" AND ", listjoin);
 
@@ -192,13 +211,43 @@ namespace KitBoxApp
                 SQLiteDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    component["code"] = reader["code"].ToString();
-                    component["price"] = reader["price"].ToString();
+                    component.Add("code", reader["code"].ToString());
+                    component.Add("price", reader["price"].ToString());
                 }
             }
 
             /*End connection DataBase*/
             dbConnection.Close();
+        }
+        /// <summary>
+        ///     Retrieves the smallest available steelcorner lenght form the database
+        /// </summary>
+
+        static public string GetCornersLength(string color, int minheight)
+        {
+            string length = "";
+            string sql =
+                "SELECT MIN(height) " +
+                "FROM ComponentData " +
+                "WHERE reference = 'Cornières' AND Color = " + color + " AND height >  " + minheight.ToString();
+
+            /*
+                "SELECT * " +
+                "FROM ComponentData " +
+                "WHERE reference = 'Cornières' AND Color = " + color + " AND height >  " + minheight +
+                "ORDER BY ASC";
+
+             */
+
+
+            SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
+            SQLiteDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                length = reader["height"].ToString();
+            }
+
+            return length;
         }
 
         /// <summary>
@@ -284,18 +333,5 @@ namespace KitBoxApp
             }
         }
 
-        static private void CheckOrderId(Order order)
-        {
-            /*Verification if the id of order exists*/
-            string sql = "select * from `Order` where PK_IDOrder='" + order.Id + "'";
-
-            SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
-            SQLiteDataReader reader = command.ExecuteReader();
-
-            if (reader.Read()) //if id does not exists
-            {
-                throw new Exception("This order id exists already");
-            }
-        }
     }
 }
