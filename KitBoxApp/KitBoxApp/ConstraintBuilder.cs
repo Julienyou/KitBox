@@ -251,6 +251,33 @@ namespace KitBoxApp
             return new CupboardConstraint(distinctDepths.ToList(), distinctWidths.ToList(), null, maxHeight);
         }
 
+        public static int GetMaxHeight()
+        {
+            int maxHeight;
+            List<int> heights = new List<int>();
+
+            /*Start connection DataBase*/
+            dbConnection.Open();
+            string sql = "SELECT `height` FROM `CupboardConstraint` WHERE `FK_Reference`='1'";
+
+            SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
+
+            SQLiteDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                heights.Add(Convert.ToInt32(reader["height"]));
+            }
+
+            IEnumerable<int> distinctHeights = heights.Distinct();
+
+            maxHeight = heights.Max();
+
+            /*End connection DataBase*/
+            dbConnection.Close();
+
+            return maxHeight;
+        }
+
         public static BoxConstraint BuildBoxConstraint()
         {
             List<int> heights = new List<int>();
