@@ -32,18 +32,18 @@ namespace KitBoxApp
             
             InitializeComponent();
 
-            //List<string> widths = ConstraintBuilder.GetAvailableSteelCornerColor(72);
-            //foreach (string i in widths)
-            //    Console.WriteLine(i);
+            int widths = ConstraintBuilder.GetMaxHeight();
+            //foreach (int i in widths)
+                Console.WriteLine(widths);
 
-            BoxConstraint a = ConstraintBuilder.BuildBoxConstraint();
+            /*BoxConstraint a = ConstraintBuilder.BuildBoxConstraint();
             foreach (int i in a.Heights)
             {
                 Console.WriteLine(i);
             }
             Console.WriteLine(a.HColors);
             Console.WriteLine(a.VColors);
-            Console.WriteLine(a.Heights);
+            Console.WriteLine(a.Heights);*/
 
 
 
