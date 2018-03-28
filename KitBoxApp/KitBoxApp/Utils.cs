@@ -99,7 +99,8 @@ namespace KitBoxApp
         /// <returns>The method return the order who has been created</returns>
         static public Order ImportFromDatabase(string id)
         {
-            Order order = new Order(id);
+            Order order = new Order();
+            order.Id = id;
 
             /*Start connection DataBase*/
             dbConnection.Open();
