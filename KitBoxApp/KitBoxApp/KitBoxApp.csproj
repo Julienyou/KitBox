@@ -86,7 +86,11 @@
     <Compile Include="IAccessory.cs" />
     <Compile Include="Door.cs" />
     <Compile Include="IConstraintChecker.cs" />
+    <Compile Include="OrderConfirm.xaml.cs">
+      <DependentUpon>OrderConfirm.xaml</DependentUpon>
+    </Compile>
     <Compile Include="KitComposer.cs" />
+
     <Compile Include="Utils.cs" />
     <Compile Include="OrderRecap.xaml.cs">
       <DependentUpon>OrderRecap.xaml</DependentUpon>
@@ -104,6 +108,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="OrderConfirm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="OrderRecap.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

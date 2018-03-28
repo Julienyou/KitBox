@@ -31,7 +31,22 @@ namespace KitBoxApp
         {
             
             InitializeComponent();
-            
+
+            //List<string> widths = ConstraintBuilder.GetAvailableSteelCornerColor(72);
+            //foreach (string i in widths)
+            //    Console.WriteLine(i);
+
+            BoxConstraint a = ConstraintBuilder.BuildBoxConstraint();
+            foreach (int i in a.Heights)
+            {
+                Console.WriteLine(i);
+            }
+            Console.WriteLine(a.HColors);
+            Console.WriteLine(a.VColors);
+            Console.WriteLine(a.Heights);
+
+
+
             cupboard = new Cupboard(cupboardConstraint.Widths[0], cupboardConstraint.Depths[0], cupboardConstraint.SteelCornerColors[0]);
 
             widthComboBox.ItemsSource = cupboardConstraint.Widths;
@@ -85,8 +100,7 @@ namespace KitBoxApp
 
         private void validate_button_Click(object sender, RoutedEventArgs e)
         {
-            
-            Window w = new OrderRecap();
+            Window w = new OrderConfirm(this);
             w.ShowDialog();
         }
 
@@ -99,5 +113,7 @@ namespace KitBoxApp
         {
                 cupboard.RemoveBox((Box)drawBox.SelectedItem);
         }
+
+        public Cupboard Cupboard { get => cupboard; }
     }
 }
