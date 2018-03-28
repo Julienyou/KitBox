@@ -13,7 +13,7 @@ namespace KitBoxApp
 
         public DoorConstraint(List<string> colors, List<Tuple<int,int>> doorDimensions)
         {
- //         this.knop = knop;
+            //this.knop = knop;
             this.colors = colors;
             this.doorDimensions = doorDimensions;
         }
@@ -48,6 +48,10 @@ namespace KitBoxApp
             return false;
         }
 
-        public List<string> Colors { get => colors; }
+        public List<string> Colors
+        {
+            get => colors;
+            set { colors = value; }
+        }
     }
 }
