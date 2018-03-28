@@ -201,6 +201,68 @@ namespace KitBoxApp
             dbConnection.Close();
         }
 
+        /// <summary>
+        ///     This method searchs all components which have their stock under the minimum stock
+        /// </summary>
+        /// <returns>The component's list which need to restock</returns>
+        static public List<Dictionary<string, List<Dictionary<string, string>>>> Restock()
+        {
+            List<Dictionary<string, List<Dictionary<string,string>>>> listStock = new List<Dictionary<string, List<Dictionary<string, string>>>>();
+
+            string sql = "SELECT `Reference`.`Name` AS ref, `Component`.`Code` AS code, `Component`.`Stock` AS stock, " +
+                         "`Component`.`StockMinimum` AS stockmin, `Supplier`.`Name` as nameSupp, " +
+                         "LinkSupplierComponent.SupplierPrice AS price, LinkSupplierComponent.SupplierDelay AS delay " +
+                         "FROM `Component` " +
+                         "INNER JOIN `Reference` ON `Component`.`FK_Reference`=`Reference`.`PK_IDRef` " +
+                         "INNER JOIN `LinkSupplierComponent` ON `Component`.`Code`=`LinkSupplierComponent`.`FK_Component` " +
+                         "INNER JOIN `Supplier` ON `LinkSupplierComponent`.`FK_Suppliers`=`Supplier`.`PK_IDSupplier` " +
+                         "WHERE `Component`.`Stock`<=`Component`.`StockMinimum`";
+
+            SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
+            SQLiteDataReader reader = command.ExecuteReader();
+
+            while(reader.Read())
+            {
+                /*if the code is already in the list*/
+                if (listStock.Exists(x => x.ContainsKey(reader["code"].ToString()))) {
+                    foreach (Dictionary<string, List<Dictionary<string, string>>> component in listStock)
+                    {
+                        foreach (KeyValuePair<string, List<Dictionary<string, string>>> kvp in component)
+                        {
+                            if (kvp.Key == reader["code"].ToString()) {
+                                kvp.Value.Add( new Dictionary<string, string> {
+                                    { "nameSupp", reader["nameSupp"].ToString() },
+                                    { "price", reader["price"].ToString() },
+                                    { "delay", reader["delay"].ToString() }
+                                });
+                            }
+                        }
+                    }
+                }
+                else {
+                    List<Dictionary<string, string>> listData = new List<Dictionary<string, string>>();
+
+                    listData.Add(new Dictionary<string, string> {
+                        { "ref", reader["ref"].ToString() },
+                        { "code", reader["code"].ToString() },
+                        { "stock", reader["stock"].ToString() },
+                        { "stockmin", reader["stockmin"].ToString() }
+                    });
+
+                    listData.Add(new Dictionary<string, string> {
+                        { "nameSupp", reader["nameSupp"].ToString() },
+                        { "price", reader["price"].ToString() },
+                        { "delay", reader["delay"].ToString() }
+                    });
+
+                    listStock.Add(new Dictionary<string, List<Dictionary<string, string>>>{
+                        { reader["code"].ToString(), listData }
+                    });
+                }                
+            }
+
+            return listStock;
+        }
 
         /*Private function*/
         static private void CheckCustomer(Customer customer)
