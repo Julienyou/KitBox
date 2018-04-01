@@ -13,12 +13,6 @@ namespace KitBoxApp
         private List<string> vColors;
         private List<string> hColors;
 
-        public BoxConstraint(List<int> heights, List<string> vColors, List<string> hColors)
-        {
-            this.heights = heights;
-            this.vColors = vColors;
-            this.hColors = hColors;
-        }
 
         public bool Check(Box b)
         {

@@ -11,13 +11,6 @@ namespace KitBoxApp
         private List<string> colors;
         private List<Tuple<int,int>> doorDimensions;
 
-        public DoorConstraint(List<string> colors, List<Tuple<int,int>> doorDimensions)
-        {
-            //this.knop = knop;
-            this.colors = colors;
-            this.doorDimensions = doorDimensions;
-        }
-
         public bool Check(Box b)
         {
             foreach (IAccessory element in b.Accessories)
