@@ -18,10 +18,10 @@ namespace KitBoxApp
         private BoxConstraint boxConstraint;
 
 
-        public Box(Cupboard cupboard, BoxConstraint boxConstraint)
+        public Box(Cupboard cupboard)
         {
             this.cupboard = cupboard;
-            this.boxConstraint = boxConstraint;
+            this.boxConstraint = new BoxConstraint();
         }
 
         // INotifyPropertyChanged Member

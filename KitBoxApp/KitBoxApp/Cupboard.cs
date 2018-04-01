@@ -14,12 +14,8 @@ namespace KitBoxApp
         private int width;
         private int depth;
         private string steelCornerColor;
-        private CupboardConstraint cupboardConstraint;
+        private CupboardConstraint cupboardConstraint = new CupboardConstraint();
 
-        public Cupboard (CupboardConstraint cupboardConstraint)
-        {
-            this.cupboardConstraint = cupboardConstraint;
-        }
 
         // INotifyPropertyChanged Member
         public event PropertyChangedEventHandler PropertyChanged;

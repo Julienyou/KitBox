@@ -11,12 +11,8 @@ namespace KitBoxApp
     {
         private string color;
         private bool knop = false;
-        private DoorConstraint doorConstraint;
+        private DoorConstraint doorConstraint = new DoorConstraint();
 
-        public Door (DoorConstraint doorConstraint)
-        {
-            this.doorConstraint = doorConstraint;
-        }
 
         public string Color
         {
