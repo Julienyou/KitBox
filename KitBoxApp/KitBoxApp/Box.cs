@@ -10,16 +10,18 @@ namespace KitBoxApp
 
     public class Box : INotifyPropertyChanged
     {
-        private int height = 100;
+        private int height;
         private List<IAccessory> accessories = new List<IAccessory> { };
-        private Cupboard cupboard = new Cupboard();
-        private string lateralColor = "";
-        private string horizontalColor = "";
+        private Cupboard cupboard;
+        private string lateralColor;
+        private string horizontalColor;
+        private BoxConstraint boxConstraint;
 
 
-        public Box(Cupboard cupboard)
+        public Box(Cupboard cupboard, BoxConstraint boxConstraint)
         {
             this.cupboard = cupboard;
+            this.boxConstraint = boxConstraint;
         }
 
         // INotifyPropertyChanged Member
@@ -55,6 +57,8 @@ namespace KitBoxApp
             set
             {
                 height = value;
+                ((Door)accessories[0]).DoorConstraint.Colors = ConstraintBuilder.GetAvailableDoorStyle(cupboard.Width, height);
+                boxConstraint.VColors = ConstraintBuilder.GetAvailableVPaneColor(cupboard.Width, cupboard.Depth, height);
                 Notify("Height");
             }
         }
@@ -83,5 +87,7 @@ namespace KitBoxApp
                 Notify("HorizontalColor");
             }
         }
+
+        public BoxConstraint BoxConstraint { get => boxConstraint; }
     }
 }

@@ -11,10 +11,15 @@ namespace KitBoxApp
     public class Cupboard : INotifyPropertyChanged
     {
         private ObservableCollection<Box> boxes = new ObservableCollection<Box> {};
-        private int width = 100;
-        private int depth = 100;
-        private string steelCornerColor = "";
+        private int width;
+        private int depth;
+        private string steelCornerColor;
+        private CupboardConstraint cupboardConstraint;
 
+        public Cupboard (CupboardConstraint cupboardConstraint)
+        {
+            this.cupboardConstraint = cupboardConstraint;
+        }
 
         // INotifyPropertyChanged Member
         public event PropertyChangedEventHandler PropertyChanged;
@@ -40,6 +45,13 @@ namespace KitBoxApp
             set
             {
                 width = value;
+                cupboardConstraint.Depths = ConstraintBuilder.GetAvailableDepth(width);
+                foreach(Box b in boxes)
+                {
+                    b.BoxConstraint.HColors = ConstraintBuilder.GetAvailableHPaneColor(width, depth);
+                    b.BoxConstraint.VColors = ConstraintBuilder.GetAvailableVPaneColor(width, depth, b.Height);
+                    ((Door) b.Accessories[0]).DoorConstraint.Colors = ConstraintBuilder.GetAvailableDoorStyle(width, b.Height);
+                }
                 Notify("Width");
             }
         }
@@ -60,6 +72,11 @@ namespace KitBoxApp
             set
             {
                 depth = value;
+                foreach (Box b in boxes)
+                {
+                    b.BoxConstraint.HColors = ConstraintBuilder.GetAvailableHPaneColor(width, depth);
+                    b.BoxConstraint.VColors = ConstraintBuilder.GetAvailableVPaneColor(width, depth, b.Height);
+                }
                 Notify("Depth");
             }
         }
@@ -78,5 +95,7 @@ namespace KitBoxApp
         {
             boxes.Remove(b);
         }
+
+        public CupboardConstraint CupboardConstraint { get => cupboardConstraint; }
     }
 }
