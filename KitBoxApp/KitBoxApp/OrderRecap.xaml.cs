@@ -36,7 +36,14 @@ namespace KitBoxApp
             if (firstNameCombo.Text.Trim() == "" && lastNameCombo.Text.Trim() == "" && emailCombo.Text.Trim() == "" && adressCombo.Text.Trim() == "")
                 MessageBox.Show("You must complete all the field");
             else
+            {
                 MessageBox.Show("Thank you for ordering");
+                List<string> addr= adressCombo.Text.Split(',').ToList();
+                Order order = new Order();
+                order.SetCustomer(emailCombo.Text, firstNameCombo.Text, lastNameCombo.Text, addr[0], addr[1]);
+                KitComposer.ComposeKit(order, mainWindow.Cupboard);
+                Utils.ExportToDatabase(order);
+            }
         }
     }
 }
