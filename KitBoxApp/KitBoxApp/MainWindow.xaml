@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="887" Width="1362.575" WindowStartupLocation="CenterScreen" WindowState="Maximized">
 
-    <Grid Background="{StaticResource BackbroungColor}">
+    <Grid x:Name="mainGrid" Background="{StaticResource BackbroungColor}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="8*"/>
@@ -16,13 +16,13 @@
             <TabItem Header="Cupboard" RenderTransformOrigin="0.5,0.5">
                 <StackPanel x:Name="cupboardConfig">
                     <TextBlock Style="{StaticResource labelStyle}" >Height</TextBlock>
-                    <TextBlock x:Name="cupboardHeight" Padding="8" Background="#FFE6E6E6"/>
+                    <TextBlock x:Name="cupboardHeight" Padding="8" Background="#FFE6E6E6" Text="{Binding Path=Height}"/>
                     <TextBlock Style="{StaticResource labelStyle}">Width</TextBlock>
-                    <ComboBox Style="{StaticResource ComboStyle}" x:Name="widthComboBox" SelectedItem="{Binding Path=Width}"/>
+                    <ComboBox Style="{StaticResource ComboStyle}" x:Name="widthComboBox" SelectedItem="{Binding Path=Width}" ItemsSource="{Binding Path=CupboardConstraint.Widths}" SelectedIndex="0"/>
                     <TextBlock Style="{StaticResource labelStyle}">Depth</TextBlock>
-                    <ComboBox Style="{StaticResource ComboStyle}" x:Name="depthComboBox" SelectedItem="{Binding Path=Depth}"/>
+                    <ComboBox Style="{StaticResource ComboStyle}" x:Name="depthComboBox" SelectedItem="{Binding Path=Depth}" ItemsSource="{Binding Path=CupboardConstraint.Depths}" SelectedIndex="0"/>
                     <TextBlock Style="{StaticResource labelStyle}">Steel Corner</TextBlock>
-                    <ComboBox Style="{StaticResource ComboStyle}" x:Name="steelCornerCombo"/>
+                    <ComboBox Style="{StaticResource ComboStyle}" x:Name="steelCornerCombo" SelectedItem="{Binding Path=SteelCornerColor}" ItemsSource="{Binding Path=CupboardConstraint.SteelCornerColors}" SelectedIndex="0"/>
                 </StackPanel>
             </TabItem>
             <TabItem  Header="Boxes">
@@ -31,15 +31,15 @@
                         <RowDefinition/>
                         <RowDefinition Height="20"/>
                     </Grid.RowDefinitions>
-                    <StackPanel  x:Name="boxesConfig">
+                    <StackPanel  x:Name="boxesConfig" DataContext="{Binding}">
                         <TextBlock Style="{StaticResource labelStyle}">Pane color</TextBlock>
-                        <ComboBox Style="{StaticResource ComboStyle}" x:Name="paneColorCombo" SelectedItem="{Binding Path=LateralColor}" IsSynchronizedWithCurrentItem="True"/>
+                        <ComboBox Style="{StaticResource ComboStyle}" x:Name="paneColorCombo" SelectedItem="{Binding Path=LateralColor}" ItemsSource="{Binding Path=BoxConstraint.VColors}"/>
                         <TextBlock Style="{StaticResource labelStyle}">Top and bottom color</TextBlock>
-                        <ComboBox Style="{StaticResource ComboStyle}" x:Name="hPaneColorCombo" SelectedItem="{Binding Path=HorizontalColor}" IsSynchronizedWithCurrentItem="True"/>
+                        <ComboBox Style="{StaticResource ComboStyle}" x:Name="hPaneColorCombo" SelectedItem="{Binding Path=HorizontalColor}" ItemsSource="{Binding Path=BoxConstraint.HColors}"/>
                         <TextBlock Style="{StaticResource labelStyle}">Door style</TextBlock>
-                        <ComboBox Style="{StaticResource ComboStyle}" x:Name="doorStyleCombo" SelectedItem="{Binding Path=Accessories[0].Color}" IsSynchronizedWithCurrentItem="True"/>
+                        <ComboBox Style="{StaticResource ComboStyle}" x:Name="doorStyleCombo" SelectedItem="{Binding Path=Accessories[0].Color}" ItemsSource="{Binding Path=Accessories[0].DoorConstraint.Colors}"/>
                         <TextBlock Style="{StaticResource labelStyle}">Height</TextBlock>
-                        <ComboBox Style="{StaticResource ComboStyle}" x:Name="boxHeighCombo"  SelectedItem="{Binding Path=Height}" IsSynchronizedWithCurrentItem="True"/>
+                        <ComboBox Style="{StaticResource ComboStyle}" x:Name="boxHeighCombo"  SelectedItem="{Binding Path=Height}" ItemsSource="{Binding Path=BoxConstraint.Heights}"/>
                     </StackPanel>
                 </Grid>
             </TabItem>
@@ -49,7 +49,7 @@
             Background="Transparent"
             Grid.Column="1" 
             Grid.Row="0" 
-            ItemsSource="{Binding Path=Boxes}"  
+            ItemsSource="{Binding}"  
             IsSynchronizedWithCurrentItem="True" 
             HorizontalAlignment="Center" 
             BorderThickness="0" 
@@ -59,7 +59,6 @@
             RenderTransformOrigin="0.5,0.5" 
             Panel.ZIndex="-2" 
             ScrollViewer.CanContentScroll="False" 
-            SizeChanged="drawBox_SizeChanged" 
             ItemContainerStyle="{StaticResource BoxShapeListStyle}">
 
             <ListView.RenderTransform>
@@ -72,7 +71,7 @@
 
             <ListView.ItemTemplate >
                 <DataTemplate x:Name="ShapeTemplate" >
-                    <local:BoxShape x:Name="Shape"   BHeight="{Binding Path=Height}" BWidth="{Binding Path=Cupboard.Width}" Door="{Binding Path=Accessories[0].Color}"  Stroke="{StaticResource ActionColor}" StrokeThickness="1" Margin="0,0,0,0" RenderTransformOrigin="0.5,0.5"/>
+                    <local:BoxShape x:Name="Shape"   BHeight="{Binding Path=Height, Mode=OneWay}" BWidth="{Binding Path=Cupboard.Width, Mode=OneWay}" Door="{Binding Path=Accessories[0].Color, Mode=OneWay}"  Stroke="{StaticResource ActionColor}" StrokeThickness="1" Margin="0,0,0,0" RenderTransformOrigin="0.5,0.5" />
                     <DataTemplate.Triggers>
                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}},Path=IsSelected}" Value="True">
                             <Setter TargetName="Shape" Property="StrokeThickness" Value="2"/>
@@ -88,6 +87,7 @@
                 <Button x:Name="validate_button" Style="{StaticResource roundedButton}" Click="validate_button_Click" Content="{StaticResource ValdidateIcon}"/>
                 <Button x:Name="reset_button"  Style="{StaticResource roundedButton}" Click="reset_button_Click"  Content="{StaticResource RefreshIcon}"/>
             </StackPanel>
+            
         </Canvas>
     </Grid>
 </Window>

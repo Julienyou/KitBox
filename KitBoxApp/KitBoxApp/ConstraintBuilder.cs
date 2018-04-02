@@ -128,6 +128,7 @@ namespace KitBoxApp
             }
 
             colors.Sort();
+            colors.Insert(0, "None");
             IEnumerable<string> distinctColors = colors.Distinct();
             dbConnection.Close();
             return distinctColors.ToList();
@@ -155,28 +156,10 @@ namespace KitBoxApp
             }
 
             colors.Sort();
-            int count = 0;
-            foreach (string i in colors)
-            {
-                if (!colorsOnly.Contains(i))
-                    colorsOnly.Add(i);
-                else
-                {
-                    count += 1;
-                }
-            }
+            IEnumerable<string> distinctColors = colors.Distinct();
+            dbConnection.Close();
+            return distinctColors.ToList();
 
-            if (colors.Count()/2 == count)
-            {
-                IEnumerable<string> distinctColors = colors.Distinct();
-                dbConnection.Close();
-                return distinctColors.ToList();
-            }
-            else
-            {
-                return new List<string>();
-            }
-            
         }
 
         public static List<string> GetAvailableSteelCornerColor(int height)
@@ -198,8 +181,11 @@ namespace KitBoxApp
                 colors.Add(reader["Name"].ToString());
             }
 
+
+
             colors.Sort();
             IEnumerable<string> distinctColors = colors.Distinct();
+            Console.WriteLine("Style :" + distinctColors.Count());
             dbConnection.Close();
             return distinctColors.ToList();
         }

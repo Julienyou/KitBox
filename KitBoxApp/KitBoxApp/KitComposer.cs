@@ -70,7 +70,7 @@ namespace KitBoxApp
             AddComponent(order, new Dictionary<string, string> {
                 { "reference", "Cornières" },
                 { "color", cupboard.SteelCornerColor },
-                { "height", cupboard.GetHeight().ToString() },
+                { "height", cupboard.Height.ToString() },
                 { "quantity" , "4"}
             });
 

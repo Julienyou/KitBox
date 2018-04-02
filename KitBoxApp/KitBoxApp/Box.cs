@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace KitBoxApp
 {
@@ -56,10 +57,26 @@ namespace KitBoxApp
             get => height;
             set
             {
-                height = value;
-                ((Door)accessories[0]).DoorConstraint.Colors = ConstraintBuilder.GetAvailableDoorStyle(cupboard.Width, height);
-                boxConstraint.VColors = ConstraintBuilder.GetAvailableVPaneColor(cupboard.Width, cupboard.Depth, height);
-                Notify("Height");
+                if(cupboard.Height-height+value >= cupboard.CupboardConstraint.MaxHeight)
+                {
+                    MessageBox.Show("You have reached max cupboard height", "Max Height", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                else
+                {
+                    height = value;
+                
+                    ((Door)accessories[0]).DoorConstraint.Colors = ConstraintBuilder.GetAvailableDoorStyle(cupboard.Width, height);
+                    if (!((Door)accessories[0]).DoorConstraint.Colors.Contains(((Door)accessories[0]).Color))
+                    {
+                        ((Door)accessories[0]).Color = ((Door)accessories[0]).DoorConstraint.Colors[0];
+                    }
+                    boxConstraint.VColors = ConstraintBuilder.GetAvailableVPaneColor(cupboard.Width, cupboard.Depth, height);
+                    if (!boxConstraint.VColors.Contains(lateralColor))
+                    {
+                        lateralColor = boxConstraint.VColors[0];
+                    }
+                    Notify("Height");
+                }
             }
         }
 

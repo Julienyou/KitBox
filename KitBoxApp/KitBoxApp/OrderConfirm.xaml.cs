@@ -43,7 +43,7 @@ namespace KitBoxApp
             List cupboardList = new List();
             List boxesList = new List();
 
-            cupboardList.ListItems.Add(new ListItem(new Paragraph(new Run("Height: " + main.Cupboard.GetHeight() + " cm"))));
+            cupboardList.ListItems.Add(new ListItem(new Paragraph(new Run("Height: " + main.Cupboard.Height + " cm"))));
             cupboardList.ListItems.Add(new ListItem(new Paragraph(new Run("Width: " + main.Cupboard.Width + " cm"))));
             cupboardList.ListItems.Add(new ListItem(new Paragraph(new Run("Depth: " + main.Cupboard.Depth + " cm"))));
             cupboardList.ListItems.Add(new ListItem(new Paragraph(new Run("Corner Color: " + main.Cupboard.SteelCornerColor))));
