@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace KitBoxApp
 {
@@ -11,19 +12,17 @@ namespace KitBoxApp
     public class Box : INotifyPropertyChanged
     {
         private int height;
-        private List<IAccessory> accessories;
+        private List<IAccessory> accessories = new List<IAccessory> { };
         private Cupboard cupboard;
         private string lateralColor;
         private string horizontalColor;
+        private BoxConstraint boxConstraint;
 
 
-        public Box(Cupboard cupboard, int height, string lateralColor, string horizontalColor)
+        public Box(Cupboard cupboard)
         {
             this.cupboard = cupboard;
-            this.height = height;
-            this.lateralColor = lateralColor;
-            this.horizontalColor = horizontalColor;
-            this.accessories = new List<IAccessory> { };
+            this.boxConstraint = new BoxConstraint();
         }
 
         // INotifyPropertyChanged Member
@@ -58,8 +57,26 @@ namespace KitBoxApp
             get => height;
             set
             {
-                height = value;
-                Notify("Height");
+                if(cupboard.Height-height+value >= cupboard.CupboardConstraint.MaxHeight)
+                {
+                    MessageBox.Show("You have reached max cupboard height", "Max Height", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                else
+                {
+                    height = value;
+                
+                    ((Door)accessories[0]).DoorConstraint.Colors = ConstraintBuilder.GetAvailableDoorStyle(cupboard.Width, height);
+                    if (!((Door)accessories[0]).DoorConstraint.Colors.Contains(((Door)accessories[0]).Color))
+                    {
+                        ((Door)accessories[0]).Color = ((Door)accessories[0]).DoorConstraint.Colors[0];
+                    }
+                    boxConstraint.VColors = ConstraintBuilder.GetAvailableVPaneColor(cupboard.Width, cupboard.Depth, height);
+                    if (!boxConstraint.VColors.Contains(lateralColor))
+                    {
+                        lateralColor = boxConstraint.VColors[0];
+                    }
+                    Notify("Height");
+                }
             }
         }
 
@@ -87,5 +104,7 @@ namespace KitBoxApp
                 Notify("HorizontalColor");
             }
         }
+
+        public BoxConstraint BoxConstraint { get => boxConstraint; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,17 +8,17 @@ using KitBoxApp.Properties;
 
 namespace KitBoxApp
 {
-    public class BoxConstraint : IConstraintChecker<Box>
+    public class BoxConstraint : IConstraintChecker<Box>,INotifyPropertyChanged
     {
         private List<int> heights;
         private List<string> vColors;
         private List<string> hColors;
 
-        public BoxConstraint(List<int> heights, List<string> vColors, List<string> hColors)
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        void Notify(string propName)
         {
-            this.heights = heights;
-            this.vColors = vColors;
-            this.hColors = hColors;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
 
         public bool Check(Box b)
@@ -33,18 +34,30 @@ namespace KitBoxApp
         public List<string> VColors
         {
             get => vColors;
-            set { vColors = value; }
+            set
+            {
+                vColors = value;
+                Notify("VColors");
+            }
         }
         public List<string> HColors
         {
             get => hColors;
-            set { hColors = value; }
+            set
+            {
+                hColors = value;
+                Notify("HColors");
+            }
         }
 
         public List<int> Heights
         {
             get => heights;
-            set { heights = value; }
+            set
+            {
+                heights = value;
+                Notify("Heights");
+            }
         }
 
     }

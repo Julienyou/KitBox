@@ -22,7 +22,7 @@ namespace KitBoxApp
         }
 
         /// <summary>
-        ///     Automatically add a component to the order. If the component 
+        ///     Automatically add a component to the order. If the component
         ///     already exists in the order, it automatically increments its
         ///     quantity value by the quantity from the component to add.
         /// </summary>
@@ -59,8 +59,8 @@ namespace KitBoxApp
 
 
         /// <summary>
-        ///     Generates the components for the specified cupboard for the 
-        ///     specified order and determines what are the relevant creterias 
+        ///     Generates the components for the specified cupboard for the
+        ///     specified order and determines what are the relevant creterias
         ///     for a database commponent checkout.
         /// </summary>
         /// <param name="order">Represents the order that is going to receive the list of components.</param>
@@ -90,7 +90,7 @@ namespace KitBoxApp
         #region ComposeOrder sub-methods
 
         /// <summary>
-        ///     Adds side panes components based on box infos to the order.  
+        ///     Adds side panes components based on box infos to the order.
         /// </summary>
         /// <param name="order">Represents the order that is going to receive theses panes.</param>
         /// <param name="box">Represents the box to analyse to retrieve the component details.</param>
@@ -104,9 +104,9 @@ namespace KitBoxApp
                 { "quantity" , "2"}
             });
         }
-        
+
         /// <summary>
-        ///     Adds top and bottom panes components based on box infos to the order.  
+        ///     Adds top and bottom panes components based on box infos to the order.
         /// </summary>
         /// <param name="order">Represents the order that is going to receive these panes.</param>
         /// <param name="box">Represents the box to analyse to retrieve the component details.</param>
@@ -122,7 +122,7 @@ namespace KitBoxApp
         }
 
         /// <summary>
-        ///     Adds the rear pane component based on box infos to the order.  
+        ///     Adds the rear pane component based on box infos to the order.
         /// </summary>
         /// <param name="order">Represents the order that is going to receive this pane.</param>
         /// <param name="box">Represents the box to analyse to retrieve the component details.</param>
@@ -138,7 +138,7 @@ namespace KitBoxApp
         }
 
         /// <summary>
-        ///     Adds the mounts components based on box infos to the order.  
+        ///     Adds the mounts components based on box infos to the order.
         /// </summary>
         /// <param name="order">Represents the order that is going to receive these mounts.</param>
         /// <param name="box">Represents the box to analyse to retrieve the component details.</param>
@@ -152,7 +152,7 @@ namespace KitBoxApp
         }
 
         /// <summary>
-        ///     Adds the cross pieces components based on box infos to the order.  
+        ///     Adds the cross pieces components based on box infos to the order.
         /// </summary>
         /// <param name="order">Represents the order that is going to receive these cross pieces.</param>
         /// <param name="box">Represents the box to analyse to retrieve the component details.</param>
@@ -166,7 +166,7 @@ namespace KitBoxApp
         }
 
         /// <summary>
-        ///     Adds the cross pieces components based on box infos to the order.  
+        ///     Adds the cross pieces components based on box infos to the order.
         /// </summary>
         /// <param name="order">Represents the order that is going to receive these cross pieces.</param>
         /// <param name="box">Represents the box to analyse to retrieve the component details.</param>
@@ -180,7 +180,7 @@ namespace KitBoxApp
         }
 
         /// <summary>
-        ///     Adds the cross pieces components based on box infos to the order.  
+        ///     Adds the cross pieces components based on box infos to the order.
         /// </summary>
         /// <param name="order">Represents the order that is going to receive these cross pieces.</param>
         /// <param name="box">Represents the box to analyse to retrieve the component details.</param>
@@ -194,7 +194,7 @@ namespace KitBoxApp
         }
 
         /// <summary>
-        ///     Adds the accessory components based on box infos to the order.  
+        ///     Adds the accessory components based on box infos to the order.
         /// </summary>
         /// <param name="order">Represents the order that is going to receive these accessories.</param>
         /// <param name="box">Represents the box to analyse to retrieve the component details.</param>

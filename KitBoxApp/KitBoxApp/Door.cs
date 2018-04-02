@@ -10,12 +10,9 @@ namespace KitBoxApp
     public class Door : IAccessory, INotifyPropertyChanged
     {
         private string color;
-        private bool knop;
+        private bool knop = false;
+        private DoorConstraint doorConstraint = new DoorConstraint();
 
-        public Door(string color)
-        {
-            this.color = color;
-        }
 
         public string Color
         {
@@ -34,5 +31,8 @@ namespace KitBoxApp
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
+
+        public DoorConstraint DoorConstraint { get => doorConstraint; }
+
     }
 }

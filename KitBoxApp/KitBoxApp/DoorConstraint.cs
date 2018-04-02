@@ -1,22 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace KitBoxApp
 {
-    public class DoorConstraint : IConstraintChecker<Box>
+
+    public class DoorConstraint : IConstraintChecker<Box>, INotifyPropertyChanged
     {
         private List<string> colors;
         private List<Tuple<int,int>> doorDimensions;
-
-        public DoorConstraint(List<string> colors, List<Tuple<int,int>> doorDimensions)
-        {
-            //this.knop = knop;
-            this.colors = colors;
-            this.doorDimensions = doorDimensions;
-        }
 
         public bool Check(Box b)
         {
@@ -48,10 +43,20 @@ namespace KitBoxApp
             return false;
         }
 
+        public event PropertyChangedEventHandler PropertyChanged;
+        void Notify(string propName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
+        }
+
         public List<string> Colors
         {
             get => colors;
-            set { colors = value; }
+            set
+            {
+                colors = value;
+                Notify("Colors");
+            }
         }
     }
 }

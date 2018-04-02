@@ -61,10 +61,10 @@ namespace KitBoxApp
         {
 
             int scale = 2;
-            int cornerWidth = 5*scale;
-            int mountWidth = 5*scale;
-            int knopSize = 5*scale;
-            int knopDelta = 10*scale;
+            int cornerWidth = 2*scale;
+            int mountWidth = 2*scale;
+            int knopSize = 3*scale;
+            int knopDelta = 5*scale;
             int width = BWidth * scale;
             int height = BHeight * scale;
 

@@ -1,29 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace KitBoxApp
 {
-    public class CupboardConstraint : IConstraintChecker<Cupboard>
+    public class CupboardConstraint : IConstraintChecker<Cupboard>, INotifyPropertyChanged
     {
         private List<int> depths;
         private List<int> widths;
         private List<string> steelCornerColors;
         private int maxHeight;
 
-        public CupboardConstraint(List<int> depths, List<int> widths, List<string> steelCornerColors,int maxHeight)
+        public event PropertyChangedEventHandler PropertyChanged;
+        void Notify(string propName)
         {
-            this.depths = depths;
-            this.widths = widths;
-            this.steelCornerColors = steelCornerColors;
-            this.maxHeight = maxHeight;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
 
         public bool Check(Cupboard cb)
         {
-            if (depths.Contains(cb.Depth) && widths.Contains(cb.Width) && maxHeight > cb.GetHeight())
+            if (depths.Contains(cb.Depth) && widths.Contains(cb.Width) && maxHeight > cb.Height)
             {
                 return true;
             }
@@ -34,13 +33,21 @@ namespace KitBoxApp
         public List<int> Widths
         {
             get => widths;
-            set { widths = value; }
+            set
+            {
+                widths = value;
+                Notify("Widths");
+            }
         }
 
         public List<int> Depths
         {
             get => depths;
-            set { depths = value; }
+            set
+            {
+                depths = value;
+                Notify("Depths");
+            }
         }
         public List<string> SteelCornerColors
         {
