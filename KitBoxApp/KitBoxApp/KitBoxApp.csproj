@@ -94,9 +94,7 @@
       <DependentUpon>OrderConfirm.xaml</DependentUpon>
     </Compile>
     <Compile Include="KitComposer.cs" />
-
     <Compile Include="Tests\UtilsTest.cs" />
-
     <Compile Include="Utils.cs" />
     <Compile Include="OrderRecap.xaml.cs">
       <DependentUpon>OrderRecap.xaml</DependentUpon>
@@ -123,8 +121,8 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Style.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
