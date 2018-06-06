@@ -5,13 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.SQLite;
 
-namespace KitBoxApp
+namespace KitBox.Core.Constraint
 {
-    static class ConstraintBuilder
+    public static class ConstraintBuilder
     {
+        #region Attributes
         private static SQLiteConnection dbConnection = new SQLiteConnection("Data Source=db.sqlite;Version=3;");
+        #endregion
 
-
+        #region methods
         public static List<int> BuildWidthsList()
         {
             List<int> widths = new List<int>();
@@ -189,6 +191,7 @@ namespace KitBoxApp
             dbConnection.Close();
             return distinctColors.ToList();
         }
+        #endregion
     }
 }
 

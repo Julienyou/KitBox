@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace KitBoxApp
+namespace KitBox
 {
     /// <summary>
     /// Logique d'interaction pour App.xaml

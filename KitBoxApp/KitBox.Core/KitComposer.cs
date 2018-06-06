@@ -1,12 +1,15 @@
-﻿using System;
+﻿using KitBox.Core.Interface;
+using KitBox.Core.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KitBoxApp
+
+namespace KitBox.Core
 {
-    static class KitComposer
+    public static class KitComposer
     {
         /// <summary>
         ///     Completes a specific order with the cupboard given in parameter

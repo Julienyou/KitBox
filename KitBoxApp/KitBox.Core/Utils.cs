@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.SQLite;
+using KitBox.Core.Model;
 
-namespace KitBoxApp
+namespace KitBox.Core
 {
-    static class Utils
+    public static class Utils
     {
         static private SQLiteConnection dbConnection = new SQLiteConnection("Data Source=db.sqlite;Version=3;");
 
@@ -118,7 +119,7 @@ namespace KitBoxApp
             SQLiteDataReader reader = command.ExecuteReader();
             while (reader.Read())
             {
-                order.SetCustomer(reader["Pk_Email"].ToString(), reader["Firstname"].ToString(),
+                order.Customer = new Customer(reader["Pk_Email"].ToString(), reader["Firstname"].ToString(),
                                   reader["Lastname"].ToString(), reader["Street"].ToString(),
                                   reader["Town"].ToString());
 
@@ -246,7 +247,6 @@ namespace KitBoxApp
             {
                 length = reader["height"].ToString();
             }
-
             return length;
         }
 

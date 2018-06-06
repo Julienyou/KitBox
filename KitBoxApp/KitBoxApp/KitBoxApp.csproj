@@ -80,25 +80,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Box.cs" />
-    <Compile Include="BoxConstraint.cs" />
-    <Compile Include="ConstraintBuilder.cs" />
-    <Compile Include="Cupboard.cs" />
-    <Compile Include="CupboardConstraint.cs" />
-    <Compile Include="Customer.cs" />
-    <Compile Include="DoorConstraint.cs" />
-    <Compile Include="IAccessory.cs" />
-    <Compile Include="Door.cs" />
-    <Compile Include="IConstraintChecker.cs" />
-    <Compile Include="OrderConfirm.xaml.cs">
-      <DependentUpon>OrderConfirm.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="KitComposer.cs" />
-    <Compile Include="Tests\UtilsTest.cs" />
-    <Compile Include="Utils.cs" />
     <Compile Include="OrderRecap.xaml.cs">
       <DependentUpon>OrderRecap.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Tests\UtilsTest.cs" />
+    <Compile Include="OrderConfirm.xaml.cs">
+      <DependentUpon>OrderConfirm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\OrderRecapViewModel.cs" />
+    <Compile Include="ViewModel\OrderConfirmViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -112,21 +103,16 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="OrderConfirm.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="OrderRecap.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Style.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <Page Include="OrderConfirm.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Order.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -156,7 +142,12 @@
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\KitBox.Core\KitBox.Core.csproj">
+      <Project>{0bd11c3e-7a85-4c82-9390-96b59bfbc6e0}</Project>
+      <Name>KitBox.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.108.0\build\net46\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.108.0\build\net46\System.Data.SQLite.Core.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace KitBoxApp.Properties
+namespace KitBox.Properties
 {
 
 

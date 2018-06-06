@@ -4,16 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KitBoxApp
+namespace KitBox.Core.Model
 {
     public class Customer
     {
+        #region Attributes
         private string email;
         private string firstName;
         private string lastName;
         private string street;
         private string town;
+        #endregion
 
+        #region Constructor
         public Customer(string email, string firstName, string lastName, string street, string town)
         {
             this.email = email;
@@ -22,7 +25,9 @@ namespace KitBoxApp
             this.street = street;
             this.town = town;
         }
+        #endregion
 
+        #region Properties
         public string Email
         {
             get => email;
@@ -72,5 +77,7 @@ namespace KitBoxApp
                 town = value;
             }
         }
+
+        #endregion
     }
 }

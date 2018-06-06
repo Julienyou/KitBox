@@ -1,14 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Data.SQLite;
 
-namespace KitBoxApp
+namespace KitBox.Core.Model
 {
-    public class Order
+    public class Order : INotifyPropertyChanged
     {
+        #region Property changed member
+        // INotifyPropertyChanged Member
+        public event PropertyChangedEventHandler PropertyChanged;
+        void Notify(string propName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
+        }
+        #endregion
 
         #region Attributes
 
@@ -21,11 +29,13 @@ namespace KitBoxApp
         private List<Dictionary<string, string>> components = new List<Dictionary<string, string>>();
 
         #endregion
+
         #region Constructors
 
         public Order() {}
 
         #endregion
+
         #region Getters and Setters
 
         public string Id
@@ -35,6 +45,7 @@ namespace KitBoxApp
             set
             {
                 id = value;
+                Notify("Id");
             }
         }
 
@@ -45,6 +56,7 @@ namespace KitBoxApp
             set
             {
                 totalPrice = value;
+                Notify("TotalPrice");
             }
         }
 
@@ -55,13 +67,17 @@ namespace KitBoxApp
             set
             {
                 remnantSale = value;
+                Notify("RemnantSale");
             }
         }
 
         public Customer Customer
         {
             get => customer;
-
+            set
+            {
+                customer = value;
+            }
         }
 
         public string State
@@ -71,23 +87,18 @@ namespace KitBoxApp
             set
             {
                 state = value;
+                Notify("State");
             }
         }
 
         public List<Dictionary<string, string>> Components
         {
             get => components;
-            set { components = value; }
-        }
-
-
-        /*Functions if we created an Order*/
-        public void SetCustomer(string email, string firstName, string lastName, string street, string town)
-        {
-            customer = new Customer(email, firstName, lastName, street, town);
+            set { components = value; Notify("Components"); }
         }
 
         #endregion
+
         #region Methods
 
         //---Methods
