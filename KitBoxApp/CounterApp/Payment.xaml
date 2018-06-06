@@ -1,0 +1,71 @@
+﻿<Window x:Class="CounterApp.Payment"
+        x:Name="PaymentWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CounterApp"
+        xmlns:r="clr-namespace:CounterApp.Rule"
+        mc:Ignorable="d"
+        Title="Payment" Height="350" Width="263.743" WindowStyle="ToolWindow" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource textBoxStyle}">
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Validation.ErrorTemplate">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <DockPanel LastChildFill="true">
+                            <Border Background="Red" DockPanel.Dock="right" Margin="5,0,0,0" Width="20" Height="20" CornerRadius="10"
+                                    ToolTip="{Binding ElementName=customAdorner, Path=AdornedElement.(Validation.Errors)[0].ErrorContent}">
+                                <TextBlock Text="!" VerticalAlignment="center" HorizontalAlignment="center" FontWeight="Bold" Foreground="white">
+                                </TextBlock>
+                            </Border>
+                            <AdornedElementPlaceholder Name="customAdorner" VerticalAlignment="Center" >
+                                <Border BorderBrush="Red" BorderThickness="1" />
+                            </AdornedElementPlaceholder>
+                        </DockPanel>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid x:Name="payment"   Background="{StaticResource BackbroungColor}" Margin="0,0,0,-7">
+        <StackPanel Grid.Row="0" Margin="40,10,40,0">
+            <TextBlock Style="{StaticResource labelStyle}">Total Price</TextBlock>
+            <TextBox  Style="{StaticResource textBoxStyle}" x:Name="totalPaymentTextblock" Text="{Binding Path=TotalPayment, Mode=OneWay}" IsEnabled="False"/>
+            <TextBlock Style="{StaticResource labelStyle}">Remaining Payment</TextBlock>
+            <TextBox Style="{StaticResource textBoxStyle}" x:Name="remainingPaymentTextblock" Text="{Binding Path=RemainingPayment, Mode=OneWay}" IsEnabled="False"/>
+            <TextBlock Style="{StaticResource labelStyle}">Payment</TextBlock>
+            <TextBox x:Name="paymentTextBox" Grid.Row="0" Grid.Column="1">
+                <TextBox.Text>
+                    <Binding Path="Payment" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" NotifyOnValidationError="True">
+                        <Binding.ValidationRules>
+                            <r:StringToIntValidationRule ValidationStep="RawProposedValue"/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+
+        </StackPanel>
+        <Canvas Name="test">
+            <Button x:Name="cancel_button" Style="{StaticResource button}" Canvas.Bottom="27" Canvas.Left="35" Command="{Binding CancelOrder}" CommandParameter="{Binding ElementName=PaymentWindow}">Cancel Order</Button>
+            <Button x:Name="confirm_button"  Canvas.Bottom="27" Canvas.Left="170" Command="{Binding Pay}" CommandParameter="{Binding ElementName=PaymentWindow}">
+                Pay
+                <Button.Style>
+                    <Style BasedOn="{StaticResource button}" TargetType="{x:Type Button}">
+                        <Setter Property="IsEnabled" Value="false" />
+                        <Style.Triggers>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding ElementName=paymentTextBox, Path=(Validation.HasError)}" Value="false" />
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="IsEnabled" Value="true" />
+                            </MultiDataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+        </Canvas>
+    </Grid>
+</Window>

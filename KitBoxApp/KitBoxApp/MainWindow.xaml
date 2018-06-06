@@ -1,11 +1,11 @@
-﻿<Window x:Class="KitBoxApp.MainWindow"
+﻿<Window x:Class="KitBox.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:KitBoxApp"
+        xmlns:local="clr-namespace:KitBox"
         mc:Ignorable="d"
-        Title="MainWindow" Height="887" Width="1362.575" WindowStartupLocation="CenterScreen" WindowState="Maximized">
+        Title="MainWindow" Height="887" Width="1362.575" WindowStartupLocation="CenterScreen" WindowState="Maximized" WindowStyle="None">
 
     <Grid x:Name="mainGrid" Background="{StaticResource BackbroungColor}">
         <Grid.ColumnDefinitions>
@@ -14,7 +14,7 @@
         </Grid.ColumnDefinitions>
         <TabControl  ItemContainerStyle="{StaticResource TabItemStyle}" Background="{StaticResource SecondaryBackgroud}" Margin="1,1,0,1" Grid.Row="0" Grid.Column="0" UseLayoutRounding="False" Padding="40,0,40,0" BorderThickness="0">
             <TabItem Header="Cupboard" RenderTransformOrigin="0.5,0.5">
-                <StackPanel x:Name="cupboardConfig">
+                <StackPanel x:Name="cupboardConfig" DataContext="{Binding Cupboard}">
                     <TextBlock Style="{StaticResource labelStyle}" >Height</TextBlock>
                     <TextBlock x:Name="cupboardHeight" Padding="8" Background="#FFE6E6E6" Text="{Binding Path=Height}"/>
                     <TextBlock Style="{StaticResource labelStyle}">Width</TextBlock>
@@ -31,7 +31,7 @@
                         <RowDefinition/>
                         <RowDefinition Height="20"/>
                     </Grid.RowDefinitions>
-                    <StackPanel  x:Name="boxesConfig" DataContext="{Binding}">
+                    <StackPanel  x:Name="boxesConfig" DataContext="{Binding SelectedBox}">
                         <TextBlock Style="{StaticResource labelStyle}">Pane color</TextBlock>
                         <ComboBox Style="{StaticResource ComboStyle}" x:Name="paneColorCombo" SelectedItem="{Binding Path=LateralColor}" ItemsSource="{Binding Path=BoxConstraint.VColors}"/>
                         <TextBlock Style="{StaticResource labelStyle}">Top and bottom color</TextBlock>
@@ -49,7 +49,8 @@
             Background="Transparent"
             Grid.Column="1" 
             Grid.Row="0" 
-            ItemsSource="{Binding}"  
+            ItemsSource="{Binding Cupboard.Boxes}" 
+            SelectedItem="{Binding SelectedBox}"
             IsSynchronizedWithCurrentItem="True" 
             HorizontalAlignment="Center" 
             BorderThickness="0" 
@@ -59,7 +60,8 @@
             RenderTransformOrigin="0.5,0.5" 
             Panel.ZIndex="-2" 
             ScrollViewer.CanContentScroll="False" 
-            ItemContainerStyle="{StaticResource BoxShapeListStyle}">
+            ItemContainerStyle="{StaticResource BoxShapeListStyle}"
+            >
 
             <ListView.RenderTransform>
                 <TransformGroup>
@@ -82,10 +84,10 @@
         </ListView>
         <Canvas Grid.Column="1">
             <StackPanel Canvas.Right="30" Canvas.Top="30">
-                <Button x:Name="add_button" Style="{StaticResource roundedButton}" Click="add_button_Click" Content="{StaticResource AddIcon}"/>
-                <Button x:Name="delete_buttn" Style="{StaticResource roundedButton}" Content="{StaticResource DeleteIcon}" Click="delete_buttn_Click"/>
-                <Button x:Name="validate_button" Style="{StaticResource roundedButton}" Click="validate_button_Click" Content="{StaticResource ValdidateIcon}"/>
-                <Button x:Name="reset_button"  Style="{StaticResource roundedButton}" Click="reset_button_Click"  Content="{StaticResource RefreshIcon}"/>
+                <Button x:Name="add_button" Style="{StaticResource roundedButton}" Content="{StaticResource AddIcon}" Command="{Binding AddBoxCommand}"/>
+                <Button x:Name="delete_buttn" Style="{StaticResource roundedButton}" Content="{StaticResource DeleteIcon}" Command="{Binding DeleteBoxCommand}"/>
+                <Button x:Name="validate_button" Style="{StaticResource roundedButton}" Content="{StaticResource ValdidateIcon}" Command="{Binding ValidateCommand}"/>
+                <Button x:Name="reset_button"  Style="{StaticResource roundedButton}" Content="{StaticResource RefreshIcon}" Command="{Binding ResetCommand}"/>
             </StackPanel>
             
         </Canvas>

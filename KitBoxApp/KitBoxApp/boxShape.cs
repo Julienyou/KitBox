@@ -8,37 +8,39 @@ using System.Windows;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
-namespace KitBoxApp
+namespace KitBox
 {
     public class BoxShape : Shape
     {
+        #region Dependency Properties
         public static readonly DependencyProperty DoorProperty =
         DependencyProperty.Register("Door", typeof(string),
         typeof(BoxShape),
         new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
-
-        public string Door
-        {
-            get { return (string)GetValue(DoorProperty); }
-            set { SetValue(DoorProperty, value);  }
-        }
 
         public static readonly DependencyProperty BHeightProperty =
         DependencyProperty.Register("BHeight", typeof(int),
         typeof(BoxShape),
         new FrameworkPropertyMetadata(0, FrameworkPropertyMetadataOptions.AffectsMeasure));
 
+        public static readonly DependencyProperty BWidthProperty =
+        DependencyProperty.Register("BWidth", typeof(int),
+        typeof(BoxShape),
+        new FrameworkPropertyMetadata(0, FrameworkPropertyMetadataOptions.AffectsMeasure));
+        #endregion
+
+        #region Properties 
+        public string Door
+        {
+            get { return (string)GetValue(DoorProperty); }
+            set { SetValue(DoorProperty, value); }
+        }
+
         public int BHeight
         {
             get { return (int)GetValue(BHeightProperty); }
             set { SetValue(BHeightProperty, value); }
         }
-
-
-        public static readonly DependencyProperty BWidthProperty =
-        DependencyProperty.Register("BWidth", typeof(int),
-        typeof(BoxShape),
-        new FrameworkPropertyMetadata(0, FrameworkPropertyMetadataOptions.AffectsMeasure));
 
         public int BWidth
         {
@@ -57,57 +59,37 @@ namespace KitBoxApp
             get { return GenerateMyWeirdGeometry(); }
         }
 
+        #endregion
+
+        #region Methods
         private Geometry GenerateMyWeirdGeometry()
         {
 
             int scale = 2;
-            int cornerWidth = 2*scale;
-            int mountWidth = 2*scale;
-            int knopSize = 3*scale;
-            int knopDelta = 5*scale;
+            int cornerWidth = 2 * scale;
+            int mountWidth = 2 * scale;
+            int knopSize = 3 * scale;
+            int knopDelta = 5 * scale;
             int width = BWidth * scale;
             int height = BHeight * scale;
 
-            
-
             GeometryGroup geom = new GeometryGroup();
 
+            RectangleGeometry mainRect = new RectangleGeometry(new Rect(0, 0, width, height));
 
-            
-            RectangleGeometry mainRect = new RectangleGeometry();
-            mainRect.Rect = new Rect(0,0, width, height);
-            
+            LineGeometry leftCorner = new LineGeometry(new Point(cornerWidth, 0),new Point(cornerWidth, height));
 
-            LineGeometry leftCorner = new LineGeometry();
-            leftCorner.StartPoint = new Point(cornerWidth, 0);
-            leftCorner.EndPoint = new Point(cornerWidth, height);
+            LineGeometry rightCorner = new LineGeometry(new Point(width - cornerWidth, 0), new Point(width - cornerWidth, height));
 
-            LineGeometry rightCorner = new LineGeometry();
-            rightCorner.StartPoint = new Point(width-cornerWidth, 0);
-            rightCorner.EndPoint = new Point(width-cornerWidth, height);
+            LineGeometry topMount = new LineGeometry(new Point(cornerWidth, mountWidth), new Point(width - cornerWidth, mountWidth));
 
-            LineGeometry topMount = new LineGeometry();
-            topMount.StartPoint = new Point(cornerWidth, mountWidth);
-            topMount.EndPoint = new Point(width-cornerWidth, mountWidth);
+            LineGeometry bottomMount = new LineGeometry( new Point(cornerWidth, height - mountWidth), new Point(width - cornerWidth, height - mountWidth));
 
-            LineGeometry bottomMount = new LineGeometry();
-            bottomMount.StartPoint = new Point(cornerWidth, height-mountWidth);
-            bottomMount.EndPoint = new Point(width - cornerWidth, height-mountWidth);
+            LineGeometry door = new LineGeometry(new Point(width / 2, mountWidth), new Point(width / 2, height - mountWidth));
 
-            LineGeometry door = new LineGeometry();
-            door.StartPoint = new Point(width/2, mountWidth);
-            door.EndPoint = new Point(width/2, height - mountWidth);
+            EllipseGeometry leftKnop = new EllipseGeometry(new Point(cornerWidth + knopDelta, height / 2), knopSize, knopSize);
 
-            EllipseGeometry leftKnop = new EllipseGeometry();
-            leftKnop.Center = new Point(cornerWidth + knopDelta, height / 2);
-            leftKnop.RadiusX = knopSize;
-            leftKnop.RadiusY = knopSize;
-
-            EllipseGeometry rightKnop = new EllipseGeometry();
-            rightKnop.Center = new Point(width-(cornerWidth + knopDelta), height / 2);
-            rightKnop.RadiusX = knopSize;
-            rightKnop.RadiusY = knopSize;
-
+            EllipseGeometry rightKnop = new EllipseGeometry(new Point(width - (cornerWidth + knopDelta), height / 2), knopSize, knopSize);
 
             geom.Children.Add(mainRect);
             geom.Children.Add(leftCorner);
@@ -115,16 +97,15 @@ namespace KitBoxApp
             geom.Children.Add(topMount);
             geom.Children.Add(bottomMount);
 
-            if(Door!=null && !Door.Equals("None"))
+            if (Door != null && !Door.Equals("None"))
             {
                 geom.Children.Add(door);
                 geom.Children.Add(leftKnop);
                 geom.Children.Add(rightKnop);
             }
 
-
-
             return geom;
         }
+        #endregion
     }
 }

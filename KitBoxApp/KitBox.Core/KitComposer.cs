@@ -1,12 +1,15 @@
-﻿using System;
+﻿using KitBox.Core.Interface;
+using KitBox.Core.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KitBoxApp
+
+namespace KitBox.Core
 {
-    static class KitComposer
+    public static class KitComposer
     {
         /// <summary>
         ///     Completes a specific order with the cupboard given in parameter
@@ -67,7 +70,7 @@ namespace KitBoxApp
         /// <param name="cupboard">Represents the cupboard that is going to be analysed to generate the component list.</param>
         static private void ComposeOrder(Order order, Cupboard cupboard)
         {
-            string height = Utils.GetCornersLength(cupboard.SteelCornerColor, cupboard.GetHeight());
+            string height = Utils.GetCornersLength(cupboard.SteelCornerColor, cupboard.Height);
             AddComponent(order, new Dictionary<string, string> {
                 { "reference", "Cornières" },
                 { "color", cupboard.SteelCornerColor },

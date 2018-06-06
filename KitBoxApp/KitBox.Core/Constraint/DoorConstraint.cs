@@ -1,18 +1,23 @@
-﻿using System;
+﻿using KitBox.Core.Interface;
+using KitBox.Core.Model;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KitBoxApp
+namespace KitBox.Core.Constraint
 {
 
     public class DoorConstraint : IConstraintChecker<Box>, INotifyPropertyChanged
     {
+        #region Attributes
         private List<string> colors;
         private List<Tuple<int,int>> doorDimensions;
+        #endregion
 
+        #region Methods
         public bool Check(Box b)
         {
             foreach (IAccessory element in b.Accessories)
@@ -43,12 +48,17 @@ namespace KitBoxApp
             return false;
         }
 
+        #endregion
+
+        #region Property changed members
         public event PropertyChangedEventHandler PropertyChanged;
         void Notify(string propName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
+        #endregion
 
+        #region Propreties
         public List<string> Colors
         {
             get => colors;
@@ -58,5 +68,6 @@ namespace KitBoxApp
                 Notify("Colors");
             }
         }
+        #endregion
     }
 }
