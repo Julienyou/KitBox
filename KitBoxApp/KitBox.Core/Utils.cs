@@ -226,11 +226,13 @@ namespace KitBox.Core
 
         static public string GetCornersLength(string color, int minheight)
         {
+            dbConnection.Open();
+
             string length = "";
             string sql =
-                "SELECT MIN(height) " +
+                "SELECT MIN(height) AS height " +
                 "FROM ComponentData " +
-                "WHERE reference = 'Cornières' AND Color = " + color + " AND height >  " + minheight.ToString();
+                "WHERE reference = 'Cornières' AND Color = '" + color + "' AND height >  '" + minheight.ToString() +"'";
 
             /*
                 "SELECT * " +
@@ -247,6 +249,10 @@ namespace KitBox.Core
             {
                 length = reader["height"].ToString();
             }
+
+            /*End connection DataBase*/
+            dbConnection.Close();
+
             return length;
         }
 
