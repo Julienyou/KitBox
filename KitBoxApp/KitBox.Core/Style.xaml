@@ -223,10 +223,10 @@ ConverterParameter={x:Static DataGridHeadersVisibility.Row},
     </Style>
 
 
-    <Image x:Shared="false" x:Key="AddIcon" Source="C:\Users\guill\source\repos\KitBox\KitBoxApp\KitBoxApp\ic_add_white_24dp\ic_add_white_24dp\web\ic_add_white_24dp_1x.png"/>
-    <Image x:Shared="false" x:Key="DeleteIcon" Source="C:\Users\guill\source\repos\KitBox\KitBoxApp\KitBoxApp\ic_remove_white_24dp\ic_remove_white_24dp\web\ic_remove_white_24dp_1x.png"/>
-    <Image x:Shared="false" x:Key="RefreshIcon" Source="C:\Users\guill\source\repos\KitBox\KitBoxApp\KitBoxApp\ic_clear_white_24dp\ic_clear_white_24dp\web\ic_clear_white_24dp_1x.png "/>
-    <Image x:Shared="false" x:Key="ValdidateIcon" Source="C:\Users\guill\source\repos\KitBox\KitBoxApp\KitBoxApp\ic_done_white_24dp\ic_done_white_24dp\web\ic_done_white_24dp_1x.png"  />
+    <Image x:Shared="false" x:Key="AddIcon" Source="Resources/ic_add_white_24dp_1x.png"/>
+    <Image x:Shared="false" x:Key="DeleteIcon" Source="pack://application:,,,KitBox.Core/Resources/ic_remove_white_24dp_1x.png"/>
+    <Image x:Shared="false" x:Key="RefreshIcon" Source="pack://application:,,,KitBox.Core/Resources/ic_clear_white_24dp_1x.png "/>
+    <Image x:Shared="false" x:Key="ValdidateIcon" Source="pack://application:,,,KitBox.Core/Resources/ic_done_white_24dp_1x.png"  />
     
     
 
