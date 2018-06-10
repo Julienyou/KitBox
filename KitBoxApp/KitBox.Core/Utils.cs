@@ -10,7 +10,7 @@ namespace KitBox.Core
 {
     public static class Utils
     {
-        static private SQLiteConnection dbConnection = new SQLiteConnection("Data Source=db.sqlite;Version=3;");
+        static private SQLiteConnection dbConnection = new SQLiteConnection("Data Source="+ Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\KitBox\db.sqlite;Version=3;");
 
         /// <summary>
         ///     This method allows to create a order in Database.
