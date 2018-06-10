@@ -5,12 +5,37 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.SQLite;
 using KitBox.Core.Model;
+using System.Collections.ObjectModel;
 
 namespace KitBox.Core
 {
     public static class Utils
     {
         static private SQLiteConnection dbConnection = new SQLiteConnection("Data Source=db.sqlite;Version=3;");
+
+
+        static public void UpdateRemnantSale(string Id, double price)
+        {
+            string sql = "UPDATE 'Order' SET RemnantSale = @price WHERE PK_IDOrder = @Id";
+            dbConnection.Open();
+            SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
+            command.Parameters.Add(new SQLiteParameter("@price") { Value = price, });
+            command.Parameters.Add(new SQLiteParameter("@Id") { Value = Id, });
+            command.ExecuteNonQuery();
+            dbConnection.Close();
+        }
+        
+
+        static public void UpdateStatus(string Id, string stateId)
+        {
+            string sql = "UPDATE 'Order' SET FK_State = @state WHERE PK_IDOrder = @Id";
+            dbConnection.Open();
+            SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
+            command.Parameters.Add(new SQLiteParameter("@state") { Value = stateId, });
+            command.Parameters.Add(new SQLiteParameter("@Id") { Value = Id, });
+            command.ExecuteNonQuery();
+            dbConnection.Close();
+        }
 
         /// <summary>
         ///     This method allows to create a order in Database.
@@ -89,6 +114,30 @@ namespace KitBox.Core
             dbConnection.Close();
         }
 
+
+        static public ObservableCollection<Order> ImportAllOrders()
+        {
+            ObservableCollection<Order> orders = new ObservableCollection<Order>();
+            List<string> ids = new List<string>();
+            string sql = "SELECT PK_IDOrder FROM 'Order'";
+
+            dbConnection.Open();
+
+            SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
+            SQLiteDataReader reader = command.ExecuteReader();
+
+            while(reader.Read())
+            {
+                ids.Add(reader["PK_IDOrder"].ToString());
+            }
+            dbConnection.Close();
+
+            foreach(string id in ids)
+            {
+                orders.Add(ImportFromDatabase(id));
+            }
+            return orders;
+        }
 
         /// <summary>
         ///     This method permits to pull a order in the database.

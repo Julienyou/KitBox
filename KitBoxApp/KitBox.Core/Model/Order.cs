@@ -22,7 +22,7 @@ namespace KitBox.Core.Model
 
         private string id = null;
         private double totalPrice = 0;
-        private int remnantSale = 0;
+        private double remnantSale = 0;
         private Customer customer = null;
         private string state;
 
@@ -60,7 +60,7 @@ namespace KitBox.Core.Model
             }
         }
 
-        public int RemnantSale
+        public double RemnantSale
         {
             get => remnantSale;
 

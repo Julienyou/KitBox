@@ -22,6 +22,7 @@ namespace KitBox.Core
             ComposeOrder(order, cupboard);
             Utils.FetchFromDataBase(order.Components);
             order.ComputePrice();
+            order.RemnantSale = order.TotalPrice;
         }
 
         /// <summary>

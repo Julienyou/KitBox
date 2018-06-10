@@ -18,7 +18,7 @@ namespace CounterApp
     {
 
         #region Attributes
-        private int m_Payment;
+        private double m_Payment;
         private Order m_Order;
         private ObservableCollection<Order> m_Orders;
         private double m_RemainingPayment;
@@ -39,7 +39,7 @@ namespace CounterApp
         /// <summary>
         /// Get or Set the amount that the client is paying
         /// </summary>
-        public int Payment { get { return m_Payment; } set { m_Payment = value; Notify("Payment"); } }
+        public double Payment { get { return m_Payment; } set { m_Payment = value; Notify("Payment"); } }
 
         /// <summary>
         /// Get the amount of the order that is not yet payed
@@ -58,11 +58,24 @@ namespace CounterApp
         {
             get
             {
-                return new CommandHandler((x) => { m_Order.RemnantSale -= Payment; ((Window)x).Close(); }, true);
+                return new CommandHandler((x) =>
+                {
+                    m_Order.RemnantSale -= Payment;
+                    Utils.UpdateRemnantSale(m_Order.Id, m_Order.RemnantSale);
+                    if (m_Order.RemnantSale == 0)
+                    {
+                        Utils.UpdateStatus(m_Order.Id, "2");
+                    }
+                    else
+                    {
+                        Utils.UpdateStatus(m_Order.Id, "3");
+                    }
+                    ((Window)x).Close();
+                }, true);
             }
         }
 
-        
+
         public ICommand CancelOrder
         {
             get
