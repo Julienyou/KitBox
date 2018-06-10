@@ -1,0 +1,23 @@
+﻿<Window x:Class="StockKeeperApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:StockKeeperApp"
+        mc:Ignorable="d"
+       Title="MainWindow" Height="450" Width="800" ResizeMode="NoResize" WindowStartupLocation="Manual" WindowState="Maximized" WindowStyle="None">
+    <Grid Background="{StaticResource BackbroungColor}">
+        <DataGrid ItemsSource="{Binding Path=Orders}" SelectedItem="{Binding SelectedOrder}" SelectionMode="Single" AutoGenerateColumns="False" CanUserAddRows="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Width="1.5*" IsReadOnly="True" Binding="{Binding Path=Id}"/>
+                <DataGridTextColumn Header="First Name" Width="2*" IsReadOnly="True" Binding="{Binding Path=Customer.FirstName}"/>
+                <DataGridTextColumn Header="Last Name" Width="3*" IsReadOnly="True" Binding="{Binding Path=Customer.LastName}"/>
+                <DataGridTextColumn Header="Email" Width="4*" IsReadOnly="True" Binding="{Binding Path=Customer.Email}"/>
+                <DataGridTextColumn Header="Status" Width="*" IsReadOnly="True" Binding="{Binding Path=State}" />
+            </DataGrid.Columns>
+            <DataGrid.InputBindings>
+                <MouseBinding Gesture="LeftDoubleClick" Command="{Binding SelectOrderCommand}" />
+            </DataGrid.InputBindings>
+        </DataGrid>
+    </Grid>
+</Window>

@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KitBox"
+        xmlns:core="clr-namespace:KitBox.Core"
         mc:Ignorable="d"
         Title="MainWindow" Height="887" Width="1362.575" WindowStartupLocation="CenterScreen" WindowState="Maximized" WindowStyle="None">
 
@@ -84,6 +85,8 @@
         </ListView>
         <Canvas Grid.Column="1">
             <StackPanel Canvas.Right="30" Canvas.Top="30">
+                
+
                 <Button x:Name="add_button" Style="{StaticResource roundedButton}" Content="{StaticResource AddIcon}" Command="{Binding AddBoxCommand}"/>
                 <Button x:Name="delete_buttn" Style="{StaticResource roundedButton}" Content="{StaticResource DeleteIcon}" Command="{Binding DeleteBoxCommand}"/>
                 <Button x:Name="validate_button" Style="{StaticResource roundedButton}" Content="{StaticResource ValdidateIcon}" Command="{Binding ValidateCommand}"/>
