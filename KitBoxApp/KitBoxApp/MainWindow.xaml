@@ -85,7 +85,9 @@
         </ListView>
         <Canvas Grid.Column="1">
             <StackPanel Canvas.Right="30" Canvas.Top="30">
-                <Button x:Name="add_button" Style="{StaticResource roundedButton}" Content="{DynamicResource AddIcon }" Command="{Binding AddBoxCommand}"/>
+                
+
+                <Button x:Name="add_button" Style="{StaticResource roundedButton}" Content="{StaticResource AddIcon}" Command="{Binding AddBoxCommand}"/>
                 <Button x:Name="delete_buttn" Style="{StaticResource roundedButton}" Content="{StaticResource DeleteIcon}" Command="{Binding DeleteBoxCommand}"/>
                 <Button x:Name="validate_button" Style="{StaticResource roundedButton}" Content="{StaticResource ValdidateIcon}" Command="{Binding ValidateCommand}"/>
                 <Button x:Name="reset_button"  Style="{StaticResource roundedButton}" Content="{StaticResource RefreshIcon}" Command="{Binding ResetCommand}"/>
