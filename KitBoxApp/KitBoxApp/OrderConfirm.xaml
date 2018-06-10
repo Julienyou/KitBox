@@ -29,7 +29,6 @@
                 </Setter.Value>
             </Setter>
         </Style>
-
     </Window.Resources>
     <Grid Background="{StaticResource BackbroungColor}" Margin="0,0,0,-7">
         <StackPanel Grid.Row="0" Margin="40,10,40,0" Name="CustomerInfo">

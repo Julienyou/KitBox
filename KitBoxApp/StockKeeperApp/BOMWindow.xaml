@@ -1,4 +1,5 @@
 ﻿<Window x:Class="StockKeeperApp.BOMWindow"
+        x:Name="bomWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -7,15 +8,19 @@
         mc:Ignorable="d"
         Title="BOMWindow" Height="450" Width="800">
     <Grid Background="{StaticResource BackbroungColor}">
-        <DataGrid ItemsSource="{Binding Path=Order.Components}" SelectionMode="Single" AutoGenerateColumns="False" CanUserAddRows="False">
+        <DataGrid ItemsSource="{Binding Path=Components}" SelectionMode="Single" AutoGenerateColumns="False" CanUserAddRows="False">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="ID" Width="1.5*" IsReadOnly="True" Binding="{Binding Path=Value}"/>
-                <DataGridTextColumn Header="Name" Width="2*" IsReadOnly="True" Binding="{Binding Path=Name}"/>
-                <DataGridCheckBoxColumn></DataGridCheckBoxColumn>
+                <DataGridTextColumn Header="Reference" Width="1.5*" IsReadOnly="True" Binding="{Binding Path=reference}"/>
+                <DataGridTextColumn Header="Color" Width="2*" IsReadOnly="True" Binding="{Binding Path=color}"/>
+                <DataGridTextColumn Header="Height" Width="*" IsReadOnly="True" Binding="{Binding height}"/>
+                <DataGridTextColumn Header="Depth" Width="*" IsReadOnly="True" Binding="{Binding depth}"/>
+                <DataGridTextColumn Header="Width" Width="*" IsReadOnly="True" Binding="{Binding width}"/>
+                <DataGridTextColumn Header="Quantity" Width="*" IsReadOnly="True" Binding="{Binding quantity}"/>
+                <DataGridCheckBoxColumn/>
             </DataGrid.Columns>
-            <DataGrid.InputBindings>
-                <MouseBinding Gesture="LeftDoubleClick" Command="{Binding SelectOrderCommand}" />
-            </DataGrid.InputBindings>
         </DataGrid>
+        <Canvas >
+            <Button Style="{StaticResource button}" Content="Validate" Canvas.Bottom="30" Canvas.Right="50" Command="{Binding ValidateCommand}" CommandParameter="{Binding ElementName=bomWindow}"/>
+        </Canvas>
     </Grid>
 </Window>

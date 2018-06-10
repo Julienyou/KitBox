@@ -12,7 +12,7 @@
         <DockPanel x:Name="confirmPanel"  Background="Transparent">
             <FlowDocumentPageViewer Document="{Binding FlowDocument}"/>
         </DockPanel>
-            <Canvas >
+        <Canvas >
             <Button x:Name="order_button" Style="{StaticResource button}" Content="Order" Canvas.Bottom="30" Canvas.Right="50" Command="{Binding OrderCommand}" CommandParameter="{Binding ElementName=OrderRecapWindow}"/>
             <Button x:Name="cancel_button" Style="{StaticResource button}" Content="Cancel" Canvas.Bottom="30" Canvas.Right="150" Command="{Binding CancelCommand}" CommandParameter="{Binding ElementName=OrderRecapWindow}"/>
         </Canvas>
