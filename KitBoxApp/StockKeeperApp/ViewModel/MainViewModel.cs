@@ -59,22 +59,6 @@ namespace StockKeeperApp.ViewModel
         {
             Thread loadCommandThread = new Thread(LoadCommand);
             loadCommandThread.Start();
-
-            Order o1 = new Order();
-            o1.Customer = new Customer("guillaumedemoff@gmail.com", "Guillaume", "de Moffarts", "bla", "bla");
-            o1.TotalPrice = 250;
-            o1.RemnantSale = 250;
-            o1.Id = "6465478";
-            o1.State = "blabla";
-            Order o2 = new Order();
-            o2.Customer = new Customer("seb478@gmail.com", "Sebastien", "Combefis", "bla", "bla");
-            o2.TotalPrice = 320;
-            o2.RemnantSale = 320;
-            o2.Id = "78P87675";
-            o2.State = "blabla";
-
-            Orders = new ObservableCollection<Order>{ o1, o2, o1 };
-            Notify("Orders");
         }
         #endregion
 
@@ -83,8 +67,9 @@ namespace StockKeeperApp.ViewModel
         {
             while(true)
             {
-                //add Load fonction here and sort    
-
+                Orders = Utils.ImportAllOrders();
+                Notify("Orders");
+                Thread.Sleep(1000);
             }
         }
         #endregion
