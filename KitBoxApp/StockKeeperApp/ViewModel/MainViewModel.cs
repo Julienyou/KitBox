@@ -14,7 +14,7 @@ using KitBox.Core.Model;
 
 namespace StockKeeperApp.ViewModel
 {
-    class MainViewModel : INotifyPropertyChanged
+    public class MainViewModel : INotifyPropertyChanged
     {
 
         #region Property changed member
@@ -59,13 +59,13 @@ namespace StockKeeperApp.ViewModel
         public MainViewModel()
         {
             Thread loadCommandThread = new Thread(LoadCommand);
+            loadCommandThread.IsBackground = true;
             loadCommandThread.Start();
-            
         }
         #endregion
 
         #region methods
-        public void LoadCommand()
+        private void LoadCommand()
         {
             while(true)
             {

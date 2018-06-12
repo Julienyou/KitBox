@@ -13,7 +13,7 @@ using KitBox.Core.Model;
 
 namespace CounterApp.ViewModel
 {
-    class MainViewModel : INotifyPropertyChanged
+    public class MainViewModel : INotifyPropertyChanged
     {
 
         #region Property changed member
@@ -58,6 +58,7 @@ namespace CounterApp.ViewModel
         public MainViewModel()
         {
             Thread loadCommandThread = new Thread(LoadCommand);
+            loadCommandThread.IsBackground = true;
             loadCommandThread.Start();
         }
         #endregion

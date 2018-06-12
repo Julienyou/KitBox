@@ -7,6 +7,7 @@ using System.Data.SQLite;
 using KitBox.Core.Model;
 using System.Collections.ObjectModel;
 using KitBox.Core.Enum;
+using System.Runtime.CompilerServices;
 
 namespace KitBox.Core
 {
@@ -14,7 +15,7 @@ namespace KitBox.Core
     {
         static private SQLiteConnection dbConnection = new SQLiteConnection("Data Source="+ Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\KitBox\db.sqlite;Version=3;");
 
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         static public void UpdateRemnantSale(string Id, double price)
         {
             string sql = "UPDATE 'Order' SET RemnantSale = @price WHERE PK_IDOrder = @Id";
@@ -26,7 +27,7 @@ namespace KitBox.Core
             dbConnection.Close();
         }
         
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         static public void UpdateStatus(string Id, PaymentStatus state)
         {
             string sql = "UPDATE 'Order' SET FK_State = @state WHERE PK_IDOrder = @Id";
@@ -38,6 +39,7 @@ namespace KitBox.Core
             dbConnection.Close();
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         static public void UpdatePreparationStatus(string Id, PreparationStatus state)
         {
             string sql = "UPDATE 'Order' SET PrepState = @state WHERE PK_IDOrder = @Id";
@@ -68,9 +70,9 @@ namespace KitBox.Core
             CheckCustomer(customer);
 
             /*If the customer and the id to order are good*/
-            string sql = "insert into `Order` ('FK_Customer', 'FK_State', 'RemnantSale', 'TotalPrice')" +
+            string sql = "insert into `Order` ('FK_Customer', 'FK_State', 'RemnantSale', 'TotalPrice', 'PrepState')" +
                          "values ('" + customer.Email + "','" + "1" + "','" +
-                         order.RemnantSale.ToString() + "','" + order.TotalPrice.ToString() + "')";
+                         order.RemnantSale.ToString() + "','" + order.TotalPrice.ToString() + "','4'"+")";
 
             SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
             command.ExecuteNonQuery();
@@ -126,7 +128,7 @@ namespace KitBox.Core
             dbConnection.Close();
         }
 
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         static public ObservableCollection<Order> ImportAllOrders()
         {
             ObservableCollection<Order> orders = new ObservableCollection<Order>();
