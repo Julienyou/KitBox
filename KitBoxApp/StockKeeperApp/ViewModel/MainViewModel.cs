@@ -69,7 +69,7 @@ namespace StockKeeperApp.ViewModel
         {
             while(true)
             {
-                Orders = new ObservableCollection<Order>(Utils.ImportAllOrders().Where(x => x.State != PaymentStatus.Canceled && x.State != PaymentStatus.Unpayed && x.PreparationState == PreparationStatus.NotProcessed));
+                Orders = new ObservableCollection<Order>(Utils.ImportAllOrders().Where(x => x.State != PaymentStatus.Canceled && x.State != PaymentStatus.Unpayed && x.PreparationState == PreparationStatus.NotProcessed).OrderBy(x => x.PreparationState));
                 Notify("Orders");
                 Thread.Sleep(1000);
             }

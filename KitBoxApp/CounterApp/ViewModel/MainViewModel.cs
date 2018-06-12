@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using KitBox.Core;
+using KitBox.Core.Enum;
 using KitBox.Core.Model;
 
 namespace CounterApp.ViewModel
@@ -67,8 +68,8 @@ namespace CounterApp.ViewModel
         public void LoadCommand()
         {
             while(true)
-            {  
-                Orders = Utils.ImportAllOrders();
+            {
+                Orders = new ObservableCollection<Order>(Utils.ImportAllOrders().Where(x => x.State != PaymentStatus.Canceled && x.PreparationState != PreparationStatus.ShippedOut).OrderBy(x => x.State));
                 Notify("Orders");
                 Thread.Sleep(1000);
             }
