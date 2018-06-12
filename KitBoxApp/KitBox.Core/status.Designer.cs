@@ -22,14 +22,14 @@ namespace KitBox.Core {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Icons {
+    internal class status {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Icons() {
+        internal status() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace KitBox.Core {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("KitBox.Core.Icons", typeof(Icons).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("KitBox.Core.status", typeof(status).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,52 +61,65 @@ namespace KitBox.Core {
         }
         
         /// <summary>
-        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        ///   Recherche une chaîne localisée semblable à Canceled.
         /// </summary>
-        internal static System.Drawing.Bitmap ic_add_white_24dp_1x {
+        internal static string PaymentStatus_Canceled {
             get {
-                object obj = ResourceManager.GetObject("ic_add_white_24dp_1x", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                return ResourceManager.GetString("PaymentStatus_Canceled", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        ///   Recherche une chaîne localisée semblable à Payed.
         /// </summary>
-        internal static System.Drawing.Bitmap ic_clear_white_24dp_1x {
+        internal static string PaymentStatus_Payed {
             get {
-                object obj = ResourceManager.GetObject("ic_clear_white_24dp_1x", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                return ResourceManager.GetString("PaymentStatus_Payed", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        ///   Recherche une chaîne localisée semblable à Prepaid.
         /// </summary>
-        internal static System.Drawing.Bitmap ic_done_white_24dp_1x {
+        internal static string PaymentStatus_Prepaid {
             get {
-                object obj = ResourceManager.GetObject("ic_done_white_24dp_1x", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                return ResourceManager.GetString("PaymentStatus_Prepaid", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        ///   Recherche une chaîne localisée semblable à Unpayed.
         /// </summary>
-        internal static System.Drawing.Bitmap ic_remove_white_24dp_1x {
+        internal static string PaymentStatus_Unpayed {
             get {
-                object obj = ResourceManager.GetObject("ic_remove_white_24dp_1x", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                return ResourceManager.GetString("PaymentStatus_Unpayed", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        ///   Recherche une chaîne localisée semblable à Not Processed.
         /// </summary>
-        internal static System.Drawing.Bitmap ic_replay_white_24dp_1x {
+        internal static string PreparationStatus_NotProcessed {
             get {
-                object obj = ResourceManager.GetObject("ic_replay_white_24dp_1x", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                return ResourceManager.GetString("PreparationStatus_NotProcessed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Ready.
+        /// </summary>
+        internal static string PreparationStatus_Ready {
+            get {
+                return ResourceManager.GetString("PreparationStatus_Ready", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Shipped Out.
+        /// </summary>
+        internal static string PreparationStatus_ShippedOut {
+            get {
+                return ResourceManager.GetString("PreparationStatus_ShippedOut", resourceCulture);
             }
         }
     }

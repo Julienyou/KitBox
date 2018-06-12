@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KitBox.Core.Enum;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -24,7 +25,8 @@ namespace KitBox.Core.Model
         private double totalPrice = 0;
         private double remnantSale = 0;
         private Customer customer = null;
-        private string state;
+        private PaymentStatus state;
+        private PreparationStatus preparationState;
 
         private List<Dictionary<string, string>> components = new List<Dictionary<string, string>>();
 
@@ -80,7 +82,7 @@ namespace KitBox.Core.Model
             }
         }
 
-        public string State
+        public PaymentStatus State
         {
             get => state;
 
@@ -88,6 +90,16 @@ namespace KitBox.Core.Model
             {
                 state = value;
                 Notify("State");
+            }
+        }
+
+        public PreparationStatus PreparationState
+        {
+            get => preparationState;
+            set
+            {
+                preparationState = value;
+                Notify("PreparationState");
             }
         }
 

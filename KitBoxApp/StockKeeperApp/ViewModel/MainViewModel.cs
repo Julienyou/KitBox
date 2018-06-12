@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using KitBox.Core;
+using KitBox.Core.Enum;
 using KitBox.Core.Model;
 
 namespace StockKeeperApp.ViewModel
@@ -59,6 +60,7 @@ namespace StockKeeperApp.ViewModel
         {
             Thread loadCommandThread = new Thread(LoadCommand);
             loadCommandThread.Start();
+            
         }
         #endregion
 
@@ -67,7 +69,7 @@ namespace StockKeeperApp.ViewModel
         {
             while(true)
             {
-                Orders = Utils.ImportAllOrders();
+                Orders = new ObservableCollection<Order>(Utils.ImportAllOrders().Where(x => x.State != PaymentStatus.Canceled && x.State != PaymentStatus.Unpayed && x.PreparationState == PreparationStatus.NotProcessed));
                 Notify("Orders");
                 Thread.Sleep(1000);
             }

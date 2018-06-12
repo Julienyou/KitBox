@@ -1,8 +1,12 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:KitBox.Core">
+                    xmlns:local="clr-namespace:KitBox.Core"
+                    xmlns:local1="clr-namespace:KitBox.Core.Converter">
 
 
+    <local1:PaymentStatusIntToText x:Key="PaymentStatusIntToText"/>
+    <local1:PreparationStatusIntToText x:Key="PreparationStatusIntToText"/>
+    
     <DrawingBrush x:Key="BackbroungColor">#EEEEEE</DrawingBrush>
     <DrawingBrush x:Key="SecondaryBackgroud">#FAFAFA</DrawingBrush>
     <DrawingBrush x:Key="DarckBackgroud">#DDDDDD</DrawingBrush>

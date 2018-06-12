@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Data.SQLite;
 using KitBox.Core.Model;
 using System.Collections.ObjectModel;
+using KitBox.Core.Enum;
 
 namespace KitBox.Core
 {
@@ -26,12 +27,23 @@ namespace KitBox.Core
         }
         
 
-        static public void UpdateStatus(string Id, string stateId)
+        static public void UpdateStatus(string Id, PaymentStatus state)
         {
             string sql = "UPDATE 'Order' SET FK_State = @state WHERE PK_IDOrder = @Id";
             dbConnection.Open();
             SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
-            command.Parameters.Add(new SQLiteParameter("@state") { Value = stateId, });
+            command.Parameters.Add(new SQLiteParameter("@state") { Value = (int)state, });
+            command.Parameters.Add(new SQLiteParameter("@Id") { Value = Id, });
+            command.ExecuteNonQuery();
+            dbConnection.Close();
+        }
+
+        static public void UpdatePreparationStatus(string Id, PreparationStatus state)
+        {
+            string sql = "UPDATE 'Order' SET PrepState = @state WHERE PK_IDOrder = @Id";
+            dbConnection.Open();
+            SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
+            command.Parameters.Add(new SQLiteParameter("@state") { Value = (int)state, });
             command.Parameters.Add(new SQLiteParameter("@Id") { Value = Id, });
             command.ExecuteNonQuery();
             dbConnection.Close();
@@ -157,10 +169,9 @@ namespace KitBox.Core
 
 
             /*Recuperation to customer and TotalPrice data*/
-            string sql = "SELECT * " +
+            string sql = "SELECT FK_State, Pk_Email, Firstname, Lastname, Street, Town, TotalPrice, RemnantSale, PrepState " +
                          "FROM `Order`" +
                          "INNER JOIN Customer ON `Order`.`FK_Customer`=`Customer`.`PK_Email`" +
-                         "INNER JOIN State ON `Order`.`FK_State`=`State`.`PK_State`" +
                          "WHERE `Order`.`PK_IDOrder`='" + order.Id + "'";
 
             SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
@@ -176,7 +187,8 @@ namespace KitBox.Core
 
                 order.RemnantSale = Convert.ToInt32(reader["RemnantSale"]);
 
-                order.State = reader["Name"].ToString();
+                order.State = (PaymentStatus)reader.GetInt32(0);
+                order.PreparationState = (PreparationStatus)reader.GetInt32(8);
             }
 
 

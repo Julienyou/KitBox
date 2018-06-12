@@ -1,6 +1,7 @@
 ﻿using KitBox;
 using KitBox.Core;
 using KitBox.Core.Model;
+using KitBox.Core.Enum;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -64,11 +65,11 @@ namespace CounterApp
                     Utils.UpdateRemnantSale(m_Order.Id, m_Order.RemnantSale);
                     if (m_Order.RemnantSale == 0)
                     {
-                        Utils.UpdateStatus(m_Order.Id, "2");
+                        Utils.UpdateStatus(m_Order.Id, PaymentStatus.Payed);
                     }
                     else
                     {
-                        Utils.UpdateStatus(m_Order.Id, "3");
+                        Utils.UpdateStatus(m_Order.Id, PaymentStatus.Prepaid);
                     }
                     ((Window)x).Close();
                 }, true);

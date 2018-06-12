@@ -13,7 +13,7 @@
                 <DataGridTextColumn Header="First Name" Width="2*" IsReadOnly="True" Binding="{Binding Path=Customer.FirstName}"/>
                 <DataGridTextColumn Header="Last Name" Width="3*" IsReadOnly="True" Binding="{Binding Path=Customer.LastName}"/>
                 <DataGridTextColumn Header="Email" Width="4*" IsReadOnly="True" Binding="{Binding Path=Customer.Email}"/>
-                <DataGridTextColumn Header="Status" Width="*" IsReadOnly="True" Binding="{Binding Path=State}" />
+                <DataGridTextColumn Header="Status" Width="*" IsReadOnly="True" Binding="{Binding Path=PreparationState, Converter={StaticResource PreparationStatusIntToText}}" />
             </DataGrid.Columns>
             <DataGrid.InputBindings>
                 <MouseBinding Gesture="LeftDoubleClick" Command="{Binding SelectOrderCommand}" />

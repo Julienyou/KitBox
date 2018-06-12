@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using KitBox.Core.Enum;
 
 namespace StockKeeperApp.ViewModel
 {
@@ -25,7 +26,7 @@ namespace StockKeeperApp.ViewModel
         {
             get
             {
-                return new CommandHandler((x) => { ((Window)x).Close(); }, true);
+                return new CommandHandler((x) => { Utils.UpdatePreparationStatus(Order.Id,PreparationStatus.Ready); ((Window)x).Close(); }, true);
             }
         }
         #endregion

@@ -68,12 +68,10 @@
     <Compile Include="Constraint\ConstraintBuilder.cs" />
     <Compile Include="Constraint\CupboardConstraint.cs" />
     <Compile Include="Constraint\DoorConstraint.cs" />
-    <Compile Include="Icons.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Icons.resx</DependentUpon>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
+    <Compile Include="Converter\PaymentStatusIntToText.cs" />
+    <Compile Include="Converter\PreparationStatusIntToText.cs" />
+    <Compile Include="Enum\PaymentStatus.cs" />
+    <Compile Include="Enum\PreparationStatus.cs" />
     <Compile Include="Interface\IAccessory.cs" />
     <Compile Include="Interface\IConstraintChecker.cs" />
     <Compile Include="KitComposer.cs" />
@@ -83,6 +81,11 @@
     <Compile Include="Model\Door.cs" />
     <Compile Include="Model\Order.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="status.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>status.resx</DependentUpon>
+    </Compile>
     <Compile Include="Utils.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -94,13 +97,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Icons.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Icons.Designer.cs</LastGenOutput>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\ic_remove_white_24dp_1x.png">
@@ -126,6 +122,12 @@
     <Resource Include="Resources\ic_replay_white_24dp_1x.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="status.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>status.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.108.0\build\net46\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.108.0\build\net46\System.Data.SQLite.Core.targets')" />
