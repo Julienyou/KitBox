@@ -66,26 +66,40 @@ namespace KitBox.Core.Model
             get => height;
             set
             {
-                if(cupboard.Height-height+value >= cupboard.CupboardConstraint.MaxHeight)
+                height = value;
+
+                ((Door)accessories[0]).DoorConstraint.Colors = ConstraintBuilder.GetAvailableDoorStyle(cupboard.Width, height);
+                if (!((Door)accessories[0]).DoorConstraint.Colors.Contains(((Door)accessories[0]).Color))
                 {
-                    throw new WarningException("You have reached max cupboard height");
+                    ((Door)accessories[0]).Color = ((Door)accessories[0]).DoorConstraint.Colors[0];
                 }
-                else
+                boxConstraint.VColors = ConstraintBuilder.GetAvailableVPaneColor(cupboard.Width, cupboard.Depth, height);
+                if (!boxConstraint.VColors.Contains(lateralColor))
                 {
-                    height = value;
+                    lateralColor = boxConstraint.VColors[0];
+                }
+                Notify("Height");
+
+                //if (cupboard.Height-height+value >= cupboard.CupboardConstraint.MaxHeight)
+                //{
+                //    throw new WarningException("You have reached max cupboard height");
+                //}
+                //else
+                //{
+                //    height = value;
                 
-                    ((Door)accessories[0]).DoorConstraint.Colors = ConstraintBuilder.GetAvailableDoorStyle(cupboard.Width, height);
-                    if (!((Door)accessories[0]).DoorConstraint.Colors.Contains(((Door)accessories[0]).Color))
-                    {
-                        ((Door)accessories[0]).Color = ((Door)accessories[0]).DoorConstraint.Colors[0];
-                    }
-                    boxConstraint.VColors = ConstraintBuilder.GetAvailableVPaneColor(cupboard.Width, cupboard.Depth, height);
-                    if (!boxConstraint.VColors.Contains(lateralColor))
-                    {
-                        lateralColor = boxConstraint.VColors[0];
-                    }
-                    Notify("Height");
-                }
+                //    ((Door)accessories[0]).DoorConstraint.Colors = ConstraintBuilder.GetAvailableDoorStyle(cupboard.Width, height);
+                //    if (!((Door)accessories[0]).DoorConstraint.Colors.Contains(((Door)accessories[0]).Color))
+                //    {
+                //        ((Door)accessories[0]).Color = ((Door)accessories[0]).DoorConstraint.Colors[0];
+                //    }
+                //    boxConstraint.VColors = ConstraintBuilder.GetAvailableVPaneColor(cupboard.Width, cupboard.Depth, height);
+                //    if (!boxConstraint.VColors.Contains(lateralColor))
+                //    {
+                //        lateralColor = boxConstraint.VColors[0];
+                //    }
+                //    Notify("Height");
+                //}
             }
         }
 

@@ -7,7 +7,6 @@
         xmlns:core="clr-namespace:KitBox.Core"
         mc:Ignorable="d"
         Title="MainWindow" Height="887" Width="1362.575" WindowStartupLocation="CenterScreen" WindowState="Maximized" WindowStyle="None">
-
     <Grid x:Name="mainGrid" Background="{StaticResource BackbroungColor}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"/>
@@ -17,7 +16,7 @@
             <TabItem Header="Cupboard" RenderTransformOrigin="0.5,0.5">
                 <StackPanel x:Name="cupboardConfig" DataContext="{Binding Cupboard}">
                     <TextBlock Style="{StaticResource labelStyle}" >Height</TextBlock>
-                    <TextBlock x:Name="cupboardHeight" Padding="8" Background="#FFE6E6E6" Text="{Binding Path=Height}"/>
+                    <TextBlock  Validation.ErrorTemplate="{x:Null}" x:Name="cupboardHeight" Padding="8" Background="#FFE6E6E6" Text="{Binding Path=Height, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
                     <TextBlock Style="{StaticResource labelStyle}">Width</TextBlock>
                     <ComboBox Style="{StaticResource ComboStyle}" x:Name="widthComboBox" SelectedItem="{Binding Path=Width}" ItemsSource="{Binding Path=CupboardConstraint.Widths}" SelectedIndex="0"/>
                     <TextBlock Style="{StaticResource labelStyle}">Depth</TextBlock>
@@ -85,14 +84,23 @@
         </ListView>
         <Canvas Grid.Column="1">
             <StackPanel Canvas.Right="30" Canvas.Top="30">
-                
-
                 <Button x:Name="add_button" Style="{StaticResource roundedButton}" Content="{StaticResource AddIcon}" Command="{Binding AddBoxCommand}"/>
                 <Button x:Name="delete_buttn" Style="{StaticResource roundedButton}" Content="{StaticResource DeleteIcon}" Command="{Binding DeleteBoxCommand}"/>
-                <Button x:Name="validate_button" Style="{StaticResource roundedButton}" Content="{StaticResource ValdidateIcon}" Command="{Binding ValidateCommand}"/>
+                <Button x:Name="validate_button" Content="{StaticResource ValdidateIcon}" Command="{Binding ValidateCommand}">
+                    <Button.Style>
+                        <Style BasedOn="{StaticResource roundedButton}" TargetType="{x:Type Button}">
+                            <Setter Property="IsEnabled" Value="false" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ElementName=cupboardHeight, Path=(Validation.HasError)}" Value="false">
+                                    <Setter Property="IsEnabled" Value="true" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
                 <Button x:Name="reset_button"  Style="{StaticResource roundedButton}" Content="{StaticResource RefreshIcon}" Command="{Binding ResetCommand}"/>
             </StackPanel>
-            
         </Canvas>
+        <TextBlock Grid.Column="1" Text="{Binding ElementName=cupboardHeight, Path=(Validation.Errors)[0].ErrorContent}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,15,0,0" FontWeight="Bold" Foreground="red"/>
     </Grid>
 </Window>

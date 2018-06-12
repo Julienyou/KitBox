@@ -103,5 +103,7 @@ namespace KitBox.ViewModel
             Notify("Cupboard");
         }
         #endregion
+
+        
     }
 }
