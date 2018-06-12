@@ -8,7 +8,7 @@ namespace KitBox.Core.Enum
 {
     public enum PreparationStatus
     {
-        NotProcessed=4,
+        NotProcessed=5,
         Ready,
         ShippedOut
     }

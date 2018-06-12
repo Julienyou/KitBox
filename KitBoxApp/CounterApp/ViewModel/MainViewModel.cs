@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using KitBox.Core;
 using KitBox.Core.Enum;
@@ -39,18 +40,31 @@ namespace CounterApp.ViewModel
         public Order SelectedOrder { get; set; }
         #endregion
 
-        #region
+        #region ICommand
         public ICommand SelectOrderCommand
         {
             get
             {
                 return new CommandHandler((x) =>
                 {
-                    Payment paymentWindow = new Payment();
-                    PaymentViewModel paymentVM = new PaymentViewModel(SelectedOrder, Orders);
-                    paymentWindow.DataContext = paymentVM;
-                    paymentWindow.ShowDialog();
-                },true);
+                    if (SelectedOrder.State == PaymentStatus.Payed)
+                    {
+                        Order o = SelectedOrder;
+                        if (MessageBox.Show("Ship the order out?", "Question", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                        {
+                            Utils.UpdatePreparationStatus(o.Id, PreparationStatus.ShippedOut);
+                        }
+                    }
+                    else
+                    {
+                        Payment paymentWindow = new Payment();
+                        PaymentViewModel paymentVM = new PaymentViewModel(SelectedOrder, Orders);
+                        paymentWindow.DataContext = paymentVM;
+                        paymentWindow.ShowDialog();
+
+                    }
+
+                }, true);
             }
         }
         #endregion
@@ -67,7 +81,7 @@ namespace CounterApp.ViewModel
         #region methods
         public void LoadCommand()
         {
-            while(true)
+            while (true)
             {
                 Orders = new ObservableCollection<Order>(Utils.ImportAllOrders().Where(x => x.State != PaymentStatus.Canceled && x.PreparationState != PreparationStatus.ShippedOut).OrderBy(x => x.State));
                 Notify("Orders");

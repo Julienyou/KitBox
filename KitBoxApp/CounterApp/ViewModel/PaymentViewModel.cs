@@ -81,7 +81,7 @@ namespace CounterApp
         {
             get
             {
-                return new CommandHandler((x) => { m_Orders.Remove(m_Order); ((Window)x).Close(); }, true);
+                return new CommandHandler((x) => { Utils.UpdateStatus(m_Order.Id, PaymentStatus.Canceled); ((Window)x).Close(); }, true);
             }
         }
 

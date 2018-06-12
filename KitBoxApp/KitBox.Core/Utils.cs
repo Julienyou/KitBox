@@ -45,8 +45,8 @@ namespace KitBox.Core
             string sql = "UPDATE 'Order' SET PrepState = @state WHERE PK_IDOrder = @Id";
             dbConnection.Open();
             SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
-            command.Parameters.Add(new SQLiteParameter("@state") { Value = (int)state, });
-            command.Parameters.Add(new SQLiteParameter("@Id") { Value = Id, });
+            command.Parameters.Add(new SQLiteParameter("@state") { Value = (int)state});
+            command.Parameters.Add(new SQLiteParameter("@Id") { Value = Id});
             command.ExecuteNonQuery();
             dbConnection.Close();
         }
@@ -70,11 +70,17 @@ namespace KitBox.Core
             CheckCustomer(customer);
 
             /*If the customer and the id to order are good*/
-            string sql = "insert into `Order` ('FK_Customer', 'FK_State', 'RemnantSale', 'TotalPrice', 'PrepState')" +
-                         "values ('" + customer.Email + "','" + "1" + "','" +
-                         order.RemnantSale.ToString() + "','" + order.TotalPrice.ToString() + "','4'"+")";
+
+            string sql = "INSERT INTO `Order` ('FK_Customer', 'FK_State', 'RemnantSale', 'TotalPrice', 'PrepState')" +
+                         "VALUES (@CustomerId, @StateId, @RemSale, @TotalPrice, @PrepState)";
 
             SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
+            command.Parameters.Add(new SQLiteParameter("@CustomerId") { Value = customer.Email });
+            command.Parameters.Add(new SQLiteParameter("@StateId") { Value = 1 });
+            command.Parameters.Add(new SQLiteParameter("@RemSale") { Value = order.RemnantSale });
+            command.Parameters.Add(new SQLiteParameter("@TotalPrice") { Value = order.RemnantSale });
+            command.Parameters.Add(new SQLiteParameter("@PrepState") { Value = 4 });
+
             command.ExecuteNonQuery();
 
             /*Recuperation of the last order's id*/
@@ -185,9 +191,9 @@ namespace KitBox.Core
                                   reader["Lastname"].ToString(), reader["Street"].ToString(),
                                   reader["Town"].ToString());
 
-                order.TotalPrice = Convert.ToInt32(reader["TotalPrice"]);
+                order.TotalPrice = reader.GetDouble(6);
 
-                order.RemnantSale = Convert.ToInt32(reader["RemnantSale"]);
+                order.RemnantSale =reader.GetDouble(7);
 
                 order.State = (PaymentStatus)reader.GetInt32(0);
                 order.PreparationState = (PreparationStatus)reader.GetInt32(8);
