@@ -7,20 +7,21 @@ using System.Data.SQLite;
 namespace KitBox.test
 {
     [TestClass]
-    public class UtilsTest
+    public class OrderTest
     {
-        public UtilsTest()
+
+        private Order order;
+
+        public OrderTest()
         {
             Utils.DBConnection = new SQLiteConnection("Data Source=db.sqlite;Version=3;");
+            order = Utils.ImportFromDatabase("5");
         }
 
         [TestMethod]
-        public void ImportFromDatabase()
+        public void IsInStock()
         {
-            Order order = Utils.ImportFromDatabase("5");
-
-            Assert.AreEqual(order.TotalPrice, 175);
-            Assert.AreEqual(Convert.ToInt32(order.Components[0]["quantity"]), 4);
+            Assert.AreEqual(order.IsInStock, true);
         }
     }
 }

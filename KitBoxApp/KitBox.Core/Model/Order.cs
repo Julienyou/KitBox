@@ -109,6 +109,11 @@ namespace KitBox.Core.Model
             set { components = value; Notify("Components"); }
         }
 
+        public bool IsInStock
+        {
+            get => ResearchInStock();
+        }
+
         #endregion
 
         #region Methods
@@ -120,6 +125,19 @@ namespace KitBox.Core.Model
             {
                 totalPrice += Convert.ToDouble(component["price"]) * Convert.ToDouble(component["quantity"]);
             }
+        }
+
+        private bool ResearchInStock()
+        {
+            foreach (Dictionary<string, string> component in components)
+            {
+                if (component["instock"] == "false")
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
     }
 

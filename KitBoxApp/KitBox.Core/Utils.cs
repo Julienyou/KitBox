@@ -230,7 +230,13 @@ namespace KitBox.Core
                 reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    /*Warning not instock*/
+                    string instock = "false";
+
+                    if ((Convert.ToInt32(reader["stock"]) - Convert.ToInt32(reader["quantity"])) >= 0)
+                    {
+                        instock = "true";
+                    }
+
                     KitComposer.AddComponent(order, new Dictionary<string, string> {
                         { "code", reader["code"].ToString() },
                         { "reference", reader["ref_name"].ToString() },
@@ -238,7 +244,8 @@ namespace KitBox.Core
                         { "height", reader["height"].ToString() },
                         { "width",  reader["width"].ToString() },
                         { "depth", reader["depth"].ToString() },
-                        { "quantity", reader["quantity"].ToString() }
+                        { "quantity", reader["quantity"].ToString() },
+                        { "instock", instock }
                     });
                 }
 
