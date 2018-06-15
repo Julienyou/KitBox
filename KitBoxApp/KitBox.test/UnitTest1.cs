@@ -1,24 +1,25 @@
 ﻿using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using KitBox.Core;
-using NUnit.Framework;
+using KitBox.Core.Model;
 using System.Data.SQLite;
 
 namespace KitBox.test
 {
-    [TestFixture()]
-    public class UtilsTest
+    [TestClass]
+    public class UnitTest
     {
-
-        [SetUp()]
-        public void Init()
+        public UnitTest()
         {
-            Utils.DBConnection = new SQLiteConnection("db.sqlite");
+            Utils.DBConnection = new SQLiteConnection("Data Source=db.sqlite;Version=3;");
         }
 
-        [Test()]
+        [TestMethod]
         public void ImportFromDatabase()
         {
-            Utils.ImportFromDatabase("0");
+            Order order = Utils.ImportFromDatabase("0");
+
+            Assert.AreEqual(order.TotalPrice, 75);
         }
     }
 }
