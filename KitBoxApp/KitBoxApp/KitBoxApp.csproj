@@ -147,6 +147,10 @@
       <Project>{0bd11c3e-7a85-4c82-9390-96b59bfbc6e0}</Project>
       <Name>KitBox.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\KitBox.WPFcore\KitBox.WPFcore.csproj">
+      <Project>{4a5561df-c6e2-4641-91e1-9cb0ed15f71b}</Project>
+      <Name>KitBox.WPFcore</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.108.0\build\net46\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.108.0\build\net46\System.Data.SQLite.Core.targets')" />

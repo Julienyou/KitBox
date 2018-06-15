@@ -9,6 +9,7 @@ using System.Windows.Input;
 using KitBox.Core;
 using KitBox.Core.Model;
 using KitBox.Core.Constraint;
+using KitBox.WPFcore;
 
 namespace KitBox.ViewModel
 {
@@ -52,7 +53,7 @@ namespace KitBox.ViewModel
                 }
                 catch (WarningException e)
                 {
-                    MessageBox.Show(e.Message);
+                    WpfMessageBox.Show(e.Message);
                 }
             }, true);
         }
@@ -74,7 +75,7 @@ namespace KitBox.ViewModel
         {
             get => new CommandHandler((x) =>
             {
-                MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Are you sure?", "Delete Confirmation", System.Windows.MessageBoxButton.YesNo);
+                MessageBoxResult messageBoxResult = WpfMessageBox.Show("Are you sure?", "Delete Confirmation", MessageBoxButton.YesNo);
                 if (messageBoxResult == MessageBoxResult.Yes)
                 {
                     InitCupboard();

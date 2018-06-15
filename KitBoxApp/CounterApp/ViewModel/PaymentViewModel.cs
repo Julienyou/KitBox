@@ -62,6 +62,7 @@ namespace CounterApp
                 return new CommandHandler((x) =>
                 {
                     m_Order.RemnantSale -= Payment;
+                    m_Order.RemnantSale = Math.Round(m_Order.RemnantSale,2);
                     Utils.UpdateRemnantSale(m_Order.Id, m_Order.RemnantSale);
                     if (m_Order.RemnantSale == 0)
                     {
@@ -92,7 +93,7 @@ namespace CounterApp
         {
             m_Order = order;
             m_Orders = orders;
-            m_Payment = 0;
+            m_Payment = 10;
             m_RemainingPayment = order.RemnantSale;
             m_TotalPayment = order.TotalPrice;
         }

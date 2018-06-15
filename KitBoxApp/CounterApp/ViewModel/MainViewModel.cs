@@ -12,6 +12,7 @@ using System.Windows.Input;
 using KitBox.Core;
 using KitBox.Core.Enum;
 using KitBox.Core.Model;
+using KitBox.WPFcore;
 
 namespace CounterApp.ViewModel
 {
@@ -49,10 +50,17 @@ namespace CounterApp.ViewModel
                 {
                     if (SelectedOrder.State == PaymentStatus.Payed)
                     {
-                        Order o = SelectedOrder;
-                        if (MessageBox.Show("Ship the order out?", "Question", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                        if (SelectedOrder.PreparationState == PreparationStatus.Ready)
                         {
-                            Utils.UpdatePreparationStatus(o.Id, PreparationStatus.ShippedOut);
+                            Order o = SelectedOrder;
+                            if (WpfMessageBox.Show("Ship the order out?", "Question", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                            {
+                                Utils.UpdatePreparationStatus(o.Id, PreparationStatus.ShippedOut);
+                            }
+                        }
+                        else
+                        {
+                            WpfMessageBox.Show("This Order is Not yet ready");
                         }
                     }
                     else

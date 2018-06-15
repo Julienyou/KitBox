@@ -7,13 +7,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 
-namespace KitBox.Core.Converter
+namespace KitBox.WPFcore.Converter
 {
     public class PaymentStatusIntToText : IValueConverter
     {
         public object Convert(object value, Type targetType,object parameter, CultureInfo language)
         {
-            return   status.ResourceManager.GetString(nameof(PaymentStatus)+"_"+ ((PaymentStatus)value).ToString());
+            return  status.ResourceManager.GetString(nameof(PaymentStatus)+"_"+ ((PaymentStatus)value).ToString());
         }
 
         public object ConvertBack(object value, Type targetType,object parameter, CultureInfo language)

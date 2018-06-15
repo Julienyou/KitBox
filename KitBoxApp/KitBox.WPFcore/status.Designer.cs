@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace KitBox.Core {
+namespace KitBox.WPFcore {
     using System;
     
     

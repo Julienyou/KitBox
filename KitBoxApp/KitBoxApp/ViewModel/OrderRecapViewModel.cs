@@ -15,19 +15,22 @@ namespace KitBox.ViewModel
     class OrderRecapViewModel 
     {
         #region Attributes
-        private Order m_Order;
         private Cupboard m_Cupboard;
         #endregion
 
         #region Properties
-        public FlowDocument FlowDocument { get; set; }
+        public FlowDocument FlowDocument { get; private set; }
+
+        public Order Order { get; private set; }
+
+        public bool InStock { get; private set; }
         #endregion
 
         #region ICommand
         public ICommand OrderCommand { get { return new CommandHandler((x) => 
         {
             OrderConfirm w = new OrderConfirm();
-            OrderConfirmViewModel orderRecapVM = new OrderConfirmViewModel(w, m_Order);
+            OrderConfirmViewModel orderRecapVM = new OrderConfirmViewModel(w, Order);
             w.DataContext = orderRecapVM;
             ((Window)x).Close();
             w.ShowDialog();
@@ -39,9 +42,11 @@ namespace KitBox.ViewModel
         #region Constructor
         public OrderRecapViewModel(Cupboard cupboard)
         {
+            InStock = true;
+
             m_Cupboard = cupboard;
-            m_Order = new Order();
-            KitComposer.ComposeKit(m_Order,cupboard);
+            Order = new Order();
+            KitComposer.ComposeKit(Order,cupboard);
 
             FlowDocument = new FlowDocument();
 

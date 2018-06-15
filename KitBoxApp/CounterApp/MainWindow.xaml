@@ -15,7 +15,7 @@
                 <DataGridTextColumn Header="Email" Width="4*" IsReadOnly="True" Binding="{Binding Path=Customer.Email}"/>
                 <DataGridTextColumn Header="Total Price" Width="1.5*" IsReadOnly="True" Binding="{Binding Path=TotalPrice}"/>
                 <DataGridTextColumn Header="Remaing Payment" Width="2*" IsReadOnly="True" Binding="{Binding Path=RemnantSale}"/>
-                <DataGridTextColumn Header="Status" Width="*" IsReadOnly="True" Binding="{Binding Path=State, Converter={StaticResource PaymentStatusIntToText}}"/>
+                <DataGridTextColumn Header="Status" Width="2*" IsReadOnly="True" Binding="{Binding Path=State, Converter={StaticResource PaymentStatusIntToText}}"/>
             </DataGrid.Columns>
             <DataGrid.InputBindings>
                 <MouseBinding Gesture="LeftDoubleClick" Command="{Binding SelectOrderCommand}" />
