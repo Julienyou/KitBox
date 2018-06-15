@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Data.SQLite;
 
 namespace CounterApp
 {
@@ -91,6 +92,7 @@ namespace CounterApp
         #region Constructor
         public PaymentViewModel(Order order, ObservableCollection<Order> orders)
         {
+            Utils.DBConnection = new SQLiteConnection("Data Source=" + Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\KitBox\db.sqlite;Version=3;");
             m_Order = order;
             m_Orders = orders;
             m_Payment = 10;

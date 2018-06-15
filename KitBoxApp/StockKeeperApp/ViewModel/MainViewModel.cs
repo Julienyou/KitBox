@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Data.SQLite;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -58,6 +59,8 @@ namespace StockKeeperApp.ViewModel
         #region Constructor
         public MainViewModel()
         {
+            Utils.DBConnection = new SQLiteConnection("Data Source=" + Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\KitBox\db.sqlite;Version=3;");
+
             Thread loadCommandThread = new Thread(LoadCommand);
             loadCommandThread.IsBackground = true;
             loadCommandThread.Start();

@@ -12,7 +12,8 @@ namespace KitBox.Core
 {
     public static class Utils
     {
-        private static SQLiteConnection dbConnection = new SQLiteConnection("Data Source="+ Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\KitBox\db.sqlite;Version=3;");
+        public static SQLiteConnection DBConnection { get; set; } 
+
         private static Object dblock = new Object();
 
         public static void UpdateRemnantSale(string Id, double price)
@@ -21,12 +22,12 @@ namespace KitBox.Core
 
             lock (dblock)
             {
-                dbConnection.Open();
-                SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
+                DBConnection.Open();
+                SQLiteCommand command = new SQLiteCommand(sql, DBConnection);
                 command.Parameters.Add(new SQLiteParameter("@price") { Value = price, });
                 command.Parameters.Add(new SQLiteParameter("@Id") { Value = Id, });
                 command.ExecuteNonQuery();
-                dbConnection.Close();
+                DBConnection.Close();
             }
         }
 
@@ -36,12 +37,12 @@ namespace KitBox.Core
 
             lock (dblock)
             {
-                dbConnection.Open();
-                SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
-                command.Parameters.Add(new SQLiteParameter("@state") { Value = (int)state, });
-                command.Parameters.Add(new SQLiteParameter("@Id") { Value = Id, });
+                DBConnection.Open();
+                SQLiteCommand command = new SQLiteCommand(sql, DBConnection);
+                command.Parameters.Add(new SQLiteParameter("@state") { Value = (int)state});
+                command.Parameters.Add(new SQLiteParameter("@Id") { Value = Id});
                 command.ExecuteNonQuery();
-                dbConnection.Close();
+                DBConnection.Close();
             }
         }
 
@@ -51,12 +52,12 @@ namespace KitBox.Core
 
             lock (dblock)
             {
-                dbConnection.Open();
-                SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
+                DBConnection.Open();
+                SQLiteCommand command = new SQLiteCommand(sql, DBConnection);
                 command.Parameters.Add(new SQLiteParameter("@state") { Value = (int)state });
                 command.Parameters.Add(new SQLiteParameter("@Id") { Value = Id });
                 command.ExecuteNonQuery();
-                dbConnection.Close();
+                DBConnection.Close();
             }
         }
 
@@ -75,7 +76,7 @@ namespace KitBox.Core
             {
                 
                     /*Start connection DataBase*/
-                    dbConnection.Open();
+                    DBConnection.Open();
 
                     Customer customer = order.Customer;
 
@@ -86,7 +87,7 @@ namespace KitBox.Core
                     string sql = "INSERT INTO `Order` ('FK_Customer', 'FK_State', 'RemnantSale', 'TotalPrice', 'PrepState')" +
                                  "VALUES (@CustomerId, @StateId, @RemSale, @TotalPrice, @PrepState)";
 
-                    SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
+                    SQLiteCommand command = new SQLiteCommand(sql, DBConnection);
                     command.Parameters.Add(new SQLiteParameter("@CustomerId") { Value = customer.Email });
                     command.Parameters.Add(new SQLiteParameter("@StateId") { Value = (int)PaymentStatus.Unpayed });
                     command.Parameters.Add(new SQLiteParameter("@RemSale") { Value = order.RemnantSale });
@@ -99,7 +100,7 @@ namespace KitBox.Core
                     sql = "SELECT MAX(PK_IDOrder) as max " +
                           "FROM `Order`";
 
-                    command = new SQLiteCommand(sql, dbConnection);
+                    command = new SQLiteCommand(sql, DBConnection);
                     SQLiteDataReader reader = command.ExecuteReader();
 
 
@@ -115,7 +116,7 @@ namespace KitBox.Core
                         sql = "insert into `OrderComponentLink` ('FK_Order', 'FK_Component', 'Quantity')" +
                               "values ('" + order.Id + "','" + component["code"] + "','" + component["quantity"] + "')";
 
-                        command = new SQLiteCommand(sql, dbConnection);
+                        command = new SQLiteCommand(sql, DBConnection);
                         command.ExecuteNonQuery();
 
 
@@ -124,7 +125,7 @@ namespace KitBox.Core
                               "FROM `Component` " +
                               "WHERE `Component`.`Code`='" + component["code"] + "'";
 
-                        command = new SQLiteCommand(sql, dbConnection);
+                        command = new SQLiteCommand(sql, DBConnection);
                         reader = command.ExecuteReader();
 
                         while (reader.Read())
@@ -136,14 +137,14 @@ namespace KitBox.Core
                                   "SET Stock='" + newStock.ToString() + "'" +
                                   "WHERE `Component`.`Code`='" + component["code"] + "'";
 
-                            command = new SQLiteCommand(sql, dbConnection);
+                            command = new SQLiteCommand(sql, DBConnection);
                             command.ExecuteNonQuery();
 
                         }
                     }
 
                     /*End connection DataBase*/
-                    dbConnection.Close();
+                    DBConnection.Close();
              
             }
         }
@@ -156,16 +157,16 @@ namespace KitBox.Core
 
             lock (dblock)
             {
-                dbConnection.Open();
+                DBConnection.Open();
 
-                SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
+                SQLiteCommand command = new SQLiteCommand(sql, DBConnection);
                 SQLiteDataReader reader = command.ExecuteReader();
 
                 while (reader.Read())
                 {
                     ids.Add(reader["PK_IDOrder"].ToString());
                 }
-                dbConnection.Close();
+                DBConnection.Close();
             }
 
             foreach(string id in ids)
@@ -192,7 +193,7 @@ namespace KitBox.Core
             /*Start connection DataBase*/
             lock (dblock)
             {
-                dbConnection.Open();
+                DBConnection.Open();
 
 
                 /*Recuperation to customer and TotalPrice data*/
@@ -201,7 +202,7 @@ namespace KitBox.Core
                              "INNER JOIN Customer ON `Order`.`FK_Customer`=`Customer`.`PK_Email`" +
                              "WHERE `Order`.`PK_IDOrder`='" + order.Id + "'";
 
-                SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
+                SQLiteCommand command = new SQLiteCommand(sql, DBConnection);
 
                 SQLiteDataReader reader = command.ExecuteReader();
                 while (reader.Read())
@@ -224,7 +225,7 @@ namespace KitBox.Core
                       "FROM `ImportData` " +
                       "WHERE `ImportData`.`FK_Order`='" + id + "'";
 
-                command = new SQLiteCommand(sql, dbConnection);
+                command = new SQLiteCommand(sql, DBConnection);
 
                 reader = command.ExecuteReader();
                 while (reader.Read())
@@ -243,7 +244,7 @@ namespace KitBox.Core
 
 
                 /*End connection DataBase*/
-                dbConnection.Close();
+                DBConnection.Close();
             }
 
             return order;
@@ -261,18 +262,18 @@ namespace KitBox.Core
             {
 
                 /*Start connection DataBase*/
-                dbConnection.Open();
+                DBConnection.Open();
 
                 string sql = "UPDATE `Order` " +
                              "SET FK_State='" + state + "'" +
                              "WHERE `Order`.`PK_IDOrder`='" + id + "'";
 
-                SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
+                SQLiteCommand command = new SQLiteCommand(sql, DBConnection);
 
                 command.ExecuteNonQuery();
 
                 /*End connection DataBase*/
-                dbConnection.Close();
+                DBConnection.Close();
             }
         }
 
@@ -285,7 +286,7 @@ namespace KitBox.Core
             lock (dblock)
             {
                 /*Start connection DataBase*/
-                dbConnection.Open();
+                DBConnection.Open();
 
                 foreach (Dictionary<string, string> component in components)
                 {
@@ -303,7 +304,7 @@ namespace KitBox.Core
                     }
                     sql += String.Join(" AND ", listjoin);
 
-                    SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
+                    SQLiteCommand command = new SQLiteCommand(sql, DBConnection);
                     SQLiteDataReader reader = command.ExecuteReader();
                     while (reader.Read())
                     {
@@ -313,7 +314,7 @@ namespace KitBox.Core
                 }
 
                 /*End connection DataBase*/
-                dbConnection.Close();
+                DBConnection.Close();
             }
         }
         /// <summary>
@@ -327,7 +328,7 @@ namespace KitBox.Core
             /*Start connection DataBase*/
             lock (dblock)
             {
-                dbConnection.Open();
+                DBConnection.Open();
 
                 string sql =
                     "SELECT MIN(height) AS height " +
@@ -342,7 +343,7 @@ namespace KitBox.Core
                  */
 
 
-                SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
+                SQLiteCommand command = new SQLiteCommand(sql, DBConnection);
                 SQLiteDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
@@ -350,7 +351,7 @@ namespace KitBox.Core
                 }
 
                 /*End connection DataBase*/
-                dbConnection.Close();
+                DBConnection.Close();
             }
             return length;
         }
@@ -365,7 +366,7 @@ namespace KitBox.Core
 
             lock (dblock)
             {
-                dbConnection.Open();
+                DBConnection.Open();
 
                 string sql = "SELECT `Reference`.`Name` AS ref, `Component`.`Code` AS code, `Component`.`Stock` AS stock, " +
                              "`Component`.`StockMinimum` AS stockmin, `Supplier`.`Name` as nameSupp, " +
@@ -376,7 +377,7 @@ namespace KitBox.Core
                              "INNER JOIN `Supplier` ON `LinkSupplierComponent`.`FK_Suppliers`=`Supplier`.`PK_IDSupplier` " +
                              "WHERE `Component`.`Stock`<=`Component`.`StockMinimum`";
 
-                SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
+                SQLiteCommand command = new SQLiteCommand(sql, DBConnection);
                 SQLiteDataReader reader = command.ExecuteReader();
 
                 while (reader.Read())
@@ -422,7 +423,7 @@ namespace KitBox.Core
                     }
                 }
 
-                dbConnection.Close();
+                DBConnection.Close();
             }
 
             return listStock;
@@ -434,7 +435,7 @@ namespace KitBox.Core
             /*Verification if the customer exists*/
             string sql = "select * from Customer where PK_Email='" + customer.Email + "'";
 
-                SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
+                SQLiteCommand command = new SQLiteCommand(sql, DBConnection);
                 SQLiteDataReader reader = command.ExecuteReader();
 
                 if (!reader.Read()) //Customer creation if he does not exists
@@ -443,7 +444,7 @@ namespace KitBox.Core
                               "values ('" + customer.Email + "','" + customer.FirstName + "','" + customer.LastName +
                               "','" + customer.Street + "','" + customer.Town + "')";
 
-                    command = new SQLiteCommand(sql, dbConnection);
+                    command = new SQLiteCommand(sql, DBConnection);
                     command.ExecuteNonQuery();
                 }
         }

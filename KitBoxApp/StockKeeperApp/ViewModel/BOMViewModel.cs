@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using KitBox.Core.Enum;
+using System.Data.SQLite;
 
 namespace StockKeeperApp.ViewModel
 {
@@ -34,6 +35,7 @@ namespace StockKeeperApp.ViewModel
         #region constructor
         public BOMViewModel(Order order)
         {
+            Utils.DBConnection = new SQLiteConnection("Data Source=" + Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\KitBox\db.sqlite;Version=3;");
             Order = order;
         }
         #endregion

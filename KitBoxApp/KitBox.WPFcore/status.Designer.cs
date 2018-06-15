@@ -22,7 +22,7 @@ namespace KitBox.WPFcore {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class status {
+    public class status {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,10 +36,10 @@ namespace KitBox.WPFcore {
         ///   Retourne l'instance ResourceManager mise en cache utilisée par cette classe.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("KitBox.Core.status", typeof(status).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("KitBox.WPFcore.status", typeof(status).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -51,7 +51,7 @@ namespace KitBox.WPFcore {
         ///   les recherches de ressources à l'aide de cette classe de ressource fortement typée.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace KitBox.WPFcore {
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Canceled.
         /// </summary>
-        internal static string PaymentStatus_Canceled {
+        public static string PaymentStatus_Canceled {
             get {
                 return ResourceManager.GetString("PaymentStatus_Canceled", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace KitBox.WPFcore {
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Payed.
         /// </summary>
-        internal static string PaymentStatus_Payed {
+        public static string PaymentStatus_Payed {
             get {
                 return ResourceManager.GetString("PaymentStatus_Payed", resourceCulture);
             }
@@ -81,7 +81,7 @@ namespace KitBox.WPFcore {
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Prepaid.
         /// </summary>
-        internal static string PaymentStatus_Prepaid {
+        public static string PaymentStatus_Prepaid {
             get {
                 return ResourceManager.GetString("PaymentStatus_Prepaid", resourceCulture);
             }
@@ -90,7 +90,7 @@ namespace KitBox.WPFcore {
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Unpayed.
         /// </summary>
-        internal static string PaymentStatus_Unpayed {
+        public static string PaymentStatus_Unpayed {
             get {
                 return ResourceManager.GetString("PaymentStatus_Unpayed", resourceCulture);
             }
@@ -99,7 +99,7 @@ namespace KitBox.WPFcore {
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Not Processed.
         /// </summary>
-        internal static string PreparationStatus_NotProcessed {
+        public static string PreparationStatus_NotProcessed {
             get {
                 return ResourceManager.GetString("PreparationStatus_NotProcessed", resourceCulture);
             }
@@ -108,7 +108,7 @@ namespace KitBox.WPFcore {
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Ready.
         /// </summary>
-        internal static string PreparationStatus_Ready {
+        public static string PreparationStatus_Ready {
             get {
                 return ResourceManager.GetString("PreparationStatus_Ready", resourceCulture);
             }
@@ -117,7 +117,7 @@ namespace KitBox.WPFcore {
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Shipped Out.
         /// </summary>
-        internal static string PreparationStatus_ShippedOut {
+        public static string PreparationStatus_ShippedOut {
             get {
                 return ResourceManager.GetString("PreparationStatus_ShippedOut", resourceCulture);
             }

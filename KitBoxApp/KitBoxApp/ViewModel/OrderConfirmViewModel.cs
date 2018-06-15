@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data.SQLite;
 using System.Linq;
 using System.Net.Mail;
 using System.Text;
@@ -50,6 +51,7 @@ namespace KitBox.ViewModel
         #region Constructor
         public OrderConfirmViewModel (Window window, Order order)
         {
+            Utils.DBConnection = new SQLiteConnection("Data Source=" + Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\KitBox\db.sqlite;Version=3;");
             Address = "";
             m_Order = order;
         }

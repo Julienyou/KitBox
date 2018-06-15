@@ -13,7 +13,17 @@ namespace KitBox.WPFcore.Converter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo language)
         {
-            return status.ResourceManager.GetString(nameof(PreparationStatus) + "_" + value.ToString());
+            string result;
+            try
+            {
+                var a = nameof(PreparationStatus) + "_" + value.ToString();
+                result = status.ResourceManager.GetString(nameof(PreparationStatus) + "_" + value.ToString());
+            }
+            catch
+            {
+                result = value.ToString();
+            }
+            return result;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo language)
