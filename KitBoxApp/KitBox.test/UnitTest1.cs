@@ -7,9 +7,9 @@ using System.Data.SQLite;
 namespace KitBox.test
 {
     [TestClass]
-    public class UnitTest
+    public class UtilsTest
     {
-        public UnitTest()
+        public UtilsTest()
         {
             Utils.DBConnection = new SQLiteConnection("Data Source=db.sqlite;Version=3;");
         }
@@ -17,9 +17,10 @@ namespace KitBox.test
         [TestMethod]
         public void ImportFromDatabase()
         {
-            Order order = Utils.ImportFromDatabase("0");
+            Order order = Utils.ImportFromDatabase("5");
 
-            Assert.AreEqual(order.TotalPrice, 75);
+            Assert.AreEqual(order.TotalPrice, 175);
+            Assert.AreEqual(Convert.ToInt32(order.Components[0]["quantity"]), 4);
         }
     }
 }
