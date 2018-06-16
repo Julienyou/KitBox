@@ -42,7 +42,7 @@
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
-               
+
             </Setter.Value>
         </Setter>
         <Style.Triggers>
@@ -51,13 +51,13 @@
             </Trigger>
         </Style.Triggers>
     </Style>
-    
+
     <Style x:Key="labelStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="FontWeight" Value="Bold"/>
         <Setter Property="FontSize" Value="16"/>
         <Setter Property="Margin" Value="0,20,0,5"/>
     </Style>
-    
+
     <Style x:Key="ComboStyle" TargetType="{x:Type ComboBox}">
         <Setter Property="Padding" Value="8"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
@@ -78,18 +78,24 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
+
     <Style x:Key="roundedButton" TargetType="{x:Type Button}">
-        <Setter Property="Margin" Value="0,10"/>
+        <Setter Property="Margin" Value="5,10"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Background" Value="{StaticResource ActionColor}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
                     <Grid>
-                        <Ellipse x:Name="ellîpse"   Width="40" Height="40" Fill="{TemplateBinding Background}"/>
-                        <ContentPresenter
-                                       VerticalAlignment="Center" HorizontalAlignment="Center" />
+                        <Border CornerRadius="50"
+                            Width="40"
+                            Height="40"
+                            Margin="0"
+                            Padding="5"
+                            Background="{TemplateBinding Background}"
+                            BorderThickness="0">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" />
+                        </Border>
                     </Grid>
                 </ControlTemplate>
 
@@ -101,7 +107,7 @@
             </Trigger>
         </Style.Triggers>
     </Style>
-    
+
     <Style x:Key="TabItemStyle"  TargetType="TabItem">
         <Setter Property="Template">
             <Setter.Value>
@@ -163,7 +169,6 @@
 
     <Style TargetType="DataGrid">
         <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="Margin" Value="10,20"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="HeadersVisibility" Value="Column"/>
         <Setter Property="GridLinesVisibility" Value="Vertical"/>
@@ -174,15 +179,15 @@
     <Style TargetType="DataGridCell">
         <Setter Property="FontSize" Value="20"/>
         <Setter Property="Padding" Value="10"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type DataGridCell}">
-                        <Border Padding="{TemplateBinding Padding}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
-                            <ContentPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type DataGridCell}">
+                    <Border Padding="{TemplateBinding Padding}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                        <ContentPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 
     <Style TargetType="DataGridRow">
@@ -194,7 +199,7 @@
 			BorderBrush="{TemplateBinding BorderBrush}"
 			BorderThickness="0"
 		        SnapsToDevicePixels="True">
-                        
+
                         <SelectiveScrollingGrid>
                             <SelectiveScrollingGrid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
@@ -235,11 +240,12 @@ ConverterParameter={x:Static DataGridHeadersVisibility.Row},
     </Style>
 
 
-    <Image x:Shared="false" x:Key="AddIcon" Source="pack://application:,,,/KitBox.Core;component/Resources/ic_add_white_24dp_1x.png"/>
-    <Image x:Shared="false" x:Key="DeleteIcon" Source="pack://application:,,,/KitBox.Core;component/Resources/ic_remove_white_24dp_1x.png"/>
-    <Image x:Shared="false" x:Key="RefreshIcon" Source="pack://application:,,,/KitBox.Core;component/Resources/ic_clear_white_24dp_1x.png "/>
-    <Image x:Shared="false" x:Key="ValdidateIcon" Source="pack://application:,,,/KitBox.Core;component/Resources/ic_done_white_24dp_1x.png"  />
-    
-    
+    <Image x:Shared="false" RenderOptions.BitmapScalingMode="HighQuality" x:Key="AddIcon" Source="pack://application:,,,/KitBox.Core;component/Resources/ic_add_white_24dp_1x.png"/>
+    <Image x:Shared="false" RenderOptions.BitmapScalingMode="HighQuality" x:Key="DeleteIcon" Source="pack://application:,,,/KitBox.Core;component/Resources/ic_remove_white_24dp_1x.png"/>
+    <Image x:Shared="false" RenderOptions.BitmapScalingMode="HighQuality" x:Key="RefreshIcon" Source="pack://application:,,,/KitBox.Core;component/Resources/ic_clear_white_24dp_1x.png "/>
+    <Image x:Shared="false" RenderOptions.BitmapScalingMode="HighQuality" x:Key="ValdidateIcon" Source="pack://application:,,,/KitBox.Core;component/Resources/ic_done_white_24dp_1x.png"  />
+    <Image x:Shared="false" RenderOptions.BitmapScalingMode="HighQuality" x:Key="InventoryIcon" Source="pack://application:,,,/KitBox.Core;component/Resources/InvetoryIcon.png"  />
+    <Image x:Shared="false" RenderOptions.BitmapScalingMode="HighQuality" x:Key="CartIcon" Source="pack://application:,,,/KitBox.Core;component/Resources/CartIcon.png"  />
+    <Image x:Shared="false" RenderOptions.BitmapScalingMode="HighQuality" x:Key="SupplierIcon" Source="pack://application:,,,/KitBox.Core;component/Resources/icons8-supplier-50.png"  />
 
 </ResourceDictionary>

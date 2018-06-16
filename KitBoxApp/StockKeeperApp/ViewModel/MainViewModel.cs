@@ -27,7 +27,6 @@ namespace StockKeeperApp.ViewModel
         }
         #endregion
 
-
         #region Properties
         /// <summary>
         /// Get or set the orders
@@ -47,11 +46,31 @@ namespace StockKeeperApp.ViewModel
             {
                 return new CommandHandler((x) =>
                 {
-                    BOMViewModel bOMViewModel = new BOMViewModel(SelectedOrder);
                     BOMWindow bOMWindow = new BOMWindow();
-                    bOMWindow.DataContext = bOMViewModel;
+                    bOMWindow.DataContext = new BOMViewModel(SelectedOrder);
                     bOMWindow.ShowDialog();
-                },true);
+                }, true);
+            }
+        }
+
+        public ICommand ShowInvetoryCommand
+        {
+            get
+            {
+                return new CommandHandler((x) =>
+                {
+                    InventoryWindow w = new InventoryWindow();
+                    w.DataContext = new InventoryViewModel();
+                    w.Show();
+                }, true);
+            }
+        }
+
+        public ICommand SupplierOrderCommand
+        {
+            get
+            {
+                return new CommandHandler((x) => { }, true);
             }
         }
         #endregion
@@ -70,7 +89,7 @@ namespace StockKeeperApp.ViewModel
         #region methods
         private void LoadCommand()
         {
-            while(true)
+            while (true)
             {
                 Orders = new ObservableCollection<Order>(Utils.ImportAllOrders().Where(x => x.State != PaymentStatus.Canceled && x.State != PaymentStatus.Unpayed && x.PreparationState == PreparationStatus.NotProcessed).OrderBy(x => x.PreparationState));
                 Notify("Orders");

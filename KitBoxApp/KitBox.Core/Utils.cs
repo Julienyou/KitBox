@@ -7,14 +7,50 @@ using System.Data.SQLite;
 using KitBox.Core.Model;
 using System.Collections.ObjectModel;
 using KitBox.Core.Enum;
+using Newtonsoft.Json.Linq;
 
 namespace KitBox.Core
 {
     public static class Utils
     {
-        public static SQLiteConnection DBConnection { get; set; } 
+        public static SQLiteConnection DBConnection { get; set; }
 
         private static Object dblock = new Object();
+
+        public static void UpdateInventory(string code, int quantity)
+        {
+            string sql = "UPDATE Component SET Stock=@stock WHERE Code=@code";
+            lock(dblock)
+            {
+                DBConnection.Open();
+                SQLiteCommand command = new SQLiteCommand(sql, DBConnection);
+                command.Parameters.Add(new SQLiteParameter("@stock") { Value = quantity });
+                command.Parameters.Add(new SQLiteParameter("@code") { Value = code });
+                command.ExecuteNonQuery();
+                DBConnection.Close();
+            }
+        }
+        public static JArray GetInventory()
+        {
+            JArray components = new JArray();
+            string sql = "SELECT Code, Stock FROM Component";
+            lock (dblock)
+            {
+                DBConnection.Open();
+                SQLiteCommand command = new SQLiteCommand(sql, DBConnection);
+                SQLiteDataReader reader = command.ExecuteReader();
+                while(reader.Read())
+                {
+                    JObject c = new JObject();
+                    c["Code"] = reader.GetString(0);
+                    c["Quantity"] = reader.GetInt32(1);
+                    components.Add(c);
+                }
+                DBConnection.Close();
+            }
+            
+            return components;
+        }
 
         public static void UpdateRemnantSale(string Id, double price)
         {
@@ -24,8 +60,8 @@ namespace KitBox.Core
             {
                 DBConnection.Open();
                 SQLiteCommand command = new SQLiteCommand(sql, DBConnection);
-                command.Parameters.Add(new SQLiteParameter("@price") { Value = price, });
-                command.Parameters.Add(new SQLiteParameter("@Id") { Value = Id, });
+                command.Parameters.Add(new SQLiteParameter("@price") { Value = price });
+                command.Parameters.Add(new SQLiteParameter("@Id") { Value = Id });
                 command.ExecuteNonQuery();
                 DBConnection.Close();
             }
@@ -39,8 +75,8 @@ namespace KitBox.Core
             {
                 DBConnection.Open();
                 SQLiteCommand command = new SQLiteCommand(sql, DBConnection);
-                command.Parameters.Add(new SQLiteParameter("@state") { Value = (int)state});
-                command.Parameters.Add(new SQLiteParameter("@Id") { Value = Id});
+                command.Parameters.Add(new SQLiteParameter("@state") { Value = (int)state });
+                command.Parameters.Add(new SQLiteParameter("@Id") { Value = Id });
                 command.ExecuteNonQuery();
                 DBConnection.Close();
             }
@@ -74,78 +110,78 @@ namespace KitBox.Core
         {
             lock (dblock)
             {
-                
-                    /*Start connection DataBase*/
-                    DBConnection.Open();
 
-                    Customer customer = order.Customer;
+                /*Start connection DataBase*/
+                DBConnection.Open();
 
-                    CheckCustomer(customer);
+                Customer customer = order.Customer;
 
-                    /*If the customer and the id to order are good*/
-                    
-                    string sql = "INSERT INTO `Order` ('FK_Customer', 'FK_State', 'RemnantSale', 'TotalPrice', 'PrepState')" +
-                                 "VALUES (@CustomerId, @StateId, @RemSale, @TotalPrice, @PrepState)";
+                CheckCustomer(customer);
 
-                    SQLiteCommand command = new SQLiteCommand(sql, DBConnection);
-                    command.Parameters.Add(new SQLiteParameter("@CustomerId") { Value = customer.Email });
-                    command.Parameters.Add(new SQLiteParameter("@StateId") { Value = (int)PaymentStatus.Unpayed });
-                    command.Parameters.Add(new SQLiteParameter("@RemSale") { Value = order.RemnantSale });
-                    command.Parameters.Add(new SQLiteParameter("@TotalPrice") { Value = order.RemnantSale });
-                    command.Parameters.Add(new SQLiteParameter("@PrepState") { Value = (int)PreparationStatus.NotProcessed });
+                /*If the customer and the id to order are good*/
 
-                    command.ExecuteNonQuery();
+                string sql = "INSERT INTO `Order` ('FK_Customer', 'FK_State', 'RemnantSale', 'TotalPrice', 'PrepState')" +
+                             "VALUES (@CustomerId, @StateId, @RemSale, @TotalPrice, @PrepState)";
 
-                    /*Recuperation of the last order's id*/
-                    sql = "SELECT MAX(PK_IDOrder) as max " +
-                          "FROM `Order`";
+                SQLiteCommand command = new SQLiteCommand(sql, DBConnection);
+                command.Parameters.Add(new SQLiteParameter("@CustomerId") { Value = customer.Email });
+                command.Parameters.Add(new SQLiteParameter("@StateId") { Value = (int)PaymentStatus.Unpayed });
+                command.Parameters.Add(new SQLiteParameter("@RemSale") { Value = order.RemnantSale });
+                command.Parameters.Add(new SQLiteParameter("@TotalPrice") { Value = order.RemnantSale });
+                command.Parameters.Add(new SQLiteParameter("@PrepState") { Value = (int)PreparationStatus.NotProcessed });
+
+                command.ExecuteNonQuery();
+
+                /*Recuperation of the last order's id*/
+                sql = "SELECT MAX(PK_IDOrder) as max " +
+                      "FROM `Order`";
+
+                command = new SQLiteCommand(sql, DBConnection);
+                SQLiteDataReader reader = command.ExecuteReader();
+
+
+                while (reader.Read())
+                {
+                    order.Id = reader["max"].ToString();
+                }
+
+
+                foreach (Dictionary<string, string> component in order.Components)
+                {
+                    /*Add data in OrderComponentLink for each component located in components*/
+                    sql = "insert into `OrderComponentLink` ('FK_Order', 'FK_Component', 'Quantity')" +
+                          "values ('" + order.Id + "','" + component["code"] + "','" + component["quantity"] + "')";
 
                     command = new SQLiteCommand(sql, DBConnection);
-                    SQLiteDataReader reader = command.ExecuteReader();
+                    command.ExecuteNonQuery();
 
+
+                    /*Remove stock in Component table*/
+                    sql = "SELECT * " +
+                          "FROM `Component` " +
+                          "WHERE `Component`.`Code`='" + component["code"] + "'";
+
+                    command = new SQLiteCommand(sql, DBConnection);
+                    reader = command.ExecuteReader();
 
                     while (reader.Read())
                     {
-                        order.Id = reader["max"].ToString();
-                    }
+                        int newStock = Convert.ToInt32(reader["Stock"]);
+                        newStock -= Convert.ToInt32(component["quantity"]);
 
-
-                    foreach (Dictionary<string, string> component in order.Components)
-                    {
-                        /*Add data in OrderComponentLink for each component located in components*/
-                        sql = "insert into `OrderComponentLink` ('FK_Order', 'FK_Component', 'Quantity')" +
-                              "values ('" + order.Id + "','" + component["code"] + "','" + component["quantity"] + "')";
+                        sql = "UPDATE `Component`" +
+                              "SET Stock='" + newStock.ToString() + "'" +
+                              "WHERE `Component`.`Code`='" + component["code"] + "'";
 
                         command = new SQLiteCommand(sql, DBConnection);
                         command.ExecuteNonQuery();
 
-
-                        /*Remove stock in Component table*/
-                        sql = "SELECT * " +
-                              "FROM `Component` " +
-                              "WHERE `Component`.`Code`='" + component["code"] + "'";
-
-                        command = new SQLiteCommand(sql, DBConnection);
-                        reader = command.ExecuteReader();
-
-                        while (reader.Read())
-                        {
-                            int newStock = Convert.ToInt32(reader["Stock"]);
-                            newStock -= Convert.ToInt32(component["quantity"]);
-
-                            sql = "UPDATE `Component`" +
-                                  "SET Stock='" + newStock.ToString() + "'" +
-                                  "WHERE `Component`.`Code`='" + component["code"] + "'";
-
-                            command = new SQLiteCommand(sql, DBConnection);
-                            command.ExecuteNonQuery();
-
-                        }
                     }
+                }
 
-                    /*End connection DataBase*/
-                    DBConnection.Close();
-             
+                /*End connection DataBase*/
+                DBConnection.Close();
+
             }
         }
 
@@ -169,7 +205,7 @@ namespace KitBox.Core
                 DBConnection.Close();
             }
 
-            foreach(string id in ids)
+            foreach (string id in ids)
             {
                 orders.Add(ImportFromDatabase(id));
             }
@@ -442,18 +478,18 @@ namespace KitBox.Core
             /*Verification if the customer exists*/
             string sql = "select * from Customer where PK_Email='" + customer.Email + "'";
 
-                SQLiteCommand command = new SQLiteCommand(sql, DBConnection);
-                SQLiteDataReader reader = command.ExecuteReader();
+            SQLiteCommand command = new SQLiteCommand(sql, DBConnection);
+            SQLiteDataReader reader = command.ExecuteReader();
 
-                if (!reader.Read()) //Customer creation if he does not exists
-                {
-                    sql = "insert into Customer ('PK_Email', 'Firstname', 'Lastname', 'Street', 'Town')" +
-                              "values ('" + customer.Email + "','" + customer.FirstName + "','" + customer.LastName +
-                              "','" + customer.Street + "','" + customer.Town + "')";
+            if (!reader.Read()) //Customer creation if he does not exists
+            {
+                sql = "insert into Customer ('PK_Email', 'Firstname', 'Lastname', 'Street', 'Town')" +
+                          "values ('" + customer.Email + "','" + customer.FirstName + "','" + customer.LastName +
+                          "','" + customer.Street + "','" + customer.Town + "')";
 
-                    command = new SQLiteCommand(sql, DBConnection);
-                    command.ExecuteNonQuery();
-                }
+                command = new SQLiteCommand(sql, DBConnection);
+                command.ExecuteNonQuery();
+            }
         }
 
     }

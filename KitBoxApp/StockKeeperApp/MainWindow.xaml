@@ -7,7 +7,16 @@
         mc:Ignorable="d"
        Title="MainWindow" Height="450" Width="800" ResizeMode="NoResize" WindowStartupLocation="Manual" WindowState="Maximized" WindowStyle="None">
     <Grid Background="{StaticResource BackbroungColor}">
-        <DataGrid ItemsSource="{Binding Path=Orders}" SelectedItem="{Binding SelectedOrder}" SelectionMode="Single" AutoGenerateColumns="False" CanUserAddRows="False">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,7,0">
+            <Button Style="{StaticResource roundedButton}" Grid.Row="0" Content="{StaticResource InventoryIcon}" Command="{Binding Path=ShowInvetoryCommand}" ToolTip="Inventory"/>
+            <Button Style="{StaticResource roundedButton}" Grid.Row="0" Content="{StaticResource SupplierIcon}" Command="{Binding Path=SupplierOrderCommand}" ToolTip="Supplier"/>
+        </StackPanel>
+
+        <DataGrid ItemsSource="{Binding Path=Orders}" SelectedItem="{Binding SelectedOrder}" SelectionMode="Single" AutoGenerateColumns="False" CanUserAddRows="False" Grid.Row="1" >
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Width="1.5*" IsReadOnly="True" Binding="{Binding Path=Id}"/>
                 <DataGridTextColumn Header="First Name" Width="2*" IsReadOnly="True" Binding="{Binding Path=Customer.FirstName}"/>
