@@ -10,7 +10,7 @@ namespace KitBox.Core.Constraint
     public static class ConstraintBuilder
     {
         #region Attributes
-        private static SQLiteConnection dbConnection = new SQLiteConnection("Data Source=db.sqlite;Version=3;");
+        private static SQLiteConnection dbConnection = Utils.DBConnection;
         #endregion
 
         #region methods

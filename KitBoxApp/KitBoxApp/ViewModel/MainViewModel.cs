@@ -10,6 +10,7 @@ using KitBox.Core;
 using KitBox.Core.Model;
 using KitBox.Core.Constraint;
 using KitBox.WPFcore;
+using System.Data.SQLite;
 
 namespace KitBox.ViewModel
 {
@@ -88,6 +89,8 @@ namespace KitBox.ViewModel
         #region Constroctor / Init
         public MainViewModel()
         {
+            Utils.DBConnection = new SQLiteConnection("Data Source=" + Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\KitBox\db.sqlite;Version=3;");
+
             InitCupboard();
         }
 
