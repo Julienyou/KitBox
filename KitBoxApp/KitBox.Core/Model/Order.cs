@@ -21,12 +21,12 @@ namespace KitBox.Core.Model
 
         #region Attributes
 
-        private string id = null;
-        private double totalPrice = 0;
-        private double remnantSale = 0;
-        private Customer customer = null;
-        private PaymentStatus state;
-        private PreparationStatus preparationState;
+        private string m_Id = null;
+        private double m_TotalPrice = 0;
+        private double m_RemnantSale = 0;
+        private Customer m_Customer = null;
+        private PaymentStatus m_State;
+        private PreparationStatus m_PreparationState;
 
         private List<Dictionary<string, string>> components = new List<Dictionary<string, string>>();
 
@@ -42,63 +42,63 @@ namespace KitBox.Core.Model
 
         public string Id
         {
-            get => id;
+            get => m_Id;
 
             set
             {
-                id = value;
+                m_Id = value;
                 Notify("Id");
             }
         }
 
         public double TotalPrice
         {
-            get => totalPrice;
+            get => m_TotalPrice;
 
             set
             {
-                totalPrice = value;
+                m_TotalPrice = value;
                 Notify("TotalPrice");
             }
         }
 
         public double RemnantSale
         {
-            get => remnantSale;
+            get => m_RemnantSale;
 
             set
             {
-                remnantSale = value;
+                m_RemnantSale = value;
                 Notify("RemnantSale");
             }
         }
 
         public Customer Customer
         {
-            get => customer;
+            get => m_Customer;
             set
             {
-                customer = value;
+                m_Customer = value;
             }
         }
 
         public PaymentStatus State
         {
-            get => state;
+            get => m_State;
 
             set
             {
-                state = value;
+                m_State = value;
                 Notify("State");
             }
         }
 
         public PreparationStatus PreparationState
         {
-            get => preparationState;
+            get => m_PreparationState;
             set
             {
-                preparationState = value;
+                m_PreparationState = value;
                 Notify("PreparationState");
             }
         }
@@ -122,7 +122,7 @@ namespace KitBox.Core.Model
         {
             foreach (Dictionary<string, string> component in components)
             {
-                totalPrice += Convert.ToDouble(component["price"]) * Convert.ToDouble(component["quantity"]);
+                m_TotalPrice += Convert.ToDouble(component["price"]) * Convert.ToDouble(component["quantity"]);
             }
         }
 

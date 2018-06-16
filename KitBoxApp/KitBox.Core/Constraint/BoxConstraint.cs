@@ -12,9 +12,9 @@ namespace KitBox.Core.Constraint
     public class BoxConstraint : IConstraintChecker<Box>,INotifyPropertyChanged
     {
         #region Attributes
-        private List<int> heights;
-        private List<string> vColors;
-        private List<string> hColors;
+        private List<int> m_Heights;
+        private List<string> m_VColors;
+        private List<string> m_HColors;
         #endregion
 
         #region Property changed members
@@ -28,7 +28,7 @@ namespace KitBox.Core.Constraint
         #region methods
         public bool Check(Box b)
         {
-            if (heights.Contains(b.Height))
+            if (m_Heights.Contains(b.Height))
             {
                 return true;
             }
@@ -39,29 +39,29 @@ namespace KitBox.Core.Constraint
         #region Properties
         public List<string> VColors
         {
-            get => vColors;
+            get => m_VColors;
             set
             {
-                vColors = value;
+                m_VColors = value;
                 Notify("VColors");
             }
         }
         public List<string> HColors
         {
-            get => hColors;
+            get => m_HColors;
             set
             {
-                hColors = value;
+                m_HColors = value;
                 Notify("HColors");
             }
         }
 
         public List<int> Heights
         {
-            get => heights;
+            get => m_Heights;
             set
             {
-                heights = value;
+                m_Heights = value;
                 Notify("Heights");
             }
         }

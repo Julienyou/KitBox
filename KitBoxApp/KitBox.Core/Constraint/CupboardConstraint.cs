@@ -12,9 +12,9 @@ namespace KitBox.Core.Constraint
     public class CupboardConstraint : IConstraintChecker<Cupboard>, INotifyPropertyChanged
     {
         #region Attributes
-        private List<int> depths;
-        private List<int> widths;
-        private List<string> steelCornerColors;
+        private List<int> m_Depths;
+        private List<int> m_Widths;
+        private List<string> m_SteelCornerColors;
         private int maxHeight;
         #endregion
 
@@ -29,7 +29,7 @@ namespace KitBox.Core.Constraint
         #region methods
         public bool Check(Cupboard cb)
         {
-            if (depths.Contains(cb.Depth) && widths.Contains(cb.Width) && maxHeight > cb.Height)
+            if (m_Depths.Contains(cb.Depth) && m_Widths.Contains(cb.Width) && maxHeight > cb.Height)
             {
                 return true;
             }
@@ -41,27 +41,27 @@ namespace KitBox.Core.Constraint
         #region Properties
         public List<int> Widths
         {
-            get => widths;
+            get => m_Widths;
             set
             {
-                widths = value;
+                m_Widths = value;
                 Notify("Widths");
             }
         }
 
         public List<int> Depths
         {
-            get => depths;
+            get => m_Depths;
             set
             {
-                depths = value;
+                m_Depths = value;
                 Notify("Depths");
             }
         }
         public List<string> SteelCornerColors
         {
-            get => steelCornerColors;
-            set { steelCornerColors = value; }
+            get => m_SteelCornerColors;
+            set { m_SteelCornerColors = value; }
         }
         public int MaxHeight
         {

@@ -9,72 +9,72 @@ namespace KitBox.Core.Model
     public class Customer
     {
         #region Attributes
-        private string email;
-        private string firstName;
-        private string lastName;
-        private string street;
-        private string town;
+        private string m_Email;
+        private string m_FirstName;
+        private string m_LastName;
+        private string m_Street;
+        private string m_Town;
         #endregion
 
         #region Constructor
         public Customer(string email, string firstName, string lastName, string street, string town)
         {
-            this.email = email;
-            this.firstName = firstName;
-            this.lastName = lastName;
-            this.street = street;
-            this.town = town;
+            this.m_Email = email;
+            this.m_FirstName = firstName;
+            this.m_LastName = lastName;
+            this.m_Street = street;
+            this.m_Town = town;
         }
         #endregion
 
         #region Properties
         public string Email
         {
-            get => email;
+            get => m_Email;
 
             set
             {
-                email = value;
+                m_Email = value;
             }
         }
 
         public string FirstName
         {
-            get => firstName;
+            get => m_FirstName;
 
             set
             {
-                firstName = value;
+                m_FirstName = value;
             }
         }
 
         public string LastName
         {
-            get => lastName;
+            get => m_LastName;
 
             set
             {
-                lastName = value;
+                m_LastName = value;
             }
         }
 
         public string Street
         {
-            get => street;
+            get => m_Street;
 
             set
             {
-                street = value;
+                m_Street = value;
             }
         }
 
         public string Town
         {
-            get => town;
+            get => m_Town;
 
             set
             {
-                town = value;
+                m_Town = value;
             }
         }
 

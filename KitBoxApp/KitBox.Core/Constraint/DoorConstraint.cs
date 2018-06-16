@@ -13,8 +13,8 @@ namespace KitBox.Core.Constraint
     public class DoorConstraint : IConstraintChecker<Box>, INotifyPropertyChanged
     {
         #region Attributes
-        private List<string> colors;
-        private List<Tuple<int,int>> doorDimensions;
+        private List<string> m_Colors;
+        private List<Tuple<int,int>> m_DoorDimensions;
         #endregion
 
         #region Methods
@@ -28,7 +28,7 @@ namespace KitBox.Core.Constraint
 
                     Tuple<int, int> constrain = new Tuple<int, int>(b.Height - 4, (b.Cupboard.Width- 4) / 2);
 
-                    if (colors.Contains(d.Color) && doorDimensions.Contains(constrain))
+                    if (m_Colors.Contains(d.Color) && m_DoorDimensions.Contains(constrain))
                     {
                         if (d.Color == "Verre" && d.Knop == true)
                         {
@@ -61,10 +61,10 @@ namespace KitBox.Core.Constraint
         #region Propreties
         public List<string> Colors
         {
-            get => colors;
+            get => m_Colors;
             set
             {
-                colors = value;
+                m_Colors = value;
                 Notify("Colors");
             }
         }

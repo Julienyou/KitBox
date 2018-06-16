@@ -14,18 +14,18 @@ namespace KitBox.Core.Model
     public class Cupboard : INotifyPropertyChanged, IDataErrorInfo
     {
         #region attributes
-        private ObservableCollection<Box> boxes = new ObservableCollection<Box> { };
-        private int width;
-        private int depth;
-        private int height;
-        private string steelCornerColor;
-        private CupboardConstraint cupboardConstraint = new CupboardConstraint();
+        private ObservableCollection<Box> m_Boxes = new ObservableCollection<Box> { };
+        private int m_Width;
+        private int m_Depth;
+        private int m_Height;
+        private string m_SteelCornerColor;
+        private CupboardConstraint m_CupboardConstraint = new CupboardConstraint();
         #endregion
 
         #region Constructor
         public Cupboard()
         {
-            boxes.CollectionChanged += OnBoxesChanged;
+            m_Boxes.CollectionChanged += OnBoxesChanged;
         }
         #endregion
 
@@ -45,8 +45,8 @@ namespace KitBox.Core.Model
             Console.WriteLine("box changed");
             if (e.NewItems != null)
             {
-                Height = boxes.Sum(x => x.Height);
-                cupboardConstraint.SteelCornerColors = ConstraintBuilder.GetAvailableSteelCornerColor(height);
+                Height = m_Boxes.Sum(x => x.Height);
+                m_CupboardConstraint.SteelCornerColors = ConstraintBuilder.GetAvailableSteelCornerColor(m_Height);
                 foreach (Box newItem in e.NewItems)
                 {
 
@@ -57,8 +57,8 @@ namespace KitBox.Core.Model
 
             if (e.OldItems != null)
             {
-                Height = boxes.Sum(x => x.Height);
-                cupboardConstraint.SteelCornerColors = ConstraintBuilder.GetAvailableSteelCornerColor(height);
+                Height = m_Boxes.Sum(x => x.Height);
+                m_CupboardConstraint.SteelCornerColors = ConstraintBuilder.GetAvailableSteelCornerColor(m_Height);
                 foreach (Box oldItem in e.OldItems)
                 {
                     oldItem.PropertyChanged -= this.OnItemPropertyChanged;
@@ -70,8 +70,8 @@ namespace KitBox.Core.Model
         {
             if (e.PropertyName == "Height")
             {
-                Height = boxes.Sum(x => x.Height);
-                cupboardConstraint.SteelCornerColors = ConstraintBuilder.GetAvailableSteelCornerColor(height);
+                Height = m_Boxes.Sum(x => x.Height);
+                m_CupboardConstraint.SteelCornerColors = ConstraintBuilder.GetAvailableSteelCornerColor(m_Height);
             }
 
         }
@@ -82,30 +82,30 @@ namespace KitBox.Core.Model
         #region Properties
         public int Width
         {
-            get => width;
+            get => m_Width;
             set
             {
-                width = value;
-                cupboardConstraint.Depths = ConstraintBuilder.GetAvailableDepth(width);
-                if (!cupboardConstraint.Depths.Contains(depth))
+                m_Width = value;
+                m_CupboardConstraint.Depths = ConstraintBuilder.GetAvailableDepth(m_Width);
+                if (!m_CupboardConstraint.Depths.Contains(m_Depth))
                 {
-                    depth = cupboardConstraint.Depths[0];
+                    m_Depth = m_CupboardConstraint.Depths[0];
                 }
 
-                foreach (Box b in boxes)
+                foreach (Box b in m_Boxes)
                 {
-                    b.BoxConstraint.HColors = ConstraintBuilder.GetAvailableHPaneColor(width, depth);
+                    b.BoxConstraint.HColors = ConstraintBuilder.GetAvailableHPaneColor(m_Width, m_Depth);
                     if (!b.BoxConstraint.HColors.Contains(b.HorizontalColor))
                     {
                         b.HorizontalColor = b.BoxConstraint.HColors[0];
                     }
-                    b.BoxConstraint.VColors = ConstraintBuilder.GetAvailableVPaneColor(width, depth, b.Height);
+                    b.BoxConstraint.VColors = ConstraintBuilder.GetAvailableVPaneColor(m_Width, m_Depth, b.Height);
                     Console.WriteLine("w  " + b.BoxConstraint.VColors.Count);
                     if (!b.BoxConstraint.VColors.Contains(b.LateralColor))
                     {
                         b.LateralColor = b.BoxConstraint.VColors[0];
                     }
-                    ((Door)b.Accessories[0]).DoorConstraint.Colors = ConstraintBuilder.GetAvailableDoorStyle(width, b.Height);
+                    ((Door)b.Accessories[0]).DoorConstraint.Colors = ConstraintBuilder.GetAvailableDoorStyle(m_Width, b.Height);
                     if (!((Door)b.Accessories[0]).DoorConstraint.Colors.Contains(((Door)b.Accessories[0]).Color))
                     {
                         ((Door)b.Accessories[0]).Color = ((Door)b.Accessories[0]).DoorConstraint.Colors[0];
@@ -117,28 +117,28 @@ namespace KitBox.Core.Model
 
         public string SteelCornerColor
         {
-            get => steelCornerColor;
+            get => m_SteelCornerColor;
             set
             {
-                steelCornerColor = value;
+                m_SteelCornerColor = value;
                 Notify("SteelCornerColor");
             }
         }
 
         public int Depth
         {
-            get => depth;
+            get => m_Depth;
             set
             {
-                depth = value;
-                foreach (Box b in boxes)
+                m_Depth = value;
+                foreach (Box b in m_Boxes)
                 {
-                    b.BoxConstraint.HColors = ConstraintBuilder.GetAvailableHPaneColor(width, depth);
+                    b.BoxConstraint.HColors = ConstraintBuilder.GetAvailableHPaneColor(m_Width, m_Depth);
                     if (!b.BoxConstraint.HColors.Contains(b.HorizontalColor))
                     {
                         b.HorizontalColor = b.BoxConstraint.HColors[0];
                     }
-                    b.BoxConstraint.VColors = ConstraintBuilder.GetAvailableVPaneColor(width, depth, b.Height);
+                    b.BoxConstraint.VColors = ConstraintBuilder.GetAvailableVPaneColor(m_Width, m_Depth, b.Height);
                     if (!b.BoxConstraint.VColors.Contains(b.LateralColor))
                     {
                         b.LateralColor = b.BoxConstraint.VColors[0];
@@ -150,20 +150,20 @@ namespace KitBox.Core.Model
 
         public int Height
         {
-            get => height;
+            get => m_Height;
             set
             {
-                height = value;
+                m_Height = value;
                 Notify("Height");
             }
         }
 
         public ObservableCollection<Box> Boxes
         {
-            get => boxes;
+            get => m_Boxes;
         }
 
-        public CupboardConstraint CupboardConstraint { get => cupboardConstraint; }
+        public CupboardConstraint CupboardConstraint { get => m_CupboardConstraint; }
         #endregion
 
         #region Methods
@@ -173,16 +173,16 @@ namespace KitBox.Core.Model
             b.BoxConstraint.Heights = ConstraintBuilder.GetAvailableHeight();
 
             b.AddAccessory(new Door());
-            b.BoxConstraint.HColors = ConstraintBuilder.GetAvailableHPaneColor(width, depth);
+            b.BoxConstraint.HColors = ConstraintBuilder.GetAvailableHPaneColor(m_Width, m_Depth);
             b.HorizontalColor = b.BoxConstraint.HColors[0];
             b.Height = b.BoxConstraint.Heights[0];
-            boxes.Add(b);
+            m_Boxes.Add(b);
             Notify("Height");
         }
 
         public void RemoveBox(Box b)
         {
-            boxes.Remove(b);
+            m_Boxes.Remove(b);
         }
         #endregion
 
@@ -199,7 +199,7 @@ namespace KitBox.Core.Model
                 string result = null;
                 if (columnName == "Height")
                 {
-                    if (Height > cupboardConstraint.MaxHeight)
+                    if (Height > m_CupboardConstraint.MaxHeight)
                         result = "Cupboard reached maximum height";
 
                     if (Boxes.Count > 7)

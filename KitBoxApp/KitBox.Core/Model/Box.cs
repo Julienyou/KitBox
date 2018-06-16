@@ -13,12 +13,12 @@ namespace KitBox.Core.Model
     public class Box : INotifyPropertyChanged
     {
         #region Attributes
-        private int height;
-        private List<IAccessory> accessories = new List<IAccessory> { };
-        private Cupboard cupboard;
-        private string lateralColor;
-        private string horizontalColor;
-        private BoxConstraint boxConstraint;
+        private int m_Height;
+        private List<IAccessory> m_Accessories = new List<IAccessory> { };
+        private Cupboard m_Cupboard;
+        private string m_CateralColor;
+        private string m_HorizontalColor;
+        private BoxConstraint m_BoxConstraint;
         #endregion
 
         #region Property changed members
@@ -33,50 +33,50 @@ namespace KitBox.Core.Model
         #region Constructor
         public Box(Cupboard cupboard)
         {
-            this.cupboard = cupboard;
-            this.boxConstraint = new BoxConstraint();
+            this.m_Cupboard = cupboard;
+            this.m_BoxConstraint = new BoxConstraint();
         }
         #endregion
 
         #region Methods
         public void AddAccessory(IAccessory c)
         {
-            accessories.Add(c);
+            m_Accessories.Add(c);
         }
 
         public void RemoveAccessory(IAccessory c)
         {
-            accessories.Remove(c);
+            m_Accessories.Remove(c);
         }
         #endregion
 
         #region Properties
         public List<IAccessory> Accessories
         {
-            get => accessories;
+            get => m_Accessories;
         }
 
         public int GetWidth()
         {
-            return cupboard.Width;
+            return m_Cupboard.Width;
         }
 
         public int Height
         {
-            get => height;
+            get => m_Height;
             set
             {
-                height = value;
+                m_Height = value;
 
-                ((Door)accessories[0]).DoorConstraint.Colors = ConstraintBuilder.GetAvailableDoorStyle(cupboard.Width, height);
-                if (!((Door)accessories[0]).DoorConstraint.Colors.Contains(((Door)accessories[0]).Color))
+                ((Door)m_Accessories[0]).DoorConstraint.Colors = ConstraintBuilder.GetAvailableDoorStyle(m_Cupboard.Width, m_Height);
+                if (!((Door)m_Accessories[0]).DoorConstraint.Colors.Contains(((Door)m_Accessories[0]).Color))
                 {
-                    ((Door)accessories[0]).Color = ((Door)accessories[0]).DoorConstraint.Colors[0];
+                    ((Door)m_Accessories[0]).Color = ((Door)m_Accessories[0]).DoorConstraint.Colors[0];
                 }
-                boxConstraint.VColors = ConstraintBuilder.GetAvailableVPaneColor(cupboard.Width, cupboard.Depth, height);
-                if (!boxConstraint.VColors.Contains(lateralColor))
+                m_BoxConstraint.VColors = ConstraintBuilder.GetAvailableVPaneColor(m_Cupboard.Width, m_Cupboard.Depth, m_Height);
+                if (!m_BoxConstraint.VColors.Contains(m_CateralColor))
                 {
-                    lateralColor = boxConstraint.VColors[0];
+                    m_CateralColor = m_BoxConstraint.VColors[0];
                 }
                 Notify("Height");
 
@@ -105,30 +105,30 @@ namespace KitBox.Core.Model
 
         public Cupboard Cupboard
         {
-            get => cupboard;
+            get => m_Cupboard;
         }
 
         public string LateralColor
         {
-            get => lateralColor;
+            get => m_CateralColor;
             set
             {
-                lateralColor = value;
+                m_CateralColor = value;
                 Notify("LateralColor");
             }
         }
 
         public string HorizontalColor
         {
-            get => horizontalColor;
+            get => m_HorizontalColor;
             set
             {
-                horizontalColor = value;
+                m_HorizontalColor = value;
                 Notify("HorizontalColor");
             }
         }
 
-        public BoxConstraint BoxConstraint { get => boxConstraint; }
+        public BoxConstraint BoxConstraint { get => m_BoxConstraint; }
 
         #endregion
     }
