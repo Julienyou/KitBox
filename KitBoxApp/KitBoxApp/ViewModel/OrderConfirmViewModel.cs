@@ -15,7 +15,7 @@ using KitBox.Core.Model;
 
 namespace KitBox.ViewModel
 {
-    public class OrderConfirmViewModel:IDataErrorInfo
+    public class OrderConfirmViewModel : IDataErrorInfo
     {
 
         #region Attributes
@@ -34,7 +34,13 @@ namespace KitBox.ViewModel
         {
             get
             {
-                return new CommandHandler((x) => { m_Order.Customer = new Customer(Email,FirstName,LastName,Address,""); Utils.ExportToDatabase(m_Order); ((Window)x).Close(); }, true);
+                return new CommandHandler((x) =>
+                {
+                    m_Order.Customer = new Customer(Email, FirstName, LastName, Address, "");
+                    Utils.ExportToDatabase(m_Order);
+                    ((Window)x).DialogResult = true;
+                    ((Window)x).Close();
+                }, true);
             }
         }
 
@@ -42,14 +48,18 @@ namespace KitBox.ViewModel
         {
             get
             {
-                return new CommandHandler((x) => { ((Window)x).Close(); }, true);
+                return new CommandHandler((x) =>
+                {
+                    ((Window)x).DialogResult = false;
+                    ((Window)x).Close();
+                }, true);
             }
         }
 
         #endregion
 
         #region Constructor
-        public OrderConfirmViewModel (Window window, Order order)
+        public OrderConfirmViewModel(Window window, Order order)
         {
             Utils.DBConnection = new SQLiteConnection("Data Source=" + Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\KitBox\db.sqlite;Version=3;");
             Address = "";

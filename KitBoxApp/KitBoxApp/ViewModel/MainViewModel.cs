@@ -23,7 +23,7 @@ namespace KitBox.ViewModel
         #endregion
 
         #region Properties
-        public Cupboard Cupboard { get; set; }
+        public Cupboard Cupboard { get; private set; }
 
         public Box SelectedBox
         {
@@ -69,7 +69,12 @@ namespace KitBox.ViewModel
                 OrderRecap w = new OrderRecap();
                 OrderRecapViewModel orderConfirmVM = new OrderRecapViewModel(Cupboard);
                 w.DataContext = orderConfirmVM;
-                w.ShowDialog();
+
+                //true if order has been validate
+                if(w.ShowDialog() == true)
+                {
+                    InitCupboard();
+                }
             }, true);
         }
         public ICommand ResetCommand
@@ -90,7 +95,6 @@ namespace KitBox.ViewModel
         public MainViewModel()
         {
             Utils.DBConnection = new SQLiteConnection("Data Source=" + Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\KitBox\db.sqlite;Version=3;");
-
             InitCupboard();
         }
 
@@ -98,10 +102,13 @@ namespace KitBox.ViewModel
         {
             Cupboard = new Cupboard();
             Cupboard.CupboardConstraint.Widths = ConstraintBuilder.BuildWidthsList();
+            Cupboard.CupboardConstraint.SteelCornerColors = ConstraintBuilder.GetAvailableSteelCornerColor(Cupboard.Height);
+
 
             //ajout connect DB
             Cupboard.CupboardConstraint.MaxHeight = 150;
             Cupboard.Width = Cupboard.CupboardConstraint.Widths[0];
+            Cupboard.SteelCornerColor = Cupboard.CupboardConstraint.SteelCornerColors[0];
             Cupboard.AddBox();
             SelectedBox = Cupboard.Boxes[0];
             Notify("Cupboard");

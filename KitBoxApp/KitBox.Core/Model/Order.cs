@@ -118,7 +118,6 @@ namespace KitBox.Core.Model
 
         #region Methods
 
-        //---Methods
         public void ComputePrice()
         {
             foreach (Dictionary<string, string> component in components)

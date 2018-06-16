@@ -33,8 +33,9 @@ namespace KitBox.ViewModel
             OrderConfirm w = new OrderConfirm();
             OrderConfirmViewModel orderRecapVM = new OrderConfirmViewModel(w, Order);
             w.DataContext = orderRecapVM;
+            ((Window)x).DialogResult = w.ShowDialog();
             ((Window)x).Close();
-            w.ShowDialog();
+            
         }, true); } }
 
         public ICommand CancelCommand { get { return new CommandHandler((x) => { ((Window)x).Close(); }, true); } }
