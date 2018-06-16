@@ -8,7 +8,11 @@
         mc:Ignorable="d"
         Title="BOMWindow" Height="450" Width="800">
     <Grid Background="{StaticResource BackbroungColor}">
-        <DataGrid ItemsSource="{Binding Path=Components}" SelectionMode="Single" AutoGenerateColumns="False" CanUserAddRows="False">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <DataGrid Grid.Row="0" ItemsSource="{Binding Path=Components}" SelectionMode="Single" AutoGenerateColumns="False" CanUserAddRows="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Reference" Width="1.5*" IsReadOnly="True" Binding="{Binding Path=reference}"/>
                 <DataGridTextColumn Header="Color" Width="2*" IsReadOnly="True" Binding="{Binding Path=color}"/>
@@ -19,8 +23,7 @@
                 <DataGridCheckBoxColumn/>
             </DataGrid.Columns>
         </DataGrid>
-        <Canvas >
-            <Button Style="{StaticResource button}" Content="Validate" Canvas.Bottom="30" Canvas.Right="50" Command="{Binding ValidateCommand}" CommandParameter="{Binding ElementName=bomWindow}"/>
-        </Canvas>
+        <Button  Grid.Row="1" Style="{StaticResource button}" Content="Validate" Command="{Binding ValidateCommand}" CommandParameter="{Binding ElementName=bomWindow}" HorizontalAlignment="Right" Margin="0,0,15,0"/>
+
     </Grid>
 </Window>
