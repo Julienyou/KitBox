@@ -14,6 +14,24 @@ namespace KitBox.Core.Constraint
         #endregion
 
         #region methods
+        public static int GetMaximumHeight()
+        {
+            
+            string sql = "SELECT MAX(Height) FROM Component WHERE FK_Reference=1";
+            int result = 0;
+            dbConnection.Open();
+            SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
+            SQLiteDataReader reader = command.ExecuteReader();
+            
+            if(reader.Read())
+            {
+
+                result = reader.GetInt32(0);
+            }
+            dbConnection.Close();
+            return result;
+        }
+
         public static List<int> BuildWidthsList()
         {
             List<int> widths = new List<int>();

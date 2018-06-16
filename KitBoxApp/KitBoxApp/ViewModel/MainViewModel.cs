@@ -106,7 +106,7 @@ namespace KitBox.ViewModel
 
 
             //ajout connect DB
-            Cupboard.CupboardConstraint.MaxHeight = 150;
+            Cupboard.CupboardConstraint.MaxHeight = ConstraintBuilder.GetMaximumHeight();
             Cupboard.Width = Cupboard.CupboardConstraint.Widths[0];
             Cupboard.SteelCornerColor = Cupboard.CupboardConstraint.SteelCornerColors[0];
             Cupboard.AddBox();
