@@ -32,13 +32,7 @@ namespace KitBox.Core.Model
 
         #endregion
 
-        #region Constructors
-
-        public Order() {}
-
-        #endregion
-
-        #region Getters and Setters
+        #region Properties
 
         public string Id
         {
@@ -109,10 +103,7 @@ namespace KitBox.Core.Model
             set { components = value; Notify("Components"); }
         }
 
-        public bool IsInStock
-        {
-            get => ResearchInStock();
-        }
+        public bool IsInStock { get; private set; }
 
         #endregion
 
@@ -126,19 +117,20 @@ namespace KitBox.Core.Model
             }
         }
 
-        private bool ResearchInStock()
+        public void CheckStock()
         {
             foreach (Dictionary<string, string> component in components)
             {
                 if (component["instock"] == "false")
                 {
-                    return false;
+                    IsInStock = false;
+                    break;
                 }
             }
 
-            return true;
+            IsInStock = true;
         }
     }
 
-        #endregion
+    #endregion
 }

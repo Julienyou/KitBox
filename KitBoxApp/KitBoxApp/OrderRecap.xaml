@@ -15,8 +15,8 @@
         <FlowDocumentPageViewer Document="{Binding FlowDocument}"/>
         <StackPanel HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="18,0,0,10">
             <TextBlock Style="{StaticResource labelStyle}" Text="{Binding Path=Order.TotalPrice, StringFormat=Total Price: {0:F}€ }"/>
-            <TextBlock Foreground="Green" FontWeight="DemiBold" Text="In stock" Visibility="{Binding Path=InStock , Converter={StaticResource BoolToVis}}"/>
-            <TextBlock Foreground="Red" FontWeight="DemiBold" Text="Not in stock" Visibility="{Binding Path=InStock , Converter={StaticResource InvertBoolToVis}}"/>
+            <TextBlock Foreground="Green" FontWeight="DemiBold" Text="In stock" Visibility="{Binding Path=Order.IsInStock , Converter={StaticResource BoolToVis}}"/>
+            <TextBlock Foreground="Red" FontWeight="DemiBold" Text="Not in stock" Visibility="{Binding Path=Order.IsInStock , Converter={StaticResource InvertBoolToVis}}"/>
         </StackPanel>
         <Canvas>
             <Button x:Name="order_button" Style="{StaticResource button}" Content="Order" Canvas.Bottom="30" Canvas.Right="50" Command="{Binding OrderCommand}" CommandParameter="{Binding ElementName=OrderRecapWindow}"/>

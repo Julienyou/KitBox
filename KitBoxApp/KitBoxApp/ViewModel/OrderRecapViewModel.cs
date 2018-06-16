@@ -24,7 +24,6 @@ namespace KitBox.ViewModel
 
         public Order Order { get; private set; }
 
-        public bool InStock { get; private set; }
         #endregion
 
         #region ICommand
@@ -46,12 +45,10 @@ namespace KitBox.ViewModel
         {
             Utils.DBConnection = new SQLiteConnection("Data Source=" + Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\KitBox\db.sqlite;Version=3;");
 
-            InStock = true;
-
             m_Cupboard = cupboard;
             Order = new Order();
             KitComposer.ComposeKit(Order,cupboard);
-
+            Order.CheckStock();
             FlowDocument = new FlowDocument();
 
             CreateRecap();
