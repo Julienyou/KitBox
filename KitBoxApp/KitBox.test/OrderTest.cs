@@ -32,23 +32,26 @@ namespace KitBox.test
 
             KitComposer.AddComponent(order, new Dictionary<string, string>() {
                 { "reference", "Cornières" },
-                { "color", "Brun" },
-                { "height", "276" },
+                { "color", "Blanc" },
+                { "height", "36" },
                 { "quantity" , "4"}
             });
 
             KitComposer.AddComponent(order, new Dictionary<string, string>() {
-                { "reference", "Cornières" },
-                { "color", "Brun" },
-                { "height", "276" },
-                { "quantity" , "4"}
+                { "reference", "Traverse Ar" },
+                { "width", "32" },
+                { "quantity" , "2"}
             });
 
             Utils.FetchFromDataBase(order.Components);
             order.ComputePrice();
 
-            Assert.AreEqual(order.Components[0]["quantity"], "8");
-            Assert.AreEqual(order.TotalPrice, 16);
+            Assert.AreEqual(order.Components[0]["quantity"], "4");
+            Assert.AreEqual(order.Components[0]["price"], "0.35");
+            Assert.AreEqual(order.Components[1]["quantity"], "2");
+            Assert.AreEqual(order.Components[1]["price"], "1");
+
+            Assert.AreEqual(order.TotalPrice, 3.4);
 
         }
     }
