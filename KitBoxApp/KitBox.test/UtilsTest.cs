@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using KitBox.Core;
 using KitBox.Core.Model;
@@ -21,7 +22,7 @@ namespace KitBox.test
 
             Assert.AreEqual(order.TotalPrice, 175);
             Assert.AreEqual(Convert.ToInt32(order.Components[0]["quantity"]), 4);
-            Assert.AreEqual(Convert.ToBoolean(order.Components[0]["instock"]), false);
+            Assert.AreEqual(Convert.ToBoolean(order.Components[0]["instock"]), true);
         }
     }
 }
