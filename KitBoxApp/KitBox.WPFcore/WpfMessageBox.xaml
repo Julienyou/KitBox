@@ -66,12 +66,12 @@
 
              Name="txtMsg" 
 
-            Grid.Row="1" 
+            Grid.Row="1"  VerticalScrollBarVisibility="Auto"
 
                     Grid.Column="1">
                 <TextBlock FontSize="14" 
 
-                    LineHeight="20"  ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                    LineHeight="20"  
                        />
             </ScrollViewer>
             
