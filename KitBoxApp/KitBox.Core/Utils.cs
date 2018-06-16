@@ -340,7 +340,7 @@ namespace KitBox.Core
 
                     foreach (KeyValuePair<string, string> criteria in component)
                     {
-                        if (!criteria.Key.Equals("quantity"))
+                        if (!criteria.Key.Equals("quantity") && !criteria.Key.Equals("instock"))
                         {
                             listjoin.Add(criteria.Key + "='" + criteria.Value + "'");
                         }
