@@ -27,6 +27,7 @@ namespace KitBox.Core.Model
         private Customer m_Customer = null;
         private PaymentStatus m_State;
         private PreparationStatus m_PreparationState;
+      
 
         private List<Dictionary<string, string>> components = new List<Dictionary<string, string>>();
 
@@ -113,7 +114,7 @@ namespace KitBox.Core.Model
         {
             foreach (Dictionary<string, string> component in components)
             {
-                m_TotalPrice += Convert.ToDouble(component["price"]) * Convert.ToDouble(component["quantity"]);
+                m_TotalPrice += Convert.ToDouble(component["price"].Replace(".", ",")) * Convert.ToInt32(component["quantity"]);
             }
         }
 

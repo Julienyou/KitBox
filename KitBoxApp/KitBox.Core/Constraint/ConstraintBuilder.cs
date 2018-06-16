@@ -205,7 +205,6 @@ namespace KitBox.Core.Constraint
 
             colors.Sort();
             IEnumerable<string> distinctColors = colors.Distinct();
-            Console.WriteLine("Style :" + distinctColors.Count());
             dbConnection.Close();
             return distinctColors.ToList();
         }

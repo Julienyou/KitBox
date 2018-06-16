@@ -42,7 +42,6 @@ namespace KitBox.Core.Model
 
         private void OnBoxesChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            Console.WriteLine("box changed");
             if (e.NewItems != null)
             {
                 Height = m_Boxes.Sum(x => x.Height);
@@ -100,7 +99,6 @@ namespace KitBox.Core.Model
                         b.HorizontalColor = b.BoxConstraint.HColors[0];
                     }
                     b.BoxConstraint.VColors = ConstraintBuilder.GetAvailableVPaneColor(m_Width, m_Depth, b.Height);
-                    Console.WriteLine("w  " + b.BoxConstraint.VColors.Count);
                     if (!b.BoxConstraint.VColors.Contains(b.LateralColor))
                     {
                         b.LateralColor = b.BoxConstraint.VColors[0];
