@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Data.SQLite;
+using System.Windows.Documents;
 
 namespace CounterApp
 {
@@ -132,5 +133,6 @@ namespace CounterApp
 
         }
         #endregion
+
     }
 }
