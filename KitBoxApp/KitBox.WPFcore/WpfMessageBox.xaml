@@ -59,17 +59,22 @@
             Grid.Column="0" Width="50" 
 
             Height="50"  Stretch="Fill" />
-            <TextBlock Margin="10,5,10,5"   
+
+            <ScrollViewer Margin="10,5,10,5"   
 
             VerticalAlignment="Center" 
 
-            TextWrapping="Wrap" Name="txtMsg" 
+             Name="txtMsg" 
 
             Grid.Row="1" 
 
-                    Grid.Column="1" FontSize="14" 
+                    Grid.Column="1">
+                <TextBlock FontSize="14" 
 
-                    LineHeight="20"  />
+                    LineHeight="20"  ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                       />
+            </ScrollViewer>
+            
             <Grid Grid.Row="2" Grid.ColumnSpan="2"  
 
             Grid.Column="0" >

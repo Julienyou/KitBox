@@ -54,7 +54,7 @@ namespace CounterApp.ViewModel
                         if (SelectedOrder.PreparationState == PreparationStatus.Ready)
                         {
                             Order o = SelectedOrder;
-                            if (WpfMessageBox.Show("Ship the order out?", "Question", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                            if (WpfMessageBox.Show("Question","Ship the order out?",  MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                             {
                                 Utils.UpdatePreparationStatus(o.Id, PreparationStatus.ShippedOut);
                             }

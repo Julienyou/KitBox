@@ -12,6 +12,8 @@ using System.Windows.Input;
 using KitBox.Core;
 using KitBox.Core.Enum;
 using KitBox.Core.Model;
+using KitBox.WPFcore;
+using Newtonsoft.Json.Linq;
 
 namespace StockKeeperApp.ViewModel
 {
@@ -70,7 +72,7 @@ namespace StockKeeperApp.ViewModel
         {
             get
             {
-                return new CommandHandler((x) => { }, true);
+                return new CommandHandler((x) => { WpfMessageBox.Show("Restock Informations", JArray.FromObject(Utils.Restock()).ToString(), MessageBoxType.Information); }, true);
             }
         }
         #endregion

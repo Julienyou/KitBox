@@ -73,7 +73,7 @@ namespace KitBox.WPFcore
         MessageBoxButton button, MessageBoxImage image)
         {
             _messageBox = new WpfMessageBox
-            { txtMsg = { Text = text }, MessageTitle = { Text = caption } };
+            { txtMsg = { Content = text }, MessageTitle = { Text = caption } };
             SetVisibilityOfButtons(button);
             SetImageOfMessageBox(image);
             _messageBox.ShowDialog();

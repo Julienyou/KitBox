@@ -23,6 +23,7 @@ namespace StockKeeperApp.ViewModel
         {
             Utils.DBConnection = new SQLiteConnection("Data Source=" + Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\KitBox\db.sqlite;Version=3;");
             Components = Utils.GetInventory();
+
             foreach(JObject c in Components)
             {
                 c.PropertyChanged += OnComponentChanged;
