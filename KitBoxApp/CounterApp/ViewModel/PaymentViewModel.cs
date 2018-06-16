@@ -1,6 +1,7 @@
 ﻿using KitBox;
 using KitBox.Core;
 using KitBox.Core.Model;
+using KitBox.Core.Enum;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Data.SQLite;
 
 namespace CounterApp
 {
@@ -18,7 +20,7 @@ namespace CounterApp
     {
 
         #region Attributes
-        private int m_Payment;
+        private double m_Payment;
         private Order m_Order;
         private ObservableCollection<Order> m_Orders;
         private double m_RemainingPayment;
@@ -39,7 +41,7 @@ namespace CounterApp
         /// <summary>
         /// Get or Set the amount that the client is paying
         /// </summary>
-        public int Payment { get { return m_Payment; } set { m_Payment = value; Notify("Payment"); } }
+        public double Payment { get { return m_Payment; } set { m_Payment = value; Notify("Payment"); } }
 
         /// <summary>
         /// Get the amount of the order that is not yet payed
@@ -58,16 +60,30 @@ namespace CounterApp
         {
             get
             {
-                return new CommandHandler((x) => { m_Order.RemnantSale -= Payment; ((Window)x).Close(); }, true);
+                return new CommandHandler((x) =>
+                {
+                    m_Order.RemnantSale -= Payment;
+                    m_Order.RemnantSale = Math.Round(m_Order.RemnantSale,2);
+                    Utils.UpdateRemnantSale(m_Order.Id, m_Order.RemnantSale);
+                    if (m_Order.RemnantSale == 0)
+                    {
+                        Utils.UpdateStatus(m_Order.Id, PaymentStatus.Payed);
+                    }
+                    else
+                    {
+                        Utils.UpdateStatus(m_Order.Id, PaymentStatus.Prepaid);
+                    }
+                    ((Window)x).Close();
+                }, true);
             }
         }
 
-        
+
         public ICommand CancelOrder
         {
             get
             {
-                return new CommandHandler((x) => { m_Orders.Remove(m_Order); ((Window)x).Close(); }, true);
+                return new CommandHandler((x) => { Utils.UpdateStatus(m_Order.Id, PaymentStatus.Canceled); ((Window)x).Close(); }, true);
             }
         }
 
@@ -76,9 +92,10 @@ namespace CounterApp
         #region Constructor
         public PaymentViewModel(Order order, ObservableCollection<Order> orders)
         {
+            Utils.DBConnection = new SQLiteConnection("Data Source=" + Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\KitBox\db.sqlite;Version=3;");
             m_Order = order;
             m_Orders = orders;
-            m_Payment = 0;
+            m_Payment = 10;
             m_RemainingPayment = order.RemnantSale;
             m_TotalPayment = order.TotalPrice;
         }

@@ -11,10 +11,10 @@ using System.Threading.Tasks;
 
 namespace KitBox.Core.Model
 {
-    public class Cupboard : INotifyPropertyChanged
+    public class Cupboard : INotifyPropertyChanged, IDataErrorInfo
     {
         #region attributes
-        private ObservableCollection<Box> boxes = new ObservableCollection<Box> {};
+        private ObservableCollection<Box> boxes = new ObservableCollection<Box> { };
         private int width;
         private int depth;
         private int height;
@@ -68,10 +68,9 @@ namespace KitBox.Core.Model
 
         void OnItemPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if(e.PropertyName == "Height")
+            if (e.PropertyName == "Height")
             {
-
-                height = boxes.Sum(x => x.Height);
+                Height = boxes.Sum(x => x.Height);
                 cupboardConstraint.SteelCornerColors = ConstraintBuilder.GetAvailableSteelCornerColor(height);
             }
 
@@ -96,7 +95,7 @@ namespace KitBox.Core.Model
                 foreach (Box b in boxes)
                 {
                     b.BoxConstraint.HColors = ConstraintBuilder.GetAvailableHPaneColor(width, depth);
-                    if(!b.BoxConstraint.HColors.Contains(b.HorizontalColor))
+                    if (!b.BoxConstraint.HColors.Contains(b.HorizontalColor))
                     {
                         b.HorizontalColor = b.BoxConstraint.HColors[0];
                     }
@@ -106,8 +105,8 @@ namespace KitBox.Core.Model
                     {
                         b.LateralColor = b.BoxConstraint.VColors[0];
                     }
-                    ((Door) b.Accessories[0]).DoorConstraint.Colors = ConstraintBuilder.GetAvailableDoorStyle(width, b.Height);
-                    if(!((Door)b.Accessories[0]).DoorConstraint.Colors.Contains(((Door)b.Accessories[0]).Color))
+                    ((Door)b.Accessories[0]).DoorConstraint.Colors = ConstraintBuilder.GetAvailableDoorStyle(width, b.Height);
+                    if (!((Door)b.Accessories[0]).DoorConstraint.Colors.Contains(((Door)b.Accessories[0]).Color))
                     {
                         ((Door)b.Accessories[0]).Color = ((Door)b.Accessories[0]).DoorConstraint.Colors[0];
                     }
@@ -170,34 +169,46 @@ namespace KitBox.Core.Model
         #region Methods
         public void AddBox()
         {
-            if(boxes.Count >=7)
-            {
-                throw new WarningException("You have reached max boxes count");
-            }
-            else
-            {
-                Box b = new Box(this);
-                b.BoxConstraint.Heights = ConstraintBuilder.GetAvailableHeight();
+            Box b = new Box(this);
+            b.BoxConstraint.Heights = ConstraintBuilder.GetAvailableHeight();
 
-                if((height+b.BoxConstraint.Heights[0]) > cupboardConstraint.MaxHeight)
-                {
-                    throw new WarningException("You have reached max cupboard height");
-                }
-                else
-                {
-                    
-                    b.AddAccessory(new Door());
-                    b.BoxConstraint.HColors = ConstraintBuilder.GetAvailableHPaneColor(width, depth);
-                    b.HorizontalColor = b.BoxConstraint.HColors[0];
-                    b.Height = b.BoxConstraint.Heights[0];
-                    boxes.Add(b);
-                }
-            }
+            b.AddAccessory(new Door());
+            b.BoxConstraint.HColors = ConstraintBuilder.GetAvailableHPaneColor(width, depth);
+            b.HorizontalColor = b.BoxConstraint.HColors[0];
+            b.Height = b.BoxConstraint.Heights[0];
+            boxes.Add(b);
+            Notify("Height");
         }
 
         public void RemoveBox(Box b)
         {
             boxes.Remove(b);
+        }
+        #endregion
+
+        #region DataErrorInfo members
+        public string Error
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public string this[string columnName]
+        {
+            get
+            {
+                string result = null;
+                if (columnName == "Height")
+                {
+                    if (Height > cupboardConstraint.MaxHeight)
+                        result = "Cupboard reached maximum height";
+
+                    if (Boxes.Count > 7)
+                        result = "Maximum number of boxes";
+                }
+
+                return result;
+            }
+
         }
         #endregion
 

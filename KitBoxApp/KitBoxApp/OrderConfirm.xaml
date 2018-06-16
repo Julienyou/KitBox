@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:KitBox"
         xmlns:wpf="http://schemas.microsoft.com/netfx/2007/xaml/presentation"
         mc:Ignorable="d"
-        Title="OrderRecap" Height="475" Width="350" WindowStyle="ToolWindow" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Topmost="True">
+        Title="OrderRecap" Height="480" Width="350" WindowStyle="ToolWindow" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Topmost="True">
 
     <Window.Resources>
         <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource textBoxStyle}">
@@ -16,9 +16,8 @@
                 <Setter.Value>
                     <ControlTemplate>
                         <DockPanel LastChildFill="true">
-                            <Border Background="Red" DockPanel.Dock="right" Margin="5,0,0,0" Width="20" Height="20" CornerRadius="10"
-                                    ToolTip="{Binding ElementName=customAdorner, Path=AdornedElement.(Validation.Errors)[0].ErrorContent}">
-                                <TextBlock Text="!" VerticalAlignment="center" HorizontalAlignment="center" FontWeight="Bold" Foreground="white">
+                            <Border Background="Transparent" DockPanel.Dock="Bottom" >
+                                <TextBlock Text="{Binding ElementName=customAdorner, Path=AdornedElement.(Validation.Errors)[0].ErrorContent}" FontWeight="Bold" Foreground="red">
                                 </TextBlock>
                             </Border>
                             <AdornedElementPlaceholder Name="customAdorner" VerticalAlignment="Center" >
@@ -29,7 +28,6 @@
                 </Setter.Value>
             </Setter>
         </Style>
-
     </Window.Resources>
     <Grid Background="{StaticResource BackbroungColor}" Margin="0,0,0,-7">
         <StackPanel Grid.Row="0" Margin="40,10,40,0" Name="CustomerInfo">

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KitBox.Core.Enum;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -22,9 +23,10 @@ namespace KitBox.Core.Model
 
         private string id = null;
         private double totalPrice = 0;
-        private int remnantSale = 0;
+        private double remnantSale = 0;
         private Customer customer = null;
-        private string state;
+        private PaymentStatus state;
+        private PreparationStatus preparationState;
 
         private List<Dictionary<string, string>> components = new List<Dictionary<string, string>>();
 
@@ -60,7 +62,7 @@ namespace KitBox.Core.Model
             }
         }
 
-        public int RemnantSale
+        public double RemnantSale
         {
             get => remnantSale;
 
@@ -80,7 +82,7 @@ namespace KitBox.Core.Model
             }
         }
 
-        public string State
+        public PaymentStatus State
         {
             get => state;
 
@@ -91,10 +93,25 @@ namespace KitBox.Core.Model
             }
         }
 
+        public PreparationStatus PreparationState
+        {
+            get => preparationState;
+            set
+            {
+                preparationState = value;
+                Notify("PreparationState");
+            }
+        }
+
         public List<Dictionary<string, string>> Components
         {
             get => components;
             set { components = value; Notify("Components"); }
+        }
+
+        public bool IsInStock
+        {
+            get => ResearchInStock();
         }
 
         #endregion
@@ -108,6 +125,19 @@ namespace KitBox.Core.Model
             {
                 totalPrice += Convert.ToDouble(component["price"]) * Convert.ToDouble(component["quantity"]);
             }
+        }
+
+        private bool ResearchInStock()
+        {
+            foreach (Dictionary<string, string> component in components)
+            {
+                if (component["instock"] == "false")
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
     }
 

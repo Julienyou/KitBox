@@ -2,6 +2,7 @@
 using KitBox.Core.Model;
 using System;
 using System.Collections.Generic;
+using System.Data.SQLite;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,9 +20,11 @@ namespace KitBox.Core
         /// <param name="cupboard">The cupboard that is going to be analysed to generate the component list.</param>
         static public void ComposeKit(Order order, Cupboard cupboard)
         {
+            Utils.DBConnection = new SQLiteConnection("Data Source=" + Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\KitBox\db.sqlite;Version=3;");
             ComposeOrder(order, cupboard);
             Utils.FetchFromDataBase(order.Components);
             order.ComputePrice();
+            order.RemnantSale = order.TotalPrice;
         }
 
         /// <summary>

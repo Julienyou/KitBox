@@ -37,9 +37,9 @@
             <TextBlock Style="{StaticResource labelStyle}">Remaining Payment</TextBlock>
             <TextBox Style="{StaticResource textBoxStyle}" x:Name="remainingPaymentTextblock" Text="{Binding Path=RemainingPayment, Mode=OneWay}" IsEnabled="False"/>
             <TextBlock Style="{StaticResource labelStyle}">Payment</TextBlock>
-            <TextBox x:Name="paymentTextBox" Grid.Row="0" Grid.Column="1">
+            <TextBox x:Name="paymentTextBox" Grid.Row="0" Grid.Column="1" >
                 <TextBox.Text>
-                    <Binding Path="Payment" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" NotifyOnValidationError="True">
+                    <Binding Path="Payment" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" NotifyOnValidationError="True" StringFormat="{}{#:#.##}" Mode="OneWayToSource">
                         <Binding.ValidationRules>
                             <r:StringToIntValidationRule ValidationStep="RawProposedValue"/>
                         </Binding.ValidationRules>
