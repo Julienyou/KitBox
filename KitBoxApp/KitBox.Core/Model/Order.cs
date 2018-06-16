@@ -123,7 +123,7 @@ namespace KitBox.Core.Model
         {
             foreach (Dictionary<string, string> component in components)
             {
-                totalPrice += Convert.ToDouble(component["price"]) * Convert.ToDouble(component["quantity"]);
+                totalPrice += Convert.ToDouble(component["price"].Replace(".", ",")) * Convert.ToInt32(component["quantity"]);
             }
         }
 
