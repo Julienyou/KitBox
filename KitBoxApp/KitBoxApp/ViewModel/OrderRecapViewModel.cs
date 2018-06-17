@@ -30,7 +30,7 @@ namespace KitBox.ViewModel
         public ICommand OrderCommand { get { return new CommandHandler((x) => 
         {
             OrderConfirm w = new OrderConfirm();
-            OrderConfirmViewModel orderRecapVM = new OrderConfirmViewModel(w, Order);
+            OrderConfirmViewModel orderRecapVM = new OrderConfirmViewModel(Order, FlowDocument);
             w.DataContext = orderRecapVM;
             ((Window)x).DialogResult = w.ShowDialog();
             ((Window)x).Close();

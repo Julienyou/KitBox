@@ -479,18 +479,23 @@ namespace KitBox.Core
         private static void CheckCustomer(Customer customer)
         {
             /*Verification if the customer exists*/
-            string sql = "select * from Customer where PK_Email='" + customer.Email + "'";
+            string sql = "SELECT * FROM Customer WHERE PK_Email='" + customer.Email + "'";
 
             SQLiteCommand command = new SQLiteCommand(sql, DBConnection);
             SQLiteDataReader reader = command.ExecuteReader();
 
             if (!reader.Read()) //Customer creation if he does not exists
             {
-                sql = "insert into Customer ('PK_Email', 'Firstname', 'Lastname', 'Street', 'Town')" +
-                          "values ('" + customer.Email + "','" + customer.FirstName + "','" + customer.LastName +
-                          "','" + customer.Street + "','" + customer.Town + "')";
+                sql = "INSERT INTO Customer ('PK_Email', 'Firstname', 'Lastname', 'Street', 'Town')" +
+                          "VALUES (@email, @firstName, @lastName, @street, @town)";
 
                 command = new SQLiteCommand(sql, DBConnection);
+                command.Parameters.Add(new SQLiteParameter("@email") { Value = customer.Email });
+                command.Parameters.Add(new SQLiteParameter("@firstName") { Value = customer.FirstName });
+                command.Parameters.Add(new SQLiteParameter("@lastName") { Value = customer.LastName });
+                command.Parameters.Add(new SQLiteParameter("@street") { Value = customer.Street });
+                command.Parameters.Add(new SQLiteParameter("@town") { Value = customer.Town });
+
                 command.ExecuteNonQuery();
             }
         }

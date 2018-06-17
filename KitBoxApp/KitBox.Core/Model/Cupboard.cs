@@ -77,7 +77,6 @@ namespace KitBox.Core.Model
 
         #endregion
 
-
         #region Properties
         public int Width
         {
