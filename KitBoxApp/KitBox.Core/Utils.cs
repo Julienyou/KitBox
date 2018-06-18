@@ -354,8 +354,13 @@ namespace KitBox.Core
                         component.Add("code", reader["code"].ToString());
                         component.Add("price", reader["price"].ToString());
 
-                        //  Y faut ajouter le vrai instock
-                        component.Add("instock", "true");    
+                        string instock = "false";
+                        if ((Convert.ToInt32(reader["stock"]) - Convert.ToInt32(reader["quantity"])) >= 0)
+                        {
+                            instock = "true";
+                        }
+
+                        component.Add("instock", instock);    
                     }
                 }
 
