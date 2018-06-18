@@ -127,7 +127,7 @@
     <value>Prepaid</value>
   </data>
   <data name="PaymentStatus_Unpayed" xml:space="preserve">
-    <value>Unpayed</value>
+    <value>Pending</value>
   </data>
   <data name="PreparationStatus_NotProcessed" xml:space="preserve">
     <value>Not Processed</value>
