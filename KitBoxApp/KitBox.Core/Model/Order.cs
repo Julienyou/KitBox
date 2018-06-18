@@ -125,7 +125,7 @@ namespace KitBox.Core.Model
                 if (component["instock"] == "false")
                 {
                     IsInStock = false;
-                    break;
+                    return;
                 }
             }
 
